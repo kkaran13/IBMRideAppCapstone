@@ -1,0 +1,212 @@
+-----------------------------------------------------------------------------------------------------------------------------
+
+User Management->
+	get profile
+	register (when driver register then take extra field for validation by the admin)
+	login
+	update
+	forgot pass	
+	reset pass
+	logout
+	delete (deactivate)
+	user auth
+	rider auth 
+	drvier->>>
+		driver auth 
+		vehicle register
+		vehicle activation
+		update
+		delete (deactivate)
+		
+
+Rider Serive->
+	fares calulate (python calculation)
+	request ride
+	cancel ride
+	ride history (file system / emails /notifications )
+	ratings
+	payment service (python api call)
+	notify and emails on -> (ride accept -  ride cancel - ride complete) 
+
+Driver Service->
+	accept ride
+	cancel ride
+	start ride
+	complete ride 
+	new rides view 
+	ratings to the rider
+	wallet payment (python api call)
+	ride history (emails/ filtering based on status / sorting / searching/ file downloading)
+	notify and emails on -> (ride accept -  ride cancel - ride complete)
+
+Notification Service->
+	event emiitors calling on the request ride 
+	config variable for the minimum distance to send notify
+
+Web Socket Service->
+	chatting with the rider and drvier
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+User - MySQL (uuid(pk), firstname, lastname, role, email (unique), phone (unique), password(hashed), licensenumber, license_url, adhaarcardnumber, addhar_url, status)
+
+Vehicle - MySQL (vehicle_id(uuid pk), ownerid(fk users), make, model, year, color, reg_num, status)
+
+Ratings - MongoDB (ratin_id (uuid), fromid(fk users), toid(fk users), rideid (uuid fk users), rating (1-5), comments)
+
+Rides - MySQL (rideid (uuid), riderid (fk users), driver_id(fk_users), vehiicleid(fk vehicles), pickup, drop, fare, start_time, end_time)
+
+Notification - MongoDB
+Chats - MongoDB
+Payments - PostgreSQL
+
+
+
+
+
+
+
+
+
+
+-- =============================================
+-- USERS TABLE (MySQL) - Core user information
+-- =============================================
+CREATE TABLE users (
+    uuid CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    firstname VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    phone VARCHAR(15) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('rider', 'driver', 'admin') NOT NULL DEFAULT 'rider',
+    profile_image_url VARCHAR(500),
+    email_verified BOOLEAN DEFAULT FALSE,
+    phone_verified BOOLEAN DEFAULT FALSE,
+    account_status ENUM('active', 'inactive', 'suspended', 'deleted') DEFAULT 'active',
+    last_login_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL, -- Soft delete,
+
+    license_number VARCHAR(50) UNIQUE NOT NULL,
+    license_url VARCHAR(500),
+    license_expiry_date DATE NOT NULL,
+    aadhar_number VARCHAR(12) UNIQUE NOT NULL,
+    aadhar_url VARCHAR(500),
+    verification_status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    verification_notes TEXT,
+    verified_by CHAR(36), -- Admin who verified
+    verified_at TIMESTAMP NULL,
+    
+    -- Indexes for performance
+    INDEX idx_email (email),
+    INDEX idx_phone (phone),
+    INDEX idx_role (role),
+    INDEX idx_status (account_status),
+    INDEX idx_created (created_at)
+);
+
+
+
+
+-- =============================================
+-- VEHICLES TABLE (MySQL) - Vehicle information
+-- =============================================
+CREATE TABLE vehicles (
+    uuid CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    owner_id CHAR(36) NOT NULL,
+    make VARCHAR(50) NOT NULL,
+    model VARCHAR(50) NOT NULL,
+    year YEAR NOT NULL,
+    color VARCHAR(30) NOT NULL,
+    registration_number VARCHAR(20) UNIQUE NOT NULL,
+    vehicle_type ENUM('hatchback', 'sedan', 'suv', 'auto', 'bike') NOT NULL,
+    
+    -- Audit fields
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL, -- Soft delete
+    
+    FOREIGN KEY (owner_id) REFERENCES users(uuid) ON DELETE CASCADE,
+    FOREIGN KEY (verified_by) REFERENCES users(uuid) ON DELETE SET NULL,
+    
+    -- Indexes
+    INDEX idx_owner_id (owner_id),
+    INDEX idx_registration (registration_number),
+    INDEX idx_status (status),
+    INDEX idx_type (vehicle_type)
+);
+
+
+
+-- =============================================
+-- RIDES TABLE (MySQL) - Core ride information
+-- =============================================
+CREATE TABLE rides (
+    uuid CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    rider_id CHAR(36) NOT NULL,
+    driver_id CHAR(36) NULL, -- NULL until driver accepts
+    vehicle_id CHAR(36) NULL, -- NULL until driver accepts
+    
+    -- Location details
+    pickup_address TEXT NOT NULL,
+    pickup_latitude DECIMAL(10, 8) NOT NULL,
+    pickup_longitude DECIMAL(11, 8) NOT NULL,
+    dropoff_address TEXT NOT NULL,
+    dropoff_latitude DECIMAL(10, 8) NOT NULL,
+    dropoff_longitude DECIMAL(11, 8) NOT NULL,
+    
+    -- Fare and distance
+
+    fare DECIMAL(10, 2) NULL,
+    distance_km DECIMAL(8, 2) NULL,
+    duration_minutes INT NULL,
+    
+    -- Ride status and tracking
+    ride_status ENUM('requested', 'accepted', 'driver_arrived', 'started', 'completed', 'cancelled') 
+                DEFAULT 'requested',
+    
+    -- OTP for verification
+    otp CHAR(4) NULL,
+    otp_verified_at TIMESTAMP NULL,
+    
+    -- Cancellation details
+    cancelled_by ENUM('rider', 'driver', 'admin') NULL,
+    cancellation_reason TEXT NULL,
+
+    
+    -- Timestamps for ride lifecycle
+    requested_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    accepted_at TIMESTAMP NULL,
+
+    started_at TIMESTAMP NULL,
+    completed_at TIMESTAMP NULL,
+    cancelled_at TIMESTAMP NULL,
+    
+    -- Payment details
+    payment_method ENUM('cash', 'card', 'upi') NULL,
+    payment_status ENUM('pending', 'completed', 'failed') DEFAULT 'pending',
+        
+    -- Audit fields
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (rider_id) REFERENCES users(uuid) ON DELETE RESTRICT,
+    FOREIGN KEY (driver_id) REFERENCES users(uuid) ON DELETE RESTRICT,
+    FOREIGN KEY (vehicle_id) REFERENCES vehicles(uuid) ON DELETE RESTRICT,
+    
+    -- Indexes for performance
+    INDEX idx_rider_id (rider_id),
+    INDEX idx_driver_id (driver_id),
+    INDEX idx_vehicle_id (vehicle_id),
+    INDEX idx_status (ride_status),
+    INDEX idx_requested_at (requested_at),
+    INDEX idx_pickup_location (pickup_latitude, pickup_longitude),
+    INDEX idx_dropoff_location (dropoff_latitude, dropoff_longitude),
+    
+    -- Composite indexes for common queries
+    INDEX idx_rider_status (rider_id, ride_status),
+    INDEX idx_driver_status (driver_id, ride_status),
+    INDEX idx_status_requested_at (ride_status, requested_at)
+);
