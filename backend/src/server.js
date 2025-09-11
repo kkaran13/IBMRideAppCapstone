@@ -1,8 +1,8 @@
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 import app from "./app.js";
-import mongoConnect from "./config/mongo.js";
-import {checkMySqlConnection, syncSqlDatabase} from './config/mysql.js';
+// import mongoConnect from "./config/mongo.js";
+// import {checkMySqlConnection, syncSqlDatabase} from './config/mysql.js';
 
 const PORT = process.env.PORT;
 console.log(PORT)
@@ -10,14 +10,14 @@ console.log(PORT)
 const startServer = async () => {
     try {
         
-        await mongoConnect();
+        // await mongoConnect();
 
-        await checkMySqlConnection();
+        // await checkMySqlConnection();
 
-        await syncSqlDatabase();
+        // await syncSqlDatabase();
 
-        app.listen(PORT, ()=>{
-            console.log(`Server running on http://localhost:${PORT}`);            
+        app.listen(3000, ()=>{
+            console.log(`Server running on http://localhost:${3000}`);            
         });
         
     } catch (error) {
@@ -25,4 +25,4 @@ const startServer = async () => {
         process.exit(1);
     }
 }
-startServer();
+export default startServer;
