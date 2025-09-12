@@ -11,13 +11,15 @@ const startServer = async () => {
         await mongoConnect();
 
         await checkMySqlConnection();
+        await checkMySqlConnection();
 
+        await syncSqlDatabase();
         await syncSqlDatabase();
 
         app.listen(PORT || 3000, ()=>{
             console.log(`Server running on http://localhost:${3000}`);            
         });
-        
+
     } catch (error) {
         console.error("Error starting the server :", error.message);
         process.exit(1);

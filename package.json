@@ -9,6 +9,7 @@
     "client": "cd frontend && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/554282003/IBMRideAppCapstone.git"
