@@ -6,6 +6,7 @@ class VehicleService {
   async registerVehicle(data) {
     const { owner_id, registration_number } = data;
 
+    
     // Check driver exists
     // const owner = await User.findByPk(owner_id);
     // if (!owner || owner.role !== "driver") {
