@@ -17,6 +17,7 @@ import deviceRouter from "./routes/DeviceTokenRoutes.js";
 app.use("/user",userRoute); //User Routes
 app.use("/vehicle",vehicleRoute); //Vehicle Routes
 app.use("/device",deviceRouter); //Device Routes
+app.use("/driver",driverRoute);  // Driver Routes
 
 // global error handling
 app.use(errorHandler);
