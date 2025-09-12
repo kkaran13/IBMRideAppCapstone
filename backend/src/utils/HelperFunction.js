@@ -4,7 +4,7 @@ import fsSync from 'fs';
 import path from "path";
 import { fileURLToPath } from "url";
 import config from "../config/Config.js";
-import firebaseadmin from '../config/firebaseMessage.js'
+// import firebaseadmin from '../config/firebaseMessage.js'
 import cloudinary from "../config/cloudinary.js";
 
 // recreate __dirname in ESM
@@ -142,46 +142,54 @@ class HelperFunction {
      *   ["token1", "token2"]
      * );
     */
-    async sendFirebasePushNotification(messageObj, deviceTokens) {
-        try {
-            if (!Array.isArray(deviceTokens) || deviceTokens.length === 0) {
-                throw new Error("No device tokens provided for push notification");
-            }
+    // async sendFirebasePushNotification(messageObj, deviceTokens) {
+    //     try {
+    //         if (!Array.isArray(deviceTokens) || deviceTokens.length === 0) {
+    //             throw new Error("No device tokens provided for push notification");
+    //         }
 
-            const message = {
-                notification: { ...messageObj },
-                tokens: deviceTokens,
-            };
+    //         const message = {
+    //             notification: { ...messageObj },
+    //             tokens: deviceTokens,
+    //         };
 
-            const response = await firebaseadmin.messaging().sendEachForMulticast(message);
+    //         const response = await firebaseadmin.messaging().sendEachForMulticast(message);
 
-            console.log(`Push notification sent: ${response.successCount} success, ${response.failureCount} failures`);
+    //         console.log(`Push notification sent: ${response.successCount} success, ${response.failureCount} failures`);
 
-            // log failed tokens for cleanup
-            if (response.failureCount > 0) {
-                response.responses.forEach((res, idx) => {
-                    if (!res.success) {
-                        console.error(`Failed token[${idx}]: ${deviceTokens[idx]} | Error:`, res.error?.message);
-                    }
-                });
-            }
+    //         // log failed tokens for cleanup
+    //         if (response.failureCount > 0) {
+    //             response.responses.forEach((res, idx) => {
+    //                 if (!res.success) {
+    //                     console.error(`Failed token[${idx}]: ${deviceTokens[idx]} | Error:`, res.error?.message);
+    //                 }
+    //             });
+    //         }
 
-            return response;
-        } catch (error) {
-            console.error("Error sending push notification:", error.message);
-            throw error;
+    //         return response;
+    //     } catch (error) {
+    //         console.error("Error sending push notification:", error.message);
+    //         throw error;
+    //     }
+    // }
+
+
+async uploadToCloudinary(file, folder) {
+    if (!file || !file.buffer) {
+      throw new Error("Invalid file object: buffer missing");
+    }
+
+    return new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: `RideApp/${folder}` },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result.secure_url);
         }
-    }
-
-
-    async uploadToCloudinary(file, folder) {
-        const result = await cloudinary.uploader.upload(file.path, {
-            folder: `RideApp/${folder}`,
-        });
-        await fs.unlink(file.path); // delete temp file asynchronously
-        return result.secure_url;
-    }
-}
+      );
+      stream.end(file.buffer); // send buffer directly
+    });
+} }
 
 // const HF = new HelperFunction()
 // let mailObj = {

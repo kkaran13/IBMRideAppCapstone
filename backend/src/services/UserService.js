@@ -1,12 +1,9 @@
 import bcrypt from "bcryptjs";
-import fs from "fs";
-import cloudinary from "../config/cloudinary.js"; // make sure you created this
 import UserRepository from "../repositories/UserRepository.js";
 import HelperFunction from "../utils/HelperFunction.js";
 import ApiError from "../utils/ApiError.js";
 
 class UserService {
-
   async registerUser(data, files) {
     if (!data) throw new ApiError(400, "Missing data");
 
@@ -22,6 +19,7 @@ class UserService {
       aadhar_number,
     } = data;
 
+    // ----------------- VALIDATIONS -----------------
     if (!firstname || !lastname || !email || !phone || !password) {
       throw new ApiError(400, "Missing required fields");
     }
@@ -33,8 +31,6 @@ class UserService {
       throw new ApiError(409, "Phone already registered");
     }
 
-    const password_hash = await bcrypt.hash(password, 10);
-
     if (role === "driver") {
       if (!license_number || !license_expiry_date || !aadhar_number) {
         throw new ApiError(
@@ -44,20 +40,36 @@ class UserService {
       }
     }
 
-    const avatar_url = files?.avatar
-      ? await HelperFunction.uploadToCloudinary(files.avatar[0], "avatars")
-      : null;
+    // ----------------- PASSWORD -----------------
+    const password_hash = await bcrypt.hash(password, 10);
 
-    const license_url =
-      role === "driver" && files?.license
-        ? await HelperFunction.uploadToCloudinary(files.license[0], "licenses")
-        : null;
+    // ----------------- CLOUDINARY UPLOADS -----------------
+    let avatar_url = null;
+    let license_url = null;
+    let aadhar_url = null;
 
-    const aadhar_url =
-      role === "driver" && files?.aadhar
-        ? await HelperFunction.uploadToCloudinary(files.aadhar[0], "aadhars")
-        : null;
+    if (files?.avatar?.[0]) {
+      avatar_url = await HelperFunction.uploadToCloudinary(
+        files.avatar[0],
+        "avatars"
+      );
+    }
 
+    if (role === "driver" && files?.license?.[0]) {
+      license_url = await HelperFunction.uploadToCloudinary(
+        files.license[0],
+        "licenses"
+      );
+    }
+
+    if (role === "driver" && files?.aadhar?.[0]) {
+      aadhar_url = await HelperFunction.uploadToCloudinary(
+        files.aadhar[0],
+        "aadhars"
+      );
+    }
+
+    // ----------------- USER PAYLOAD -----------------
     const userPayload = {
       firstname,
       lastname,
