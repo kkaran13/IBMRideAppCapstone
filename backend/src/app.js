@@ -12,9 +12,11 @@ app.use(cookieParser());
 // Import All Routes
 import userRoute from "./routes/UserRoutes.js";
 import vehicleRoute from "./routes/vehicleRoutes.js";
+import deviceRouter from "./routes/DeviceTokenRoutes.js";
 
 app.use("/user",userRoute); //User Routes
 app.use("/vehicle",vehicleRoute); //Vehicle Routes
+app.use("/device",deviceRouter); //Device Routes
 
 // global error handling
 app.use(errorHandler);
