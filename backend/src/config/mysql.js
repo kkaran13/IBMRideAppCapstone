@@ -1,10 +1,11 @@
 import { Sequelize } from "sequelize";
 import mysql from "mysql2/promise";
+import config from "./Config.js";
 
-const dbName = process.env.DB_NAME;
-const dbUser = process.env.DB_USER;
-const dbPass = process.env.DB_PASS;
-const dbHost = process.env.DB_HOST;
+const dbName = config.DB_NAME;
+const dbUser = config.DB_USER;
+const dbPass = config.DB_PASS;
+const dbHost = config.DB_HOST;
 
 
 const createDatabaseIfNotExists = async () => {

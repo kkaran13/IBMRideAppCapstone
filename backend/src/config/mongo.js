@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import config from './Config.js';
 
-const mongo_uri = process.env.MONGO_URI; 
+const mongo_uri = config.MONGO_URI;
 
 const mongoConnect = async () => {
     try {

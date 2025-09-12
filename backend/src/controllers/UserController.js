@@ -1,6 +1,6 @@
 import { asyncHandler } from "../utils/asynHandler.js";
 import ApiResponse from "../utils/ApiResponse.js";
-import UserService from "../services/userService.js"
+import UserService from "../services/UserService.js"
 
 class UserController {
 
