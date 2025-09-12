@@ -6,7 +6,7 @@ import { asyncHandler } from "../utils/asynHandler.js";
 const router = express.Router();
 
 // Public routes
-router.get("/health", asyncHandler(userController.healthChecker));
+router.get("/health", userController.healthChecker);
 // router.post("/login", asyncHandler(UserController.login));
 
 // // Protected routes
