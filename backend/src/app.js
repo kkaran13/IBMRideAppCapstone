@@ -1,7 +1,7 @@
 
 import express from "express";
 import cookieParser from "cookie-parser";
-import  {errorHandler}  from "./middlewares/errorMiddleware.js";
+import  {errorHandler}  from "./middlewares/errorHandler.js";
 
 const app = express();
 app.use(express.json());
