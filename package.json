@@ -1,0 +1,26 @@
+{
+  "name": "ibmrideappcapstone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "server": "cd backend && npm start",
+    "client": "cd frontend && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/554282003/IBMRideAppCapstone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/554282003/IBMRideAppCapstone/issues"
+  },
+  "homepage": "https://github.com/554282003/IBMRideAppCapstone#readme",
+  "dependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
