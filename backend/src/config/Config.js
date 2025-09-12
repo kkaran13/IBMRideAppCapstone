@@ -24,6 +24,11 @@ class Config{
 
         this.DJANGO_API_URL = process.env.DJANGO_API_URL;
 
+        this.REDIS_HOST = process.env.REDIS_HOST;
+        this.REDIS_PORT = process.env.REDIS_PORT;
+        this.REDIS_PASSWORD = process.env.REDIS_PASSWORD;
+        this.REDIS_DB = process.env.REDIS_DB;
+
 
         this.notificationBody = {
 
