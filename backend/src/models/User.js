@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/mysql.js"; // your DB connection
+import {sequelize} from "../config/mysql.js"; // your DB connection
 
 const User = sequelize.define("User", {
   uuid: {
@@ -64,25 +64,27 @@ const User = sequelize.define("User", {
     type: DataTypes.DATE,
   },
   license_number: {
-    type: DataTypes.STRING(50),
-    unique: true,
-    allowNull: false,
-  },
-  license_url: {
-    type: DataTypes.STRING(500),
-  },
-  license_expiry_date: {
-    type: DataTypes.DATEONLY,
-    allowNull: false,
-  },
-  aadhar_number: {
-    type: DataTypes.STRING(12),
-    unique: true,
-    allowNull: false,
-  },
-  aadhar_url: {
-    type: DataTypes.STRING(500),
-  },
+  type: DataTypes.STRING(50),
+  unique: true,
+  allowNull: true, // changed from false to true
+},
+license_url: {
+  type: DataTypes.STRING(500),
+  allowNull: true,
+},
+license_expiry_date: {
+  type: DataTypes.DATEONLY,
+  allowNull: true, // changed from false to true
+},
+aadhar_number: {
+  type: DataTypes.STRING(12),
+  unique: true,
+  allowNull: true, // changed from false to true
+},
+aadhar_url: {
+  type: DataTypes.STRING(500),
+  allowNull: true,
+},
   verification_status: {
     type: DataTypes.ENUM("pending", "approved", "rejected"),
     defaultValue: "pending",
@@ -104,8 +106,6 @@ const User = sequelize.define("User", {
   paranoid: true, // enables soft delete (deleted_at)
   deletedAt: "deleted_at",
   indexes: [
-    { fields: ["email"] },
-    { fields: ["phone"] },
     { fields: ["role"] },
     { fields: ["account_status"] },
     { fields: ["created_at"] },

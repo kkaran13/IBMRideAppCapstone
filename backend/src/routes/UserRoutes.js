@@ -1,12 +1,12 @@
 import express from "express";
 import userController from "../controllers/UserController.js";
+import {uploadMultiple} from "../middlewares/multer.js";
 // import { authenticateJWT } from "../middlewares/auth.middleware.js";
-import { asyncHandler } from "../utils/asynHandler.js";
 
 const router = express.Router();
 
 // Public
-// router.post("/register", userController.register);       // Rider/Driver/Admin Register
+router.post("/register", uploadMultiple , userController.register);       // Rider/Driver/Admin Register
 // router.post("/login", userController.login);
 // router.post("/forgot-password", userController.forgotPassword);
 // router.post("/reset-password", userController.resetPassword);
