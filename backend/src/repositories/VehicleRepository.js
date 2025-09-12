@@ -1,4 +1,4 @@
-import Vehicle from "../models/vehicle.js";
+import Vehicle from "../models/Vehicle.js";
 
 class VehicleRepository {
   async createVehicle(data) {
