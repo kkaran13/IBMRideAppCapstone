@@ -1,5 +1,5 @@
 import express from "express";
-import userController from "../controllers/userController.js";
+import userController from "../controllers/UserController.js";
 // import { authenticateJWT } from "../middlewares/auth.middleware.js";
 import { asyncHandler } from "../utils/asynHandler.js";
 

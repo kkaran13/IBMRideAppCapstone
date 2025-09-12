@@ -2,6 +2,7 @@ import mailTranspoter from "../config/mailTranspoter.js";
 import fs from 'fs/promises';
 import path from "path";
 import { fileURLToPath } from "url";
+import config from "../config/Config.js";
 
 // recreate __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -27,7 +28,7 @@ export default class HelperFunction{
 
             // Mail options
             const mailOptions = {
-                from : process.env.SMTP_USER,
+                from : config.SMTP_USER,
                 to : Array.isArray(to) ? to.join(',') : to,
                 subject, 
                 html : htmlContent
