@@ -84,23 +84,24 @@ class HelperFunction {
     async axiosSendRequest(method, url, data = {}, options = {}){
         try {
             
-            const config = {
+            const requestConfig = {
                 method,
                 url,
                 ...options
             }
+            requestConfig.url = (config.DJANGO_API_URL || "") + requestConfig.url;
 
             // based on the request method filtering is done for the data as only post, put and patch can have body
             if (["post", "put", "patch"].includes(method.toLowerCase())) {
-                config.data = data;
+                requestConfig.data = data;
             }
             // if not above methods then send data in the params 
             else {
-                config.params = { ...(options.params || {}), ...data };
+                requestConfig.params = { ...(options.params || {}), ...data };
             }
 
             // call the api 
-            const response = await httpClient.request(config);
+            const response = await httpClient.request(requestConfig);
             return response.data;
 
         } catch (error) {
