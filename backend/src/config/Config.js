@@ -13,7 +13,6 @@ class Config{
 
         this.NODE_ENV = process.env.NODE_ENV;
         this.NODE_PORT = process.env.NODE_PORT;
-
         this.JWT_SECRET = process.env.JWT_SECRET; 
 
         this.MONGO_URI = process.env.MONGO_URI;
@@ -26,12 +25,13 @@ class Config{
         this.CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
         this.CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
         this.CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
-        this.SMTP_HOST = process.env.SMTP_HOST;
-        this.SMTP_PORT = process.env.SMTP_PORT;
-        this.SMTP_USER = process.env.SMTP_USER;
-        this.SMTP_PASS = process.env.SMTP_PASS;
+        
+        // this.SMTP_HOST = process.env.SMTP_HOST;
+        // this.SMTP_PORT = process.env.SMTP_PORT;
+        // this.SMTP_USER = process.env.SMTP_USER;
+        // this.SMTP_PASS = process.env.SMTP_PASS;
 
-        this.DJANGO_API_URL = process.env.DJANGO_API_URL;
+        // this.DJANGO_API_URL = process.env.DJANGO_API_URL;
 
         this.REDIS_HOST = process.env.REDIS_HOST;
         this.REDIS_PORT = process.env.REDIS_PORT;
