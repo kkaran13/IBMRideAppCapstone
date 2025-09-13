@@ -28,6 +28,9 @@ class UserRepository {
     if (!user) return null;
     return user.destroy(); // soft delete if paranoid is true
   }
+
+  
+
 }
 
 export default new UserRepository();

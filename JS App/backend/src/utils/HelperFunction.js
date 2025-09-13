@@ -1,5 +1,6 @@
 import mailTranspoter from "../config/mailTranspoter.js";
 import fs from 'fs/promises';
+import fsSync from 'fs';
 import path from "path";
 import { fileURLToPath } from "url";
 import config from "../config/Config.js";
@@ -53,8 +54,8 @@ class HelperFunction {
                 const regex = new RegExp(`#${key}#`, "g");
                 htmlContent = htmlContent.replace(regex, value);
             }
-
-            // Mail options
+        console.log(htmlContent);
+         // Mail options
             const mailOptions = {
                 from: config.SMTP_USER,
                 to: Array.isArray(to) ? to.join(',') : to,
