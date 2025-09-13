@@ -61,7 +61,6 @@ class VehicleService {
   }
 
   async updateVehicle(id, data, currentUser) {
-    // ***Janhwi ---- add here the logic that the driver should not be able to update (uuid, owner_id remove those fields from the data if comes in the data dont thwor error about this thing)  
     // First fetch the vehicle
     const vehicle = await VehicleRepository.findById(id);
 
@@ -78,26 +77,27 @@ class VehicleService {
       throw new ApiError(400, "Vehicle is deleted and cannot be updated");
     }
 
-    const { color, status } = data;
-
-    // Allow only color and status updates
-    if (!color && !status) {
-      throw new ApiError(400, "Nothing to update. Only color or status can be updated.");
-    }
-
-    // Validate status if provided
-    if (status) {
-      // ***** Janhwi ----  add a logic here that when the driver updates a the status of a vehicle from the inactive to active then you should make other vehicles of the drivers as inactive
+    const updateFields = {};
+    if (data.color) updateFields.color = data.color;
+    if (data.status) {
       const allowedStatus = ["active", "inactive"];
-      if (!allowedStatus.includes(status)) {
+      if (!allowedStatus.includes(data.status)) {
         throw new ApiError(400, "Invalid status value. Allowed: active, inactive");
       }
+
+     
+      if (data.status === "active") {
+        await VehicleRepository.updateAllByOwnerExcept(vehicle.owner_id, id, {
+          status: "inactive",
+        });
+      }
+
+      updateFields.status = data.status;
     }
 
-    // Prepare update object
-    const updateFields = {};
-    if (color) updateFields.color = color;
-    if (status) updateFields.status = status;
+    if (Object.keys(updateFields).length === 0) {
+      throw new ApiError(400, "Nothing to update. Only color or status can be updated.");
+    }
 
     // Update in repository
     const updated = await VehicleRepository.updateVehicle(id, updateFields);
