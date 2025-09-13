@@ -2,11 +2,13 @@ import express from "express";
 import userController from "../controllers/UserController.js";
 import {uploadMultiple} from "../middlewares/multer.js";
 import { authenticateJWT } from "../middlewares/authMiddleware.js";
+import UserController from "../controllers/UserController.js";
 
 const router = express.Router();
 
 // Public
-router.post("/register", uploadMultiple , userController.register);       // Rider/Driver/Admin Register
+router.post("/register", uploadMultiple , userController.register);
+router.post("/verify-otp", UserController.verifyOtp)
 router.post("/login", userController.login);
 // router.post("/forgot-password", userController.forgotPassword);
 // router.post("/reset-password", userController.resetPassword);

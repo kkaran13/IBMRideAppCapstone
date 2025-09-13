@@ -1,12 +1,21 @@
 
 import express from "express";
 import cookieParser from "cookie-parser";
+import session from "express-session";
 import { errorHandler } from "./middlewares/errorHandler.js";
+import Config from "./config/Config.js";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.use(session({
+  secret: Config.SESSION_SECRET, // use env var
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 10 * 60 * 1000 } // 10 min
+}));
 
 
 // Import All Routes

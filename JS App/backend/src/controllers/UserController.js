@@ -4,11 +4,14 @@ import UserService from "../services/UserService.js";
 
 class UserController {
   register = asyncHandler(async (req, res) => {
-    const user = await UserService.registerUser(req.body, req.files);
-    return res
-      .status(201)
-      .json(new ApiResponse(201, user, "User registered successfully"));
+    const user = await UserService.startRegistration(req.body, req.files,req);
+    return res.status(200).json(new ApiResponse(200, null, "OTP sent to email. Please verify."));
   });
+
+  verifyOtp = asyncHandler(async (req,res) => {
+    const result = await UserService.verifyEmailOtp(req)
+    return res.status(201).json(new ApiResponse(200,result,"User created successfully"))
+  })
 
   login = asyncHandler(async (req, res) => {
     const result = await UserService.loginUser(req.body);
