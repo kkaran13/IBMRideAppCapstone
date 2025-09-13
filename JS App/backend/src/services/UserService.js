@@ -35,6 +35,10 @@ class UserService {
       throw new ApiError(409, "Phone already registered");
     }
 
+    if (length(password) < 6){
+      throw new ApiError(400,"Password length must be > 6")
+    }
+
     if (role === "driver") {
       if (!license_number || !license_expiry_date || !aadhar_number) {
         throw new ApiError(
@@ -159,7 +163,7 @@ class UserService {
 
     // Generate JWT
     const accessToken = jwt.sign(
-      { id: user.uuid, role: user.role },
+      { id: user.user_id, role: user.role },
       Config.JWT_SECRET,
       { expiresIn: "1h" }
     );
@@ -175,6 +179,229 @@ class UserService {
     return { user, accessToken, cookieOptions };
   }
 
+async forgotPassword(req) {  
+    const {email}  = req.body;
+
+    if (!email) {
+      throw new ApiError(400, "Email is required");
+    }
+
+    const user = await UserRepository.findByEmail(email);
+    if (!user) {
+      throw new ApiError(404, "User not found");
+    }
+
+    // Generate 6-digit OTP
+    const otp = "" + Math.floor(100000 + Math.random() * 900000);
+
+    // Save OTP in session with expiry (10 min)
+    req.session.forgotPassword = {
+      email,
+      otp,
+      expiresAt: Date.now() + 10 * 60 * 1000,
+    };
+
+    // Send OTP email
+    const mailObj = {
+      to: email,
+      subject: "Reset your password",
+      htmlTemplate: "forgotpassword.html",
+      templateData: {
+        username: user.firstname,
+        otpcode: otp,
+        appname: "RideApp",
+      },
+    };
+
+    await HelperFunction.sendMail(mailObj);
+
+    return new ApiResponse(200, null, "OTP sent to your email");
+  }
+
+  // ----------------- VERIFY OTP -----------------
+  async verifyForgotPasswordOtp(req) {
+    const { email, otp } = req.body;
+
+    const sessionData = req.session?.forgotPassword;
+    if (!sessionData) {
+      throw new ApiError(400, "No OTP request found. Please try again.");
+    }
+
+    if (sessionData.email !== email) {
+      throw new ApiError(400, "Email does not match OTP request");
+    }
+
+    if (sessionData.otp !== otp) {
+      throw new ApiError(400, "Invalid OTP");
+    }
+
+    if (Date.now() > sessionData.expiresAt) {
+      throw new ApiError(400, "OTP expired");
+    }
+
+    // OTP verified
+    return new ApiResponse(200, null, "OTP verified successfully");
+  }
+
+  // ----------------- RESET PASSWORD -----------------
+  async resetPassword(req) {
+    const { email, newPassword } = req.body;
+
+    if (!email || !newPassword) {
+      throw new ApiError(400, "Email and new password are required");
+    }
+
+    if (newPassword.length < 6) {
+      throw new ApiError(400,"Password length must be >= 6")
+    }
+
+    const sessionData = req.session?.forgotPassword;
+    if (!sessionData || sessionData.email !== email) {
+      throw new ApiError(400, "OTP verification required before resetting password");
+    }
+
+    // Hash new password
+    const password_hash = await bcrypt.hash(newPassword, 10);
+
+    // Update password in DB
+    await UserRepository.updatePassword(email, password_hash);
+
+    // Clear session OTP
+    delete req.session.forgotPassword;
+
+    return new ApiResponse(200, null, "Password updated successfully");
+  }
+
+async getProfile(req) {
+    const { id, role } = req.user;
+
+    const user = await UserRepository.findById(id);
+    if (!user) {
+      throw new ApiError(404, "User not found");
+    }
+
+    // Common fields for all roles
+    let profile = {
+      user_id: user.user_id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      phone: user.phone,
+      role: role,
+      profile_image_url: user.profile_image_url,
+      email_verified: user.email_verified,
+      phone_verified: user.phone_verified,
+      account_status: user.account_status,
+      last_login_at: user.last_login_at,
+      created_at: user.created_at,
+      updated_at: user.updated_at,
+    };
+
+    if (role === "driver") {
+      // Driver-specific fields
+      profile.license_number = user.license_number;
+      profile.license_url = user.license_url;
+      profile.license_expiry_date = user.license_expiry_date;
+      profile.aadhar_number = user.aadhar_number;
+      profile.aadhar_url = user.aadhar_url;
+
+      // KYC object
+      profile.kyc = {
+        license_status: user.license_url ? user.verification_status : "pending",
+        aadhar_status: user.aadhar_url ? user.verification_status : "pending",
+        overall_status: user.verification_status || "pending",
+        notes: user.verification_notes || "",
+        verified_by: user.verified_by || null,
+        verified_at: user.verified_at || null,
+      };
+    }
+
+    return new ApiResponse(200, profile, "Profile fetched successfully");
+  }
+
+  async updateProfile(req) {
+    const { id, role } = req.user;
+    const data = req.body;
+    const files = req.files;    
+
+    const user = await UserRepository.findById(id);
+    if (!user) {
+      throw new ApiError(404, "User not found");
+    }
+
+    let updateFields = {};
+
+    if (role === "rider") {
+      // Riders: basic info + optional profile image
+      const { firstname, lastname, phone } = data;
+      updateFields = { firstname, lastname, phone };
+
+      if (files?.avatar?.[0]) {
+        const avatarUrl = await HelperFunction.uploadToCloudinary(
+          files.avatar[0],
+          "avatars"
+        );
+        updateFields.profile_image_url = avatarUrl;
+      }
+    } else if (role === "driver") {
+      // Drivers: rider fields + KYC files
+      const {
+        firstname,
+        lastname,
+        phone,
+        license_number,
+        license_expiry_date,
+        aadhar_number,
+      } = data;
+
+      updateFields = {
+        firstname,
+        lastname,
+        phone,
+        license_number,
+        license_expiry_date,
+        aadhar_number,
+      };
+
+      if (files?.avatar?.[0]) {
+        const avatarUrl = await HelperFunction.uploadToCloudinary(
+          files.avatar[0],
+          "avatars"
+        );
+        updateFields.profile_image_url = avatarUrl;
+      }
+
+      if (files?.license?.[0]) {
+        const licenseUrl = await HelperFunction.uploadToCloudinary(
+          files.license[0],
+          "licenses"
+        );
+        updateFields.license_url = licenseUrl;
+      }
+
+      if (files?.aadhar?.[0]) {
+        const aadharUrl = await HelperFunction.uploadToCloudinary(
+          files.aadhar[0],
+          "aadhars"
+        );
+        updateFields.aadhar_url = aadharUrl;
+      }
+    } else {
+      throw new ApiError(403, "Only riders and drivers can update profile");
+    }
+
+    // Remove undefined values (in case not all fields were passed)
+    Object.keys(updateFields).forEach(
+      (key) => updateFields[key] === undefined && delete updateFields[key]
+    );
+
+    await UserRepository.updateById(id, updateFields);
+
+    const updatedUser = await UserRepository.findById(id);
+
+    return {updatedUser};
+  }
+
   async logoutUser(res) {
     // Clear the cookie where token is stored
     res.clearCookie("access_token", {
@@ -184,6 +411,10 @@ class UserService {
     });
 
     return new ApiResponse(200, null, "Logged out successfully");
+  }
+
+  async deactivateUser(res) {
+    
   }
 }
 

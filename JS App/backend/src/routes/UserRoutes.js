@@ -10,12 +10,13 @@ const router = express.Router();
 router.post("/register", uploadMultiple , userController.register);
 router.post("/verify-otp", UserController.verifyOtp)
 router.post("/login", userController.login);
-// router.post("/forgot-password", userController.forgotPassword);
-// router.post("/reset-password", userController.resetPassword);
+router.post("/forgot-password", userController.forgotPassword);
+router.post("/verify-password-otp",userController.verifyForgotPasswordOtp)
+router.post("/reset-password", userController.resetPassword);
 
 // // Protected (after login)
-// router.get("/profile", authenticateJWT ,userController.getProfile);
-// router.put("/update", authenticateJWT, userController.updateUser);
+router.get("/profile", authenticateJWT ,userController.profile);
+router.put("/update", authenticateJWT,uploadMultiple, userController.updateUser);
 router.post("/logout", authenticateJWT ,userController.logout);
 // router.delete("/deactivate", authenticateJWT, userController.deactivateUser);
 
