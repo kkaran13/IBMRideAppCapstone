@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 // const __dirname = path.dirname(__filename);
 
 // dotenv.config({ path: path.join(__dirname, "../../.env") });
-dotenv.config();
+dotenv.config();console.log(__dirname);
 class Config{
 
     constructor(){
@@ -15,7 +15,7 @@ class Config{
         this.NODE_PORT = process.env.NODE_PORT;
         this.JWT_SECRET = process.env.JWT_SECRET; 
 
-        this.MONGO_URI = process.env.MONGO_URI;
+        // this.MONGO_URI = process.env.MONGO_URI;
 
         this.DB_NAME = process.env.DB_NAME;
         this.DB_USER = process.env.DB_USER;
@@ -35,10 +35,10 @@ class Config{
 
         // this.DJANGO_API_URL = process.env.DJANGO_API_URL;
 
-        this.REDIS_HOST = process.env.REDIS_HOST;
-        this.REDIS_PORT = process.env.REDIS_PORT;
-        this.REDIS_PASSWORD = process.env.REDIS_PASSWORD;
-        this.REDIS_DB = process.env.REDIS_DB;
+        // this.REDIS_HOST = process.env.REDIS_HOST;
+        // this.REDIS_PORT = process.env.REDIS_PORT;
+        // this.REDIS_PASSWORD = process.env.REDIS_PASSWORD;
+        // this.REDIS_DB = process.env.REDIS_DB;
 
 
         this.notificationBody = {

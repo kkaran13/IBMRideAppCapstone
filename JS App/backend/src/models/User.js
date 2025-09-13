@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import {sequelize} from "../config/mysql.js"; // your DB connection
 
 const User = sequelize.define("User", {
-  uuid: {
+  user_id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,

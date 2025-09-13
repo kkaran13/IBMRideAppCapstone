@@ -15,7 +15,7 @@ const Vehicle = sequelize.define(
       allowNull: false,
       references: {
         model: "users",
-        key: "uuid",
+        key: "user_id",
       },
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
