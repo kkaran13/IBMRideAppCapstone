@@ -1,7 +1,7 @@
 
 import express from "express";
 import cookieParser from "cookie-parser";
-import  {errorHandler}  from "./middlewares/errorHandler.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 
 const app = express();
 app.use(express.json());
@@ -14,11 +14,13 @@ import userRoute from "./routes/UserRoutes.js";
 import vehicleRoute from "./routes/VehicleRoutes.js";
 import deviceRouter from "./routes/DeviceTokenRoutes.js";
 import driverRoute from './routes/DriverRoutes.js'
+// import rideRoute from "./routes/RideRoutes.js"
 
-app.use("/user",userRoute); //User Routes
-app.use("/vehicle",vehicleRoute); //Vehicle Routes
-app.use("/device",deviceRouter); //Device Routes
-app.use("/driver",driverRoute);  // Driver Routes
+app.use("/user", userRoute); //User Routes
+app.use("/vehicle", vehicleRoute); //Vehicle Routes
+app.use("/device", deviceRouter); //Device Routes
+app.use("/driver", driverRoute);  // Driver Routes
+// app.use("/api/v1/ride", rideRoute);
 
 // global error handling
 app.use(errorHandler);

@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import path from "path";
 import { fileURLToPath } from "url";
 import config from "../config/Config.js";
-import firebaseadmin from '../config/firebaseMessage.js'
+// import firebaseadmin from '../config/firebaseMessage.js'
 import cloudinary from "../config/cloudinary.js";
 
 // recreate __dirname in ESM
