@@ -26,10 +26,12 @@ class Config{
         this.CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
         this.CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
         
-        // this.SMTP_HOST = process.env.SMTP_HOST;
-        // this.SMTP_PORT = process.env.SMTP_PORT;
-        // this.SMTP_USER = process.env.SMTP_USER;
-        // this.SMTP_PASS = process.env.SMTP_PASS;
+        this.SMTP_HOST = process.env.SMTP_HOST;
+        this.SMTP_PORT = process.env.SMTP_PORT;
+        this.SMTP_USER = process.env.SMTP_USER;
+        this.SMTP_PASS = process.env.SMTP_PASS;
+
+        this.SESSION_SECRET = process.env.SESSION_SECRET
 
         // this.DJANGO_API_URL = process.env.DJANGO_API_URL;
 

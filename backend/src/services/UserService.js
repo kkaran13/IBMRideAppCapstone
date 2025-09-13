@@ -5,11 +5,10 @@ import HelperFunction from "../utils/HelperFunction.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import Config from "../config/Config.js";
-import { config } from "dotenv";
 
 class UserService {
   // ----------------- REGISTER -----------------
-  async registerUser(data, files) {
+  async startRegistration(data, files, req) {
     if (!data) throw new ApiError(400, "Missing data");
 
     const {
@@ -63,7 +62,7 @@ class UserService {
         ? await HelperFunction.uploadToCloudinary(files.aadhar[0], "aadhars")
         : null;
 
-    // ----------------- USER PAYLOAD -----------------
+    // ----------------- PREPARE PAYLOAD -----------------
     const userPayload = {
       firstname,
       lastname,
@@ -79,7 +78,67 @@ class UserService {
       aadhar_url,
     };
 
-    return UserRepository.create(userPayload);
+    // ----------------- OTP -----------------
+    const otp = "" + Math.floor(100000 + Math.random() * 900000); // 6 digit
+    req.session.pendingUser = {
+      userPayload,
+      otp,
+      expiresAt: Date.now() + 10 * 60 * 1000 // 10 min
+    };
+
+    // ----------------- SEND MAIL -----------------
+    let mailObj = {
+      to: email, // directly use email from payload
+      subject: "Welcome to Ride App!",
+      htmlTemplate: "welcome.html", // your template file
+      templateData: {
+        username: firstname,  // or firstname + lastname
+        email: email,
+        appname: "rideapp",
+        otpcode: otp  // add OTP to template data
+      }
+    };
+
+
+    await HelperFunction.sendMail(mailObj);
+
+    return { otpSent: true }
+  }
+
+  async verifyEmailOtp(req) {
+    // Check if OTP exists in session
+    const pendingUser = req.session?.pendingUser;
+
+    if (!pendingUser) {
+      throw new ApiError(400, "No OTP request found. Please register again.");
+    }
+
+    if (pendingUser.userPayload.email !== req.body.email) {
+      console.log(req.email);
+      throw new ApiError(400, "Email does not match OTP request");
+    }
+
+    if (pendingUser.otp !== req.body.otp) {
+      console.log(pendingUser.otp);
+      console.log(req.body.otp);
+
+      throw new ApiError(400, "Invalid OTP");
+    }
+
+    if (Date.now() > pendingUser.expiresAt) {
+      throw new ApiError(400, "OTP expired");
+    }
+
+    // OTP valid → Create user in DB
+    const user = await UserRepository.create({
+      ...pendingUser.userPayload,
+      email_verified: true,
+    });
+
+    // Clear OTP from session
+    delete req.session.pendingUser;
+
+    return new ApiResponse(200, null, "Otp verified.");
   }
 
   // ----------------- LOGIN -----------------
