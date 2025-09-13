@@ -1,9 +1,9 @@
-// import express from "express";
-// import deviceTokenController from "../controllers/DeviceTokenController.js";
+import express from "express";
+import deviceTokenController from "../controllers/DeviceTokenController.js";
 
-// const deviceRouter = express.Router();
+const deviceRouter = express.Router();
 
-// deviceRouter.post('/registerDevice', deviceTokenController.registerDevice);
-// deviceRouter.post('/getUserDevices', deviceTokenController.getUserDevices);
+deviceRouter.post('/registerDevice', deviceTokenController.registerDevice);
+deviceRouter.post('/getUserDevices', deviceTokenController.getUserDevices);
 
-// export default deviceRouter; 
+export default deviceRouter; 
