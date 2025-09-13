@@ -61,6 +61,7 @@ class VehicleService {
   }
 
   async updateVehicle(id, data, currentUser) {
+    // ***Janhwi ---- add here the logic that the driver should not be able to update (uuid, owner_id remove those fields from the data if comes in the data dont thwor error about this thing)  
     // First fetch the vehicle
     const vehicle = await VehicleRepository.findById(id);
 
@@ -86,6 +87,7 @@ class VehicleService {
 
     // Validate status if provided
     if (status) {
+      // ***** Janhwi ----  add a logic here that when the driver updates a the status of a vehicle from the inactive to active then you should make other vehicles of the drivers as inactive
       const allowedStatus = ["active", "inactive"];
       if (!allowedStatus.includes(status)) {
         throw new ApiError(400, "Invalid status value. Allowed: active, inactive");
