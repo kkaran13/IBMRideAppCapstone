@@ -22,11 +22,14 @@
   },
   "homepage": "https://github.com/554282003/IBMRideAppCapstone#readme",
   "dependencies": {
+    "archiver": "^7.0.1",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.7.0",
+    "dayjs": "^1.11.18",
     "express-session": "^1.18.2",
     "ioredis": "^5.7.0",
     "multer": "^2.0.2",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "pdfkit": "^0.17.2"
   }
 }

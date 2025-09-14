@@ -182,6 +182,20 @@ class RideRepository {
         };
     }
 
+
+    async getUserRidesByDateRange(user_id, startDate, endDate) {
+        return await Ride.findAll({
+        where: {
+            rider_id: user_id,
+            requested_at: {
+            [Op.between]: [startDate, endDate],
+            },
+        },
+        order: [["requested_at", "ASC"]], // earliest rides first
+        });
+    }
+
+
     //get active ride assigned to a particular vehicle
     async getActiveRideByVehicle(vehicleId) {
         return await Ride.findOne({
