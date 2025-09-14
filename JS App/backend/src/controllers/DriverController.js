@@ -5,13 +5,13 @@ import {asyncHandler} from "../utils/asynHandler.js";
 
 class DriverController {
   acceptRide = asyncHandler(async (req, res) => {
-    const driverId = req.user.user_id;
+    const driverId = req.user.id;
     const ride = await DriverService.acceptRide(driverId, req.body);
     res.status(200).json(new ApiResponse(200, ride, "Ride accepted successfully"));
   });
 
   startRide = asyncHandler(async (req, res) => {
-    const driverId = req.user.user_id;
+    const driverId = req.user.id;
     const ride = await DriverService.startRide(driverId, req.body);
     res.status(200).json(new ApiResponse(200, ride, "Ride started successfully"));
   });

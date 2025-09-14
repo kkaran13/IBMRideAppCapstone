@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import UserRepository from "../repositories/UserRepository.js";
 import HelperFunction from "../utils/HelperFunction.js";
 import ApiError from "../utils/ApiError.js";
+import { generateRidesPDF } from "../utils/pdfGenerator.js"
+import CommonMethods from "../utils/CommonMethods.js";
 import Config from "../config/Config.js";
 import redisClient from '../config/redisClient.js'
 
@@ -35,8 +37,8 @@ class UserService {
       throw new ApiError(409, "Phone already registered");
     }
 
-    if (password.length < 6){
-      throw new ApiError(400,"Password length must be > 6")
+    if (password.length < 6) {
+      throw new ApiError(400, "Password length must be > 6")
     }
 
     if (role === "driver") {
@@ -156,11 +158,11 @@ class UserService {
       throw new ApiError(401, "Invalid credentials");
     }
 
-  if (user.account_status === "inactive") {
-    // business rule: auto-reactivate on login
-    await UserRepository.reactivate(user.user_id);
-    user.account_status = "active"; // reflect change in memory
-  }
+    if (user.account_status === "inactive") {
+      // business rule: auto-reactivate on login
+      await UserRepository.reactivate(user.user_id);
+      user.account_status = "active"; // reflect change in memory
+    }
     const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
       throw new ApiError(401, "Invalid credentials");
@@ -184,8 +186,8 @@ class UserService {
     return { user, accessToken, cookieOptions };
   }
 
-  async forgotPassword(req) {  
-    const {email}  = req.body;
+  async forgotPassword(req) {
+    const { email } = req.body;
 
     if (!email) {
       throw new ApiError(400, "Email is required");
@@ -257,7 +259,7 @@ class UserService {
     }
 
     if (newPassword.length < 6) {
-      throw new ApiError(400,"Password length must be >= 6")
+      throw new ApiError(400, "Password length must be >= 6")
     }
 
     const sessionData = req.session?.forgotPassword;
@@ -327,7 +329,7 @@ class UserService {
   async updateProfile(req) {
     const { id, role } = req.user;
     const data = req.body;
-    const files = req.files;    
+    const files = req.files;
 
     const user = await UserRepository.findById(id);
     if (!user) {
@@ -404,7 +406,7 @@ class UserService {
 
     const updatedUser = await UserRepository.findById(id);
 
-    return {updatedUser};
+    return { updatedUser };
   }
 
   async logoutUser(res) {
@@ -419,8 +421,8 @@ class UserService {
   }
 
   async deactivateUser(req) {
-    
-    const { id } = req.user; // from auth middleware
+
+      const { id } = req.user; // from auth middleware
 
     const updatedUser = await UserRepository.updateIsActive(id, "inActive");
 
@@ -431,7 +433,47 @@ class UserService {
     return updatedUser;
   };
 
-  // Function to update (or insert) the user's location in Redis
+  async exportUserRides(userId, totalDays = 14) {
+
+    // 1. Calculate date range
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(endDate.getDate() - totalDays);
+
+    // 2. Split into 7-day chunks
+    const ranges = CommonMethods.splitDateRanges(startDate, endDate, 7);
+
+    // 3. Generate PDFs
+    const pdfFiles = [];
+    for (let i = 0; i < ranges.length; i++) {
+      const rides = await UserRepository.getUserRidesByDateRange(
+        userId,
+        ranges[i].start,
+        ranges[i].end
+      );
+
+      if (!rides || rides.length === 0) {
+        continue; // skip empty ranges
+      }
+
+      const filePath = `./user_${userId}_rides_${i + 1}.pdf`;
+      await generateRidesPDF(rides, filePath);
+      pdfFiles.push(filePath);
+    }
+
+    if (pdfFiles.length === 0) {
+      throw new ApiError(404, "No rides found for this user in the given range");
+    }
+
+    // 4. Create ZIP
+    const zipPath = `./user_${userId}_rides_export_${Date.now()}.zip`;
+    await CommonMethods.createZipFromFiles(pdfFiles, zipPath);
+
+    // 5. Return ZIP path
+    return zipPath;
+  }
+
+ // Function to update (or insert) the user's location in Redis
   async updateUserLocation(req) {
     // Get user ID from request
     const { id } = req.user; 
