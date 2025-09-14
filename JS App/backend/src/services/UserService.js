@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 import UserRepository from "../repositories/UserRepository.js";
 import HelperFunction from "../utils/HelperFunction.js";
 import ApiError from "../utils/ApiError.js";
-import ApiResponse from "../utils/ApiResponse.js";
 import Config from "../config/Config.js";
+import redisClient from '../config/redisClient.js'
 
 class UserService {
   // ----------------- REGISTER -----------------
@@ -184,7 +184,7 @@ class UserService {
     return { user, accessToken, cookieOptions };
   }
 
-async forgotPassword(req) {  
+  async forgotPassword(req) {  
     const {email}  = req.body;
 
     if (!email) {
@@ -277,7 +277,7 @@ async forgotPassword(req) {
     return true
   }
 
-async getProfile(req) {
+  async getProfile(req) {
     const { id, role } = req.user;
 
     const user = await UserRepository.findById(id);
@@ -420,19 +420,51 @@ async getProfile(req) {
 
   async deactivateUser(req) {
     
-  const { id } = req.user; // from auth middleware
+    const { id } = req.user; // from auth middleware
 
-  const updatedUser = await UserRepository.updateIsActive(id, "inActive");
+    const updatedUser = await UserRepository.updateIsActive(id, "inActive");
 
-  if (!updatedUser) {
-    throw new ApiError(404, "User not found or could not be deactivated");
+    if (!updatedUser) {
+      throw new ApiError(404, "User not found or could not be deactivated");
+    }
+
+    return updatedUser;
+  };
+
+  // Function to update (or insert) the user's location in Redis
+  async updateUserLocation(req) {
+    // Get user ID from request
+    const { id } = req.user; 
+    const data = req.body;
+
+    // Validate required fields
+    if (!id || !data) { 
+      throw new ApiError(400, "Missing required data"); 
+    }
+
+    // Extract longitude and latitude from request body
+    const longitude = data.longitude || null;
+    const latitude = data.latitude || null;
+
+    // Ensure both coordinates are provided
+    if (!longitude || !latitude) { 
+      throw new ApiError(400, "Missing the user coordinates"); 
+    }
+
+    // Store the user’s location in Redis using GEOADD
+    // If the user already exists, Redis will update their coordinates
+    const redisStoreRes = await redisClient.redis.geoadd(
+      "users:location", 
+      longitude, 
+      latitude, 
+      id?.toString()
+    );
+
+    // GEOADD returns:
+    // 1 -> new element added
+    // 0 -> existing element updated
+    return redisStoreRes;
   }
 
-  return updatedUser;
-};
-
-
-  }
-
-
+}
 export default new UserService();
