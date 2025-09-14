@@ -4,8 +4,7 @@ import UserRepository from "../repositories/UserRepository.js";
 import HelperFunction from "../utils/HelperFunction.js";
 import ApiError from "../utils/ApiError.js";
 import { generateRidesPDF } from "../utils/pdfGenerator.js"
-import { splitDateRanges } from "../utils/dateUtils.js"
-import { createZipFromFiles } from "../utils/zipUtils.js";
+import CommonMethods from "../utils/CommonMethods.js";
 import Config from "../config/Config.js";
 import redisClient from '../config/redisClient.js'
 
@@ -442,7 +441,7 @@ class UserService {
     startDate.setDate(endDate.getDate() - totalDays);
 
     // 2. Split into 7-day chunks
-    const ranges = splitDateRanges(startDate, endDate, 7);
+    const ranges = CommonMethods.splitDateRanges(startDate, endDate, 7);
 
     // 3. Generate PDFs
     const pdfFiles = [];
@@ -468,7 +467,7 @@ class UserService {
 
     // 4. Create ZIP
     const zipPath = `./user_${userId}_rides_export_${Date.now()}.zip`;
-    await createZipFromFiles(pdfFiles, zipPath);
+    await CommonMethods.createZipFromFiles(pdfFiles, zipPath);
 
     // 5. Return ZIP path
     return zipPath;
