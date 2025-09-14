@@ -54,8 +54,8 @@ class HelperFunction {
                 const regex = new RegExp(`#${key}#`, "g");
                 htmlContent = htmlContent.replace(regex, value);
             }
-        console.log(htmlContent);
-         // Mail options
+            console.log(htmlContent);
+            // Mail options
             const mailOptions = {
                 from: config.SMTP_USER,
                 to: Array.isArray(to) ? to.join(',') : to,
@@ -74,7 +74,7 @@ class HelperFunction {
         }
     }
 
-    
+
     /**
      * Send an HTTP request to the Django / or any other App
      * @param {string} method - HTTP method (get, post, put, delete)
@@ -82,9 +82,9 @@ class HelperFunction {
      * @param {object} [data={}] - Request body (ignored for GET/DELETE unless needed)
      * @param {object} [options={}] - Extra axios options (headers, params, etc.)
      */
-    async axiosSendRequest(method, url, data = {}, options = {}){
+    async axiosSendRequest(method, url, data = {}, options = {}) {
         try {
-            
+
             const requestConfig = {
                 method,
                 url,
@@ -109,7 +109,7 @@ class HelperFunction {
 
             // The Api is returning a custom errors (catched when the status ! = 200)
             if (error.response) {
-               throw { status: error.response.status, data: error.response.data };
+                throw { status: error.response.status, data: error.response.data };
             }
             // This means the request was sent, but the server didn’t respond at all.
             else if (error.request) {
@@ -234,22 +234,26 @@ class HelperFunction {
     }
 
 
-async uploadToCloudinary(file, folder) {
-    if (!file || !file.buffer) {
-      throw new Error("Invalid file object: buffer missing");
+    async uploadToCloudinary(file, folder) {
+        if (!file || !file.buffer) {
+            throw new Error("Invalid file object: buffer missing");
+        }
+
+        return new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                { folder: `RideApp/${folder}` },
+                (error, result) => {
+                    if (error) reject(error);
+                    else resolve(result.secure_url);
+                }
+            );
+            stream.end(file.buffer); // send buffer directly
+        });
     }
 
-    return new Promise((resolve, reject) => {
-      const stream = cloudinary.uploader.upload_stream(
-        { folder: `RideApp/${folder}` },
-        (error, result) => {
-          if (error) reject(error);
-          else resolve(result.secure_url);
-        }
-      );
-      stream.end(file.buffer); // send buffer directly
-    });
-} }
+
+    
+}
 
 // const HF = new HelperFunction()
 // let mailObj = {

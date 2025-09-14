@@ -1,6 +1,9 @@
+import path from "path";
+import fs from "fs";
 import { asyncHandler } from "../utils/asynHandler.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import UserService from "../services/UserService.js";
+
 
 class UserController {
   register = asyncHandler(async (req, res) => {
@@ -78,6 +81,19 @@ class UserController {
       .status(201)
       .json(new ApiResponse(200, result, "Location updated succesfully"));
   });
+
+UserRides= asyncHandler(async (req,res) => {
+    // totalDays can come from query params, default to 14
+  const totalDays = parseInt(req.query.totalDays) || 14;
+
+  // Call service to generate the ZIP and return its path
+  const zipPath = await UserService.exportUserRides(req.user.id, totalDays);
+
+  // Respond with a success message and the path (or URL if you host it)
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { zipPath }, "User rides exported successfully"));
+})
 
 }
 export default new UserController();
