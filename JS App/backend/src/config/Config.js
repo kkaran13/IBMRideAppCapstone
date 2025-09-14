@@ -2,11 +2,10 @@ import dotenv from 'dotenv';
 import path from "path";
 import { fileURLToPath } from "url";
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// dotenv.config({ path: path.join(__dirname, "../../.env") });
-dotenv.config();console.log(__dirname);
+dotenv.config({ path: path.join(__dirname, "../../../.env") });
 class Config{
 
     constructor(){
@@ -31,14 +30,14 @@ class Config{
         this.SMTP_USER = process.env.SMTP_USER;
         this.SMTP_PASS = process.env.SMTP_PASS;
 
-        this.SESSION_SECRET = process.env.SESSION_SECRET
+        this.SESSION_SECRET = process.env.SESSION_SECRET;
 
-        // this.DJANGO_API_URL = process.env.DJANGO_API_URL;
+        this.DJANGO_API_URL = process.env.DJANGO_API_URL;
 
-        // this.REDIS_HOST = process.env.REDIS_HOST;
-        // this.REDIS_PORT = process.env.REDIS_PORT;
-        // this.REDIS_PASSWORD = process.env.REDIS_PASSWORD;
-        // this.REDIS_DB = process.env.REDIS_DB;
+        this.REDIS_HOST = process.env.REDIS_HOST;
+        this.REDIS_PORT = process.env.REDIS_PORT;
+        this.REDIS_PASSWORD = process.env.REDIS_PASSWORD;
+        this.REDIS_DB = process.env.REDIS_DB;
 
 
         this.notificationBody = {

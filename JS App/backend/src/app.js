@@ -26,7 +26,7 @@ import driverRoute from './routes/DriverRoutes.js'
 // import rideRoute from "./routes/RideRoutes.js"
 
 // Python App APIs
-// import anaylticsRouter from "./routes/AnalyticsRoute.js";
+import anaylticsRouter from "./routes/AnalyticsRoute.js";
 // import walletRoter from "./routes/WalletRoute.js";
 // import paymentRouter from "./routes/PaymentRoute.js";
 
@@ -37,7 +37,7 @@ app.use("/driver", driverRoute);  // Driver Routes
 // app.use("/api/v1/ride", rideRoute);
 
 // Python App APIs
-// app.use('/analysis', anaylticsRouter);
+app.use('/analysis', anaylticsRouter);
 // app.use('/wallet', walletRoter);
 // app.use('/payment', paymentRouter);
 
