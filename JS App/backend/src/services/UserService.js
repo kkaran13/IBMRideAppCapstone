@@ -35,7 +35,7 @@ class UserService {
       throw new ApiError(409, "Phone already registered");
     }
 
-    if (length(password) < 6){
+    if (password.length < 6){
       throw new ApiError(400,"Password length must be > 6")
     }
 
@@ -142,7 +142,7 @@ class UserService {
     // Clear OTP from session
     delete req.session.pendingUser;
 
-    return new ApiResponse(200, null, "Otp verified.");
+    return true
   }
 
   // ----------------- LOGIN -----------------
@@ -156,6 +156,11 @@ class UserService {
       throw new ApiError(401, "Invalid credentials");
     }
 
+  if (user.account_status === "inactive") {
+    // business rule: auto-reactivate on login
+    await UserRepository.reactivate(user.user_id);
+    user.account_status = "active"; // reflect change in memory
+  }
     const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
       throw new ApiError(401, "Invalid credentials");
@@ -215,7 +220,7 @@ async forgotPassword(req) {
 
     await HelperFunction.sendMail(mailObj);
 
-    return new ApiResponse(200, null, "OTP sent to your email");
+    return true
   }
 
   // ----------------- VERIFY OTP -----------------
@@ -240,7 +245,7 @@ async forgotPassword(req) {
     }
 
     // OTP verified
-    return new ApiResponse(200, null, "OTP verified successfully");
+    return true
   }
 
   // ----------------- RESET PASSWORD -----------------
@@ -269,7 +274,7 @@ async forgotPassword(req) {
     // Clear session OTP
     delete req.session.forgotPassword;
 
-    return new ApiResponse(200, null, "Password updated successfully");
+    return true
   }
 
 async getProfile(req) {
@@ -316,7 +321,7 @@ async getProfile(req) {
       };
     }
 
-    return new ApiResponse(200, profile, "Profile fetched successfully");
+    return profile;
   }
 
   async updateProfile(req) {
@@ -410,12 +415,24 @@ async getProfile(req) {
       sameSite: "strict",
     });
 
-    return new ApiResponse(200, null, "Logged out successfully");
+    return true;
   }
 
-  async deactivateUser(res) {
+  async deactivateUser(req) {
     
+  const { id } = req.user; // from auth middleware
+
+  const updatedUser = await UserRepository.updateIsActive(id, "inActive");
+
+  if (!updatedUser) {
+    throw new ApiError(404, "User not found or could not be deactivated");
   }
-}
+
+  return updatedUser;
+};
+
+
+  }
+
 
 export default new UserService();
