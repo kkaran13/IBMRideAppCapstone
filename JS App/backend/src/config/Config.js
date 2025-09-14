@@ -42,13 +42,71 @@ class Config{
 
 
         this.notificationBody = {
+            // Rider Notifications
+            rideRequested: {
+                title: "Ride Requested",
+                message: "Your ride request has been placed successfully.",
+                appName: "RideApp",
+                icon: "ride_request_icon"
+            },
+            rideAcceptedToRider: {
+                title: "Driver Assigned",
+                message: "Your driver {{driverName}} is on the way to pick you up.",
+                appName: "RideApp",
+                icon: "driver_assigned_icon"
+            },
+            rideStartedToRider: {
+                title: "Ride Started",
+                message: "Your ride has started. Sit back and enjoy the trip!",
+                appName: "RideApp",
+                icon: "ride_started_icon"
+            },
+            rideCompletedToRider: {
+                title: "Ride Completed",
+                message: "You have reached your destination. Please rate your driver.",
+                appName: "RideApp",
+                icon: "ride_completed_icon"
+            },
+            rideCancelledToRider: {
+                title: "Ride Cancelled",
+                message: "Your ride has been cancelled.",
+                appName: "RideApp",
+                icon: "ride_cancelled_icon"
+            },
 
-            'rideacceptedtorider' : {
-                title : "",
-                message : "",
+            // Driver Notifications
+            // newRideRequestToDriver: {
+            //     title: "New Ride Request",
+            //     message: "A rider {{riderName}} near you is requesting a ride.",
+            //     appName: "RideApp",
+            //     icon: "new_request_icon"
+            // },
+            rideAcceptedToDriver: {
+                title: "Ride Accepted",
+                message: "You have accepted the ride request.",
+                appName: "RideApp",
+                icon: "ride_accepted_icon"
+            },
+            rideStartedToDriver: {
+                title: "Ride Started",
+                message: "You have started the ride.",
+                appName: "RideApp",
+                icon: "ride_started_icon"
+            },
+            rideCompletedToDriver: {
+                title: "Ride Completed",
+                message: "You have completed the ride successfully.",
+                appName: "RideApp",
+                icon: "ride_completed_icon"
+            },
+            rideCancelledToDriver: {
+                title: "Ride Cancelled",
+                message: "The rider has cancelled the ride.",
+                appName: "RideApp",
+                icon: "ride_cancelled_icon"
             }
-            
-        }
+        };
+
     }
 }
 export default new Config();
