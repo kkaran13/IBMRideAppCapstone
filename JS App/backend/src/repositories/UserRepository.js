@@ -30,7 +30,7 @@ class UserRepository {
     );
   };
 
-    async updateById(id, updateFields) {
+  async updateById(id, updateFields) {
     const [affectedRows] = await User.update(updateFields, {
       where: { user_id: id },
     });
@@ -42,6 +42,21 @@ class UserRepository {
     const user = await this.findById(user_id);
     if (!user) return null;
     return user.destroy(); // soft delete if paranoid is true
+  }
+
+  async updateIsActive(user_id, account_status) {
+    const [affectedRows] = await User.update(
+      { account_status },
+      { where: { user_id } }
+    );
+    if (affectedRows === 0) return null;
+    return await User.findOne({ where: { user_id } });
+  }
+  async reactivate(user_id) {
+    return await User.update(
+      { account_status: "active" },
+      { where: { user_id } }
+    );
   }
 
 }

@@ -10,7 +10,7 @@ class UserController {
 
   verifyOtp = asyncHandler(async (req, res) => {
     const result = await UserService.verifyEmailOtp(req)
-    return res.status(201).json(new ApiResponse(200, result, "User created successfully"))
+    return res.status(201).json(new ApiResponse(200, result, "Email Verfied and User created successfully"))
   })
 
   login = asyncHandler(async (req, res) => {
@@ -29,17 +29,17 @@ class UserController {
 
     return res
       .status(result.statusCode || 200)
-      .json(new ApiResponse(result.statusCode || 200, null, result.message));
+      .json(new ApiResponse(200, null, "Otp Sent to your email"));
   });
 
   verifyForgotPasswordOtp = asyncHandler(async (req, res) => {
     const result = await UserService.verifyForgotPasswordOtp(req);
-    return res.status(result.statusCode || 200).json(result);
+    return res.status(200).json(200,null,"Otp verified successfully");
   });
 
   resetPassword = asyncHandler(async (req, res) => {
     const result = await UserService.resetPassword(req);
-    return res.status(result.statusCode || 200).json(result);
+    return res.status(200).json(200,null,"Password reset successfully");
   });
 
   logout = asyncHandler(async (req, res) => {
@@ -55,14 +55,18 @@ class UserController {
   }) 
 
   profile = asyncHandler(async (req,res) => {
-    const result = await UserService.getProfile(req)
+    const result = await UserService.getProfile(req)    
     return res
     .status(200)
     .json(new ApiResponse(200, result, "Profile fetched.."));
   })
+
+deactivateUser = asyncHandler(async (req, res) => {
+  const result = await UserService.deactivateUser(req);
+  return res
+    .status(200)
+    .json(new ApiResponse(200, result, "User deactivated successfully"));
+});
+
 }
-  // deactivateUser = asyncHandler(async(req,res) => {
-
-  // });
-
 export default new UserController();

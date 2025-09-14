@@ -18,7 +18,7 @@ router.post("/reset-password", userController.resetPassword);
 router.get("/profile", authenticateJWT ,userController.profile);
 router.put("/update", authenticateJWT,uploadMultiple, userController.updateUser);
 router.post("/logout", authenticateJWT ,userController.logout);
-// router.delete("/deactivate", authenticateJWT, userController.deactivateUser);
+router.patch("/deactivate", authenticateJWT, userController.deactivateUser);
 
 
 export default router;
