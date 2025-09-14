@@ -8,8 +8,10 @@ import ApiError from "../utils/ApiError.js";
 
 class DriverService {
   // Accept ride
-  async acceptRide(driverId, rideId, vehicleId) {
+  async acceptRide(driverId, {rideId, vehicleId}) {
     try {
+      if (!rideId || !vehicleId) throw new ApiError(400, "rideId and vehicleId are required");
+
       const ride = await RideRepository.getRideById(rideId);
       if (!ride) throw new ApiError(404, "Ride not found");
       
@@ -40,7 +42,7 @@ class DriverService {
       if (vehicleActiveRide) throw new ApiError(409, "Vehicle is already assigned to another ride");
 
 
-      return await RideRepository.safeUpdateRideFields(ride.ride_id, {
+     const acceptedride= await RideRepository.safeUpdateRideFields(ride.ride_id, {
             driver_id: driverId,
             vehicle_id: vehicleId,
             ride_status: "accepted",
@@ -48,39 +50,39 @@ class DriverService {
             });
 
       // Notifications
-    //   try {
-    //     const tokens = await deviceTokenService.getUserTokens(ride.rider_id);
-    //     if (tokens?.length) {
-    //       await HF.sendFirebasePushNotification(
-    //         { title: "Ride Accepted", body: "A driver has accepted your ride." },
-    //         tokens
-    //       );
-    //     }
-    //   } catch (err) {
-    //     console.warn("Push notification failed after acceptRide:", err.message || err);
-    //   }
+      try {
+        const tokens = await deviceTokenService.getUserTokens(ride.rider_id);
+        if (tokens?.length) {
+          await HF.sendFirebasePushNotification(
+            { title: "Ride Accepted", body: "A driver has accepted your ride." },
+            tokens
+          );
+        }
+      } catch (err) {
+        console.warn("Push notification failed after acceptRide:", err.message || err);
+      }
 
       // Email
-    //   try {
-    //     const rider = ride.rider_email ? null : await UserRepository.findById(ride.rider_id);
-    //     const riderEmail = ride.rider_email || rider?.email;
-    //     if (riderEmail) {
-    //       await HF.sendMail({
-    //         to: riderEmail,
-    //         subject: "Your ride has been accepted",
-    //         htmlTemplate: "ride-accepted.html",
-    //         templateData: {
-    //           rideId: ride.ride_id,
-    //           driverName: driver.firstname ? `${driver.firstname} ${driver.lastname || ""}`.trim() : "Your driver",
-    //           vehicleReg: vehicle.registration_number || "",
-    //         },
-    //       });
-    //     }
-    //   } catch (err) {
-    //     console.warn("Email sending failed after acceptRide:", err.message || err);
-    //   }
+      try {
+        const rider = ride.rider_email ? null : await UserRepository.findById(ride.rider_id);
+        const riderEmail = ride.rider_email || rider?.email;
+        if (riderEmail) {
+          await HF.sendMail({
+            to: riderEmail,
+            subject: "Your ride has been accepted",
+            htmlTemplate: "ride-accepted.html",
+            templateData: {
+              rideId: ride.ride_id,
+              driverName: driver.firstname ? `${driver.firstname} ${driver.lastname || ""}`.trim() : "Your driver",
+              vehicleReg: vehicle.registration_number || "",
+            },
+          });
+        }
+      } catch (err) {
+        console.warn("Email sending failed after acceptRide:", err.message || err);
+      }
 
-     
+    return acceptedride;
     } catch (err) {
       throw err;
     }
@@ -89,6 +91,8 @@ class DriverService {
   // Start ride (verify OTP)
   async startRide(driverId, rideId, otp) {
     try {
+      if (!rideId || !otp) throw new ApiError(400, "rideId and otp are required");
+
       const ride = await RideRepository.getRideById(rideId);
       if (!ride) throw new ApiError(404, "Ride not found");
       if (ride.driver_id !== driverId) throw new ApiError(403, "Not your ride to start");
@@ -98,24 +102,24 @@ class DriverService {
       if (ride.otp !== otp) throw new ApiError(403, "Invalid OTP");
 
 
-      return await RideRepository.safeUpdateRideFields(ride.ride_id, {
+      const startedride= await RideRepository.safeUpdateRideFields(ride.ride_id, {
             ride_status: "started",
             started_at: new Date(),
             });
 
-    //   try {
-    //     const tokens = await deviceTokenService.getUserTokens(ride.rider_id);
-    //     if (tokens?.length) {
-    //       await HF.sendFirebasePushNotification(
-    //         { title: "Ride Started", body: "Your trip has started." },
-    //         tokens
-    //       );
-    //     }
-    //   } catch (err) {
-    //     console.warn("Push notification failed after startRide:", err.message || err);
-    //   }
+      try {
+        const tokens = await deviceTokenService.getUserTokens(ride.rider_id);
+        if (tokens?.length) {
+          await HF.sendFirebasePushNotification(
+            { title: "Ride Started", body: "Your trip has started." },
+            tokens
+          );
+        }
+      } catch (err) {
+        console.warn("Push notification failed after startRide:", err.message || err);
+      }
 
-      return ride;
+      return startedride;
     } catch (err) {
       throw err;
     }
@@ -124,46 +128,52 @@ class DriverService {
   // Complete ride
   async completeRide(driverId, rideId) {
     try {
+      if (!rideId) throw new ApiError(400, "rideId is required");
+
       const ride = await RideRepository.getRideById(rideId);
       if (!ride) throw new ApiError(404, "Ride not found");
       if (ride.driver_id !== driverId) throw new ApiError(403, "Not your ride to complete");
       if (ride.ride_status !== "started") throw new ApiError(409, "Ride not in progress");
 
-      return await RideRepository.safeUpdateRideFields(ride.ride_id, {
+      const completedride= await RideRepository.safeUpdateRideFields(ride.ride_id, {
             ride_status: "completed",
             completed_at: new Date(),
             });
 
-    //   try {
-    //     const tokens = await deviceTokenService.getUserTokens(ride.rider_id);
-    //     if (tokens?.length) {
-    //       await HF.sendFirebasePushNotification(
-    //         { title: "Ride Completed", body: "Your trip has completed." },
-    //         tokens
-    //       );
-    //     }
-    //   } catch (err) {
-    //     console.warn("Push notification failed after completeRide:", err.message || err);
-    //   }
+      try {
+        const tokens = await deviceTokenService.getUserTokens(ride.rider_id);
+        if (tokens?.length) {
+          await HF.sendFirebasePushNotification(
+            { title: "Ride Completed", body: "Your trip has completed." },
+            tokens
+          );
+        }
+      } catch (err) {
+        console.warn("Push notification failed after completeRide:", err.message || err);
+      }
 
 
-      //Trigger Payments
+      //Trigger Payments(python one)
 
-    //   try {
-    //     const rider = ride.rider_email ? null : await UserRepository.findById(ride.rider_id);
-    //     const riderEmail = ride.rider_email || rider?.email;
-    //     if (riderEmail) {
-    //       await HF.sendMail({
-    //         to: riderEmail,
-    //         subject: "Your ride is completed",
-    //         htmlTemplate: "ride-completed.html",
-    //         templateData: { rideId: ride.ride_id, fare: ride.fare || "0.00" },
-    //       });
-    //     }
-    //   } catch (err) {
-    //     console.warn("Email sending failed after completeRide:", err.message || err);
-    //   }
+      //email
 
+      try {
+        const rider = ride.rider_email ? null : await UserRepository.findById(ride.rider_id);
+        const riderEmail = ride.rider_email || rider?.email;
+        if (riderEmail) {
+          await HF.sendMail({
+            to: riderEmail,
+            subject: "Your ride is completed",
+            htmlTemplate: "ride-completed.html",
+            templateData: { rideId: ride.ride_id, fare: ride.fare || "0.00" },
+          });
+        }
+      } catch (err) {
+        console.warn("Email sending failed after completeRide:", err.message || err);
+      }
+
+
+    return completedride;
     } catch (err) {
       throw err;
     }
@@ -172,6 +182,8 @@ class DriverService {
   // Cancel ride
   async cancelRide(driverId, rideId, reason = "Cancelled by driver") {
     try {
+      if (!rideId) throw new ApiError(400, "rideId is required");
+
       const ride = await RideRepository.getRideById(rideId);
       if (!ride) throw new ApiError(404, "Ride not found");
       if (ride.driver_id && ride.driver_id !== driverId) {
@@ -182,62 +194,58 @@ class DriverService {
             }
 
 
-      return await RideRepository.safeUpdateRideFields(ride.ride_id, {
+      const cancelledride= await RideRepository.safeUpdateRideFields(ride.ride_id, {
             ride_status: "cancelled",
             cancellation_reason: reason,
             cancelled_at: new Date(),
             });
 
-    //   try {
-    //     const tokens = await deviceTokenService.getUserTokens(ride.rider_id);
-    //     if (tokens?.length) {
-    //       await HF.sendFirebasePushNotification(
-    //         { title: "Ride Cancelled", body: "Your driver cancelled the ride." },
-    //         tokens
-    //       );
-    //     }
-    //   } catch (err) {
-    //     console.warn("Push notification failed after cancelRide:", err.message || err);
-    //   }
+      try {
+        const tokens = await deviceTokenService.getUserTokens(ride.rider_id);
+        if (tokens?.length) {
+          await HF.sendFirebasePushNotification(
+            { title: "Ride Cancelled", body: "Your driver cancelled the ride." },
+            tokens
+          );
+        }
+      } catch (err) {
+        console.warn("Push notification failed after cancelRide:", err.message || err);
+      }
 
-    //   try {
-    //     const rider = ride.rider_email ? null : await UserRepository.findById(ride.rider_id);
-    //     const riderEmail = ride.rider_email || rider?.email;
-    //     if (riderEmail) {
-    //       await HF.sendMail({
-    //         to: riderEmail,
-    //         subject: "Your ride was cancelled",
-    //         htmlTemplate: "ride-cancelled.html",
-    //         templateData: { rideId: ride.ride_id, reason },
-    //       });
-    //     }
-    //   } catch (err) {
-    //     console.warn("Email sending failed after cancelRide:", err.message || err);
-    //   }
+      try {
+        const rider = ride.rider_email ? null : await UserRepository.findById(ride.rider_id);
+        const riderEmail = ride.rider_email || rider?.email;
+        if (riderEmail) {
+          await HF.sendMail({
+            to: riderEmail,
+            subject: "Your ride was cancelled",
+            htmlTemplate: "ride-cancelled.html",
+            templateData: { rideId: ride.ride_id, reason },
+          });
+        }
+      } catch (err) {
+        console.warn("Email sending failed after cancelRide:", err.message || err);
+      }
 
-     
+    return cancelledride;
     } catch (err) {
       throw err;
     }
   }
 
-  // View available rides
-  async viewNewRides(limit = 20) {
-    return await RideRepository.getAvailableRides(limit);
+  async viewNewRides({ limit = 20 }) {
+    return await RideRepository.getAvailableRides(parseInt(limit));
   }
 
-  // Driver's ride history
-  async rideHistory(driverId, filters = {}) {
-  const { page = 1, limit = 10, status, startDate, endDate } = filters;
-  return await RideRepository.getRidesByDriver(driverId, {
-    page,
-    limit,
-    status,
-    startDate,
-    endDate,
-  });
-}
-
+  async rideHistory(driverId, { page = 1, limit = 10, status, startDate, endDate }) {
+    return await RideRepository.getRidesByDriver(driverId, {
+      page: parseInt(page),
+      limit: parseInt(limit),
+      status,
+      startDate,
+      endDate,
+    });
+  }
 }
 
 export default new DriverService();
