@@ -82,18 +82,18 @@ class UserController {
       .json(new ApiResponse(200, result, "Location updated succesfully"));
   });
 
-UserRides= asyncHandler(async (req,res) => {
-    // totalDays can come from query params, default to 14
-  const totalDays = parseInt(req.query.totalDays) || 14;
+  userRides = asyncHandler(async (req,res) => {
+      // totalDays can come from query params, default to 14
+    const totalDays = parseInt(req.query.totalDays) || 14;
 
-  // Call service to generate the ZIP and return its path
-  const zipPath = await UserService.exportUserRides(req.user.id, totalDays);
+    // Call service to generate the ZIP and return its path
+    const zipPath = await UserService.exportUserRides(req.user.id, totalDays);
 
-  // Respond with a success message and the path (or URL if you host it)
-  return res
-    .status(200)
-    .json(new ApiResponse(200, { zipPath }, "User rides exported successfully"));
-})
+    // Respond with a success message and the path (or URL if you host it)
+    return res
+      .status(200)
+      .json(new ApiResponse(200, { zipPath }, "User rides exported successfully"));
+  })
 
 }
 export default new UserController();

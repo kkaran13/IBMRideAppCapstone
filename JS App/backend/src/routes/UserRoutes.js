@@ -19,6 +19,7 @@ router.get("/profile", authenticateJWT ,userController.profile);
 router.put("/update", authenticateJWT,uploadMultiple, userController.updateUser);
 router.post("/logout", authenticateJWT ,userController.logout);
 router.patch("/deactivate", authenticateJWT, userController.deactivateUser);
-router.get("/export-rides", authenticateJWT, UserController.UserRides);router.patch("/update-location", authenticateJWT, userController.udpateUserLocation);
+router.get("/export-rides", authenticateJWT, UserController.userRides);
+router.post("/update-location", authenticateJWT, userController.udpateUserLocation);
 
 export default router;
