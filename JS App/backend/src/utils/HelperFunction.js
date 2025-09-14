@@ -125,53 +125,112 @@ class HelperFunction {
     /**
      * Sends a push notification via Firebase Cloud Messaging (FCM).
      *
-     * - Builds a multicast message with `notification` payload and target device tokens.
-     * - Uses Firebase Admin SDK (`firebaseadmin.messaging()`) to send the notification.
+     * - Fetches the template by name from Config.notificationBody.
+     * - Replaces placeholders in title/body using the provided `data`.
+     * - Uses the same `data` object as `extraData` for app-side handling.
+     * - Sends a multicast message to provided device tokens.
      *
      * @async
      * @function sendFirebasePushNotification
-     * @param {Object} messageObj - Notification payload (e.g., { title: "New Ride", body: "Your driver has arrived!" })
-     * @param {string[]} deviceTokens - Array of device FCM tokens to send the notification to
-     * 
+     * @param {string} templateName - Notification template key (e.g. "rideAcceptedToRider")
+     * @param {Object} data - Placeholder values and extra data (e.g. { driverName: "Amit", rideId: "123" })
+     * @param {string[]} deviceTokens - Array of FCM tokens to send notification to
+     *
      * @returns {Promise<Object>} Firebase response with success & failure counts for each token
      *
      * @throws {Error} If sending the notification fails
      *
      * @example
      * await HF.sendFirebasePushNotification(
-     *   { title: "Ride Update", body: "Your driver is arriving soon" },
+     *   "rideAcceptedToRider",
+     *   { driverName: "Amit", rideId: "123" },
      *   ["token1", "token2"]
      * );
-    */
-    async sendFirebasePushNotification(messageObj, deviceTokens) {
+     */
+    async sendFirebasePushNotification(templateName, data, deviceTokens) {
         try {
             if (!Array.isArray(deviceTokens) || deviceTokens.length === 0) {
                 throw new Error("No device tokens provided for push notification");
             }
 
+            // Build notification payload (title/message placeholders replaced with `data`)
+            const payload = getNotificationTemplate(templateName, data);
+
             const message = {
-                notification: { ...messageObj },
+                notification: payload.notification,
+                data: Object.entries(data).reduce((acc, [k, v]) => {
+                    acc[k] = String(v); // FCM `data` must be stringified
+                    return acc;
+                }, {}),
                 tokens: deviceTokens,
             };
 
-            const response = await firebaseadmin.messaging().sendEachForMulticast(message);
+            const response = await admin.messaging().sendEachForMulticast(message);
 
             console.log(`Push notification sent: ${response.successCount} success, ${response.failureCount} failures`);
 
-            // log failed tokens for cleanup
+            // Collect failed tokens (so caller can remove them from DB if needed)
+            const failedTokens = [];
             if (response.failureCount > 0) {
                 response.responses.forEach((res, idx) => {
                     if (!res.success) {
                         console.error(`Failed token[${idx}]: ${deviceTokens[idx]} | Error:`, res.error?.message);
+                        failedTokens.push(deviceTokens[idx]);
                     }
                 });
             }
 
-            return response;
+            return { ...response, failedTokens };
         } catch (error) {
             console.error("Error sending push notification:", error.message);
             throw error;
         }
+    }
+
+    /**
+     * Fetches a notification template by name and replaces placeholders
+     * inside title/message with values from `data`.
+     *
+     * Placeholders follow the format {{key}} and are replaced by
+     * corresponding values from `data`.
+     *
+     * @param {string} templateName - The template key (e.g., "rideAcceptedToRider")
+     * @param {Object} data - Data object with placeholder values
+     *
+     * @returns {Object} - Object containing { notification: { title, body }, app, icon }
+     *
+     * @example
+     * getNotificationTemplate("rideAcceptedToRider", { driverName: "Amit", rideId: "123" });
+     * // =>
+     * {
+     *   notification: {
+     *     title: "Ride Accepted",
+     *     body: "Your driver Amit has accepted ride #123"
+     *   },
+     *   app: "RideApp",
+     *   icon: "ride_icon.png"
+     * }
+     */
+    getNotificationTemplate(templateName, data = {}) {
+        const template = Config.notificationBody[templateName];
+
+        if (!template) {
+            throw new Error(`Notification template "${templateName}" not found`);
+        }
+
+        // Replace placeholders in title/message
+        const replacePlaceholders = (text = "", values = {}) => {
+            return text.replace(/\{\{(\w+)\}\}/g, (_, key) => values[key] ?? "");
+        };
+
+        return {
+            notification: {
+                title: replacePlaceholders(template.title, data),
+                body: replacePlaceholders(template.message, data),
+            },
+            app: template.app || "RideApp",
+            icon: template.icon || "default_icon.png",
+        };
     }
 
 

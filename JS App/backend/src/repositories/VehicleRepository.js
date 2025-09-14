@@ -1,4 +1,5 @@
 import Vehicle from "../models/Vehicle.js";
+import { Op } from "sequelize";
 
 class VehicleRepository {
   async createVehicle(data) {
@@ -32,6 +33,23 @@ class VehicleRepository {
       is_deleted: true,
     });
   }
+
+   async updateAllByOwnerExcept(ownerId, excludeVehicleId, updateFields) {
+    return await Vehicle.update(updateFields, {
+      where: {
+        owner_id: ownerId,
+        vehicle_id: { [Op.ne]: excludeVehicleId }
+      }
+    });
+  }
+
+  async findByOwnerAndId(ownerId, vehicleId, options = {}) {
+  return await Vehicle.findOne({
+    where: { owner_id: ownerId, vehicle_id: vehicleId },
+    ...options,
+  });
+}
+
 
   // Reactivate (admin)
   // async reactivateVehicle(id) {

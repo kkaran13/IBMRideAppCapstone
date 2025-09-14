@@ -6,6 +6,7 @@ import UserRepository from "../repositories/UserRepository.js";
 
 class VehicleController {
   registerVehicle = asyncHandler(async (req, res) => {
+   
     if (req.user.role !== "driver") {
       throw new ApiError(403, "Only drivers can register vehicles");
     }

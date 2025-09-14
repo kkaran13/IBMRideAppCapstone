@@ -5,7 +5,7 @@ import User from "./User.js";
 const Vehicle = sequelize.define(
   "Vehicle",
   {
-    uuid: {
+    vehicle_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,

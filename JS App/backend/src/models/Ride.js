@@ -6,7 +6,7 @@ import Vehicle from "./Vehicle.js";
 const Ride = sequelize.define(
     "Ride",
     {
-        uuid: {
+        ride_id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
@@ -17,7 +17,7 @@ const Ride = sequelize.define(
             allowNull: false,
             references: {
                 model: "users",
-                key: "uuid",
+                key: "user_id",
             },
             onDelete: "RESTRICT",
         },
@@ -26,7 +26,7 @@ const Ride = sequelize.define(
             allowNull: true,
             references: {
                 model: "users",
-                key: "uuid",
+                key: "user_id",
             },
             onDelete: "RESTRICT",
         },
@@ -35,7 +35,7 @@ const Ride = sequelize.define(
             allowNull: true,
             references: {
                 model: "vehicles",
-                key: "uuid",
+                key: "vehicle_id",
             },
             onDelete: "RESTRICT",
         },

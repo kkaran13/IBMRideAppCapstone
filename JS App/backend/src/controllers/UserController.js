@@ -61,12 +61,23 @@ class UserController {
     .json(new ApiResponse(200, result, "Profile fetched.."));
   })
 
-deactivateUser = asyncHandler(async (req, res) => {
-  const result = await UserService.deactivateUser(req);
-  return res
-    .status(200)
-    .json(new ApiResponse(200, result, "User deactivated successfully"));
-});
+  deactivateUser = asyncHandler(async (req, res) => {
+    const result = await UserService.deactivateUser(req);
+    return res
+      .status(200)
+      .json(new ApiResponse(200, result, "User deactivated successfully"));
+  });
+
+  // Controller to handle user location update
+  udpateUserLocation = asyncHandler(async (req, res) => {
+    // Call service function to update location in Redis
+    const result = await UserService.updateUserLocation(req);
+
+    // Send success response back to client
+    return res
+      .status(201)
+      .json(new ApiResponse(200, result, "Location updated succesfully"));
+  });
 
 }
 export default new UserController();
