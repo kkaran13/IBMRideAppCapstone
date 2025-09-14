@@ -1,4 +1,4 @@
-// backend/src/controllers/DriverController.js
+
 import DriverService from "../services/DriverService.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import ApiError from "../utils/ApiError.js";
@@ -73,16 +73,23 @@ class DriverController {
 
   async rideHistory(req, res, next) {
     try {
-      const driverId = req.user.user_id;
-      const { page = 1, limit = 10, status } = req.query;
+        const driverId = req.user.user_id;
+        const { page = 1, limit = 10, status, startDate, endDate } = req.query;
 
-      const rides = await DriverService.rideHistory(driverId, { page, limit, status });
+        const rides = await DriverService.rideHistory(driverId, {
+        page: parseInt(page),
+        limit: parseInt(limit),
+        status,
+        startDate,
+        endDate,
+        });
 
-      return res.json(new ApiResponse(200, rides, "Ride history fetched"));
+        return res.json(new ApiResponse(200, rides, "Ride history fetched"));
     } catch (err) {
-      next(err);
+        next(err);
     }
-  }
+    }
+
 }
 
 export default new DriverController();
