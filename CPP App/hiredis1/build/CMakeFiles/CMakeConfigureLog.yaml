@@ -1,0 +1,2115 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineSystem.cmake:212 (message)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    message: |
+      The system is: Windows - 10.0.26100 - AMD64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeMinGWFindMake.cmake:5 (find_program)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_MAKE_PROGRAM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "mingw32-make.exe"
+    candidate_directories:
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/msys64/mingw64/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+      - "/REGISTRY-NOTFOUND/bin/"
+      - "c:/MinGW/bin/"
+      - "/MinGW/bin/"
+      - "/REGISTRY-NOTFOUND/MinGW/bin/"
+    searched_directories:
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/mingw32-make.exe.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/mingw32-make.exe"
+      - "C:/Windows/System32/mingw32-make.exe.com"
+      - "C:/Windows/System32/mingw32-make.exe"
+      - "C:/Windows/mingw32-make.exe.com"
+      - "C:/Windows/mingw32-make.exe"
+      - "C:/Windows/System32/wbem/mingw32-make.exe.com"
+      - "C:/Windows/System32/wbem/mingw32-make.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/mingw32-make.exe.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/mingw32-make.exe"
+      - "C:/Windows/System32/OpenSSH/mingw32-make.exe.com"
+      - "C:/Windows/System32/OpenSSH/mingw32-make.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/mingw32-make.exe.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/mingw32-make.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/mingw32-make.exe.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/mingw32-make.exe"
+      - "C:/msys64/mingw64/bin/mingw32-make.exe.com"
+    found: "C:/msys64/mingw64/bin/mingw32-make.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCompiler.cmake:63 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:64 (_cmake_find_compiler)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER"
+    description: "C compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: false
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "cc"
+      - "gcc"
+      - "cl"
+      - "bcc"
+      - "xlc"
+      - "icx"
+      - "clang"
+    candidate_directories:
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/msys64/mingw64/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+    searched_directories:
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/cc.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/cc.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/cc"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/cl.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/cl.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/cl"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/bcc.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/bcc.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/bcc"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/xlc.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/xlc.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/xlc"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/icx.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/icx.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/icx"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/clang.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/clang.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/clang"
+      - "C:/Windows/System32/cc.com"
+      - "C:/Windows/System32/cc.exe"
+      - "C:/Windows/System32/cc"
+      - "C:/Windows/System32/gcc.com"
+      - "C:/Windows/System32/gcc.exe"
+      - "C:/Windows/System32/gcc"
+      - "C:/Windows/System32/cl.com"
+      - "C:/Windows/System32/cl.exe"
+      - "C:/Windows/System32/cl"
+      - "C:/Windows/System32/bcc.com"
+      - "C:/Windows/System32/bcc.exe"
+      - "C:/Windows/System32/bcc"
+      - "C:/Windows/System32/xlc.com"
+      - "C:/Windows/System32/xlc.exe"
+      - "C:/Windows/System32/xlc"
+      - "C:/Windows/System32/icx.com"
+      - "C:/Windows/System32/icx.exe"
+      - "C:/Windows/System32/icx"
+      - "C:/Windows/System32/clang.com"
+      - "C:/Windows/System32/clang.exe"
+      - "C:/Windows/System32/clang"
+      - "C:/Windows/cc.com"
+      - "C:/Windows/cc.exe"
+      - "C:/Windows/cc"
+      - "C:/Windows/gcc.com"
+      - "C:/Windows/gcc.exe"
+      - "C:/Windows/gcc"
+      - "C:/Windows/cl.com"
+      - "C:/Windows/cl.exe"
+      - "C:/Windows/cl"
+      - "C:/Windows/bcc.com"
+      - "C:/Windows/bcc.exe"
+      - "C:/Windows/bcc"
+      - "C:/Windows/xlc.com"
+      - "C:/Windows/xlc.exe"
+      - "C:/Windows/xlc"
+      - "C:/Windows/icx.com"
+      - "C:/Windows/icx.exe"
+      - "C:/Windows/icx"
+      - "C:/Windows/clang.com"
+      - "C:/Windows/clang.exe"
+      - "C:/Windows/clang"
+      - "C:/Windows/System32/wbem/cc.com"
+      - "C:/Windows/System32/wbem/cc.exe"
+      - "C:/Windows/System32/wbem/cc"
+      - "C:/Windows/System32/wbem/gcc.com"
+      - "C:/Windows/System32/wbem/gcc.exe"
+      - "C:/Windows/System32/wbem/gcc"
+      - "C:/Windows/System32/wbem/cl.com"
+      - "C:/Windows/System32/wbem/cl.exe"
+      - "C:/Windows/System32/wbem/cl"
+      - "C:/Windows/System32/wbem/bcc.com"
+      - "C:/Windows/System32/wbem/bcc.exe"
+      - "C:/Windows/System32/wbem/bcc"
+      - "C:/Windows/System32/wbem/xlc.com"
+      - "C:/Windows/System32/wbem/xlc.exe"
+      - "C:/Windows/System32/wbem/xlc"
+      - "C:/Windows/System32/wbem/icx.com"
+      - "C:/Windows/System32/wbem/icx.exe"
+      - "C:/Windows/System32/wbem/icx"
+      - "C:/Windows/System32/wbem/clang.com"
+      - "C:/Windows/System32/wbem/clang.exe"
+      - "C:/Windows/System32/wbem/clang"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/cc.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/cc.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/cc"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/cl.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/cl.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/cl"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/bcc.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/bcc.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/bcc"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/xlc.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/xlc.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/xlc"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/icx.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/icx.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/icx"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/clang.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/clang.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/clang"
+      - "C:/Windows/System32/OpenSSH/cc.com"
+      - "C:/Windows/System32/OpenSSH/cc.exe"
+      - "C:/Windows/System32/OpenSSH/cc"
+      - "C:/Windows/System32/OpenSSH/gcc.com"
+      - "C:/Windows/System32/OpenSSH/gcc.exe"
+      - "C:/Windows/System32/OpenSSH/gcc"
+      - "C:/Windows/System32/OpenSSH/cl.com"
+      - "C:/Windows/System32/OpenSSH/cl.exe"
+      - "C:/Windows/System32/OpenSSH/cl"
+      - "C:/Windows/System32/OpenSSH/bcc.com"
+      - "C:/Windows/System32/OpenSSH/bcc.exe"
+      - "C:/Windows/System32/OpenSSH/bcc"
+      - "C:/Windows/System32/OpenSSH/xlc.com"
+      - "C:/Windows/System32/OpenSSH/xlc.exe"
+      - "C:/Windows/System32/OpenSSH/xlc"
+      - "C:/Windows/System32/OpenSSH/icx.com"
+      - "C:/Windows/System32/OpenSSH/icx.exe"
+      - "C:/Windows/System32/OpenSSH/icx"
+      - "C:/Windows/System32/OpenSSH/clang.com"
+      - "C:/Windows/System32/OpenSSH/clang.exe"
+      - "C:/Windows/System32/OpenSSH/clang"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/cc.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/cc.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/cc"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/cl.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/cl.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/cl"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/bcc.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/bcc.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/bcc"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/xlc.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/xlc.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/xlc"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/icx.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/icx.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/icx"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/clang.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/clang.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/clang"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/cc.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/cc.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/cc"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/cl.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/cl.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/cl"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/bcc.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/bcc.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/bcc"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/xlc.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/xlc.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/xlc"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/icx.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/icx.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/icx"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/clang.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/clang.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/clang"
+      - "C:/msys64/mingw64/bin/cc.com"
+    found: "C:/msys64/mingw64/bin/cc.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/"
+    found: "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: C:/msys64/mingw64/bin/cc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.exe"
+      
+      The C compiler identification is GNU, found in:
+        C:/TRAINING/C++ Code Practice/hiredis/build/CMakeFiles/4.1.1/CompilerIdC/a.exe
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_AR"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ar"
+    candidate_directories:
+      - "C:/msys64/mingw64/bin/"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+    searched_directories:
+      - "C:/msys64/mingw64/bin/ar.com"
+    found: "C:/msys64/mingw64/bin/ar.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_RANLIB"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ranlib"
+    candidate_directories:
+      - "C:/msys64/mingw64/bin/"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+    searched_directories:
+      - "C:/msys64/mingw64/bin/ranlib.com"
+    found: "C:/msys64/mingw64/bin/ranlib.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_STRIP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "strip"
+    candidate_directories:
+      - "C:/msys64/mingw64/bin/"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+    searched_directories:
+      - "C:/msys64/mingw64/bin/strip.com"
+    found: "C:/msys64/mingw64/bin/strip.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_LINKER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ld"
+    candidate_directories:
+      - "C:/msys64/mingw64/bin/"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+    searched_directories:
+      - "C:/msys64/mingw64/bin/ld.com"
+    found: "C:/msys64/mingw64/bin/ld.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_NM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "nm"
+    candidate_directories:
+      - "C:/msys64/mingw64/bin/"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+    searched_directories:
+      - "C:/msys64/mingw64/bin/nm.com"
+    found: "C:/msys64/mingw64/bin/nm.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_OBJDUMP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "objdump"
+    candidate_directories:
+      - "C:/msys64/mingw64/bin/"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+    searched_directories:
+      - "C:/msys64/mingw64/bin/objdump.com"
+    found: "C:/msys64/mingw64/bin/objdump.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_OBJCOPY"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "objcopy"
+    candidate_directories:
+      - "C:/msys64/mingw64/bin/"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+    searched_directories:
+      - "C:/msys64/mingw64/bin/objcopy.com"
+    found: "C:/msys64/mingw64/bin/objcopy.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_READELF"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "readelf"
+    candidate_directories:
+      - "C:/msys64/mingw64/bin/"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+    searched_directories:
+      - "C:/msys64/mingw64/bin/readelf.com"
+    found: "C:/msys64/mingw64/bin/readelf.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_DLLTOOL"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "dlltool"
+    candidate_directories:
+      - "C:/msys64/mingw64/bin/"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+    searched_directories:
+      - "C:/msys64/mingw64/bin/dlltool.com"
+    found: "C:/msys64/mingw64/bin/dlltool.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_ADDR2LINE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "addr2line"
+    candidate_directories:
+      - "C:/msys64/mingw64/bin/"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+    searched_directories:
+      - "C:/msys64/mingw64/bin/addr2line.com"
+    found: "C:/msys64/mingw64/bin/addr2line.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_TAPI"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "tapi"
+    candidate_directories:
+      - "C:/msys64/mingw64/bin/"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+    searched_directories:
+      - "C:/msys64/mingw64/bin/tapi.com"
+      - "C:/msys64/mingw64/bin/tapi.exe"
+      - "C:/msys64/mingw64/bin/tapi"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/tapi.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/tapi.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/tapi"
+      - "C:/Windows/System32/tapi.com"
+      - "C:/Windows/System32/tapi.exe"
+      - "C:/Windows/System32/tapi"
+      - "C:/Windows/tapi.com"
+      - "C:/Windows/tapi.exe"
+      - "C:/Windows/tapi"
+      - "C:/Windows/System32/wbem/tapi.com"
+      - "C:/Windows/System32/wbem/tapi.exe"
+      - "C:/Windows/System32/wbem/tapi"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/tapi.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/tapi.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/tapi"
+      - "C:/Windows/System32/OpenSSH/tapi.com"
+      - "C:/Windows/System32/OpenSSH/tapi.exe"
+      - "C:/Windows/System32/OpenSSH/tapi"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/tapi.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/tapi.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/tapi"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/tapi.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/tapi.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/tapi"
+      - "C:/Program Files/Git/cmd/tapi.com"
+      - "C:/Program Files/Git/cmd/tapi.exe"
+      - "C:/Program Files/Git/cmd/tapi"
+      - "C:/Program Files/nodejs/tapi.com"
+      - "C:/Program Files/nodejs/tapi.exe"
+      - "C:/Program Files/nodejs/tapi"
+      - "C:/xampp/php/tapi.com"
+      - "C:/xampp/php/tapi.exe"
+      - "C:/xampp/php/tapi"
+      - "C:/Program Files/PostgreSQL/17/bin/tapi.com"
+      - "C:/Program Files/PostgreSQL/17/bin/tapi.exe"
+      - "C:/Program Files/PostgreSQL/17/bin/tapi"
+      - "C:/Program Files/CMake/bin/tapi.com"
+      - "C:/Program Files/CMake/bin/tapi.exe"
+      - "C:/Program Files/CMake/bin/tapi"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/tapi.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/tapi.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/tapi"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/tapi.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/tapi.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/tapi"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/tapi.com"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/tapi.exe"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/tapi"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/tapi.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/tapi.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/tapi"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/tapi.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/tapi.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/tapi"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/tapi.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/tapi.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/tapi"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/tapi.com"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/tapi.exe"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/tapi"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcc-ar-15.2"
+      - "gcc-ar-15"
+      - "gcc-ar15"
+      - "gcc-ar"
+    candidate_directories:
+      - "C:/msys64/mingw64/bin/"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+    searched_directories:
+      - "C:/msys64/mingw64/bin/gcc-ar-15.2.com"
+      - "C:/msys64/mingw64/bin/gcc-ar-15.2.exe"
+      - "C:/msys64/mingw64/bin/gcc-ar-15.2"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ar-15.2.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ar-15.2.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ar-15.2"
+      - "C:/Windows/System32/gcc-ar-15.2.com"
+      - "C:/Windows/System32/gcc-ar-15.2.exe"
+      - "C:/Windows/System32/gcc-ar-15.2"
+      - "C:/Windows/gcc-ar-15.2.com"
+      - "C:/Windows/gcc-ar-15.2.exe"
+      - "C:/Windows/gcc-ar-15.2"
+      - "C:/Windows/System32/wbem/gcc-ar-15.2.com"
+      - "C:/Windows/System32/wbem/gcc-ar-15.2.exe"
+      - "C:/Windows/System32/wbem/gcc-ar-15.2"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar-15.2.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar-15.2.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar-15.2"
+      - "C:/Windows/System32/OpenSSH/gcc-ar-15.2.com"
+      - "C:/Windows/System32/OpenSSH/gcc-ar-15.2.exe"
+      - "C:/Windows/System32/OpenSSH/gcc-ar-15.2"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ar-15.2.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ar-15.2.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ar-15.2"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ar-15.2.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ar-15.2.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ar-15.2"
+      - "C:/Program Files/Git/cmd/gcc-ar-15.2.com"
+      - "C:/Program Files/Git/cmd/gcc-ar-15.2.exe"
+      - "C:/Program Files/Git/cmd/gcc-ar-15.2"
+      - "C:/Program Files/nodejs/gcc-ar-15.2.com"
+      - "C:/Program Files/nodejs/gcc-ar-15.2.exe"
+      - "C:/Program Files/nodejs/gcc-ar-15.2"
+      - "C:/xampp/php/gcc-ar-15.2.com"
+      - "C:/xampp/php/gcc-ar-15.2.exe"
+      - "C:/xampp/php/gcc-ar-15.2"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ar-15.2.com"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ar-15.2.exe"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ar-15.2"
+      - "C:/Program Files/CMake/bin/gcc-ar-15.2.com"
+      - "C:/Program Files/CMake/bin/gcc-ar-15.2.exe"
+      - "C:/Program Files/CMake/bin/gcc-ar-15.2"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ar-15.2.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ar-15.2.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ar-15.2"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ar-15.2.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ar-15.2.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ar-15.2"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ar-15.2.com"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ar-15.2.exe"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ar-15.2"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ar-15.2.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ar-15.2.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ar-15.2"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ar-15.2.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ar-15.2.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ar-15.2"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ar-15.2.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ar-15.2.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ar-15.2"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ar-15.2.com"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ar-15.2.exe"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ar-15.2"
+      - "C:/msys64/mingw64/bin/gcc-ar-15.com"
+      - "C:/msys64/mingw64/bin/gcc-ar-15.exe"
+      - "C:/msys64/mingw64/bin/gcc-ar-15"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ar-15.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ar-15.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ar-15"
+      - "C:/Windows/System32/gcc-ar-15.com"
+      - "C:/Windows/System32/gcc-ar-15.exe"
+      - "C:/Windows/System32/gcc-ar-15"
+      - "C:/Windows/gcc-ar-15.com"
+      - "C:/Windows/gcc-ar-15.exe"
+      - "C:/Windows/gcc-ar-15"
+      - "C:/Windows/System32/wbem/gcc-ar-15.com"
+      - "C:/Windows/System32/wbem/gcc-ar-15.exe"
+      - "C:/Windows/System32/wbem/gcc-ar-15"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar-15.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar-15.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar-15"
+      - "C:/Windows/System32/OpenSSH/gcc-ar-15.com"
+      - "C:/Windows/System32/OpenSSH/gcc-ar-15.exe"
+      - "C:/Windows/System32/OpenSSH/gcc-ar-15"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ar-15.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ar-15.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ar-15"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ar-15.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ar-15.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ar-15"
+      - "C:/Program Files/Git/cmd/gcc-ar-15.com"
+      - "C:/Program Files/Git/cmd/gcc-ar-15.exe"
+      - "C:/Program Files/Git/cmd/gcc-ar-15"
+      - "C:/Program Files/nodejs/gcc-ar-15.com"
+      - "C:/Program Files/nodejs/gcc-ar-15.exe"
+      - "C:/Program Files/nodejs/gcc-ar-15"
+      - "C:/xampp/php/gcc-ar-15.com"
+      - "C:/xampp/php/gcc-ar-15.exe"
+      - "C:/xampp/php/gcc-ar-15"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ar-15.com"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ar-15.exe"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ar-15"
+      - "C:/Program Files/CMake/bin/gcc-ar-15.com"
+      - "C:/Program Files/CMake/bin/gcc-ar-15.exe"
+      - "C:/Program Files/CMake/bin/gcc-ar-15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ar-15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ar-15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ar-15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ar-15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ar-15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ar-15"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ar-15.com"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ar-15.exe"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ar-15"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ar-15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ar-15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ar-15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ar-15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ar-15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ar-15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ar-15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ar-15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ar-15"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ar-15.com"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ar-15.exe"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ar-15"
+      - "C:/msys64/mingw64/bin/gcc-ar15.com"
+      - "C:/msys64/mingw64/bin/gcc-ar15.exe"
+      - "C:/msys64/mingw64/bin/gcc-ar15"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ar15.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ar15.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ar15"
+      - "C:/Windows/System32/gcc-ar15.com"
+      - "C:/Windows/System32/gcc-ar15.exe"
+      - "C:/Windows/System32/gcc-ar15"
+      - "C:/Windows/gcc-ar15.com"
+      - "C:/Windows/gcc-ar15.exe"
+      - "C:/Windows/gcc-ar15"
+      - "C:/Windows/System32/wbem/gcc-ar15.com"
+      - "C:/Windows/System32/wbem/gcc-ar15.exe"
+      - "C:/Windows/System32/wbem/gcc-ar15"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar15.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar15.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ar15"
+      - "C:/Windows/System32/OpenSSH/gcc-ar15.com"
+      - "C:/Windows/System32/OpenSSH/gcc-ar15.exe"
+      - "C:/Windows/System32/OpenSSH/gcc-ar15"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ar15.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ar15.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ar15"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ar15.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ar15.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ar15"
+      - "C:/Program Files/Git/cmd/gcc-ar15.com"
+      - "C:/Program Files/Git/cmd/gcc-ar15.exe"
+      - "C:/Program Files/Git/cmd/gcc-ar15"
+      - "C:/Program Files/nodejs/gcc-ar15.com"
+      - "C:/Program Files/nodejs/gcc-ar15.exe"
+      - "C:/Program Files/nodejs/gcc-ar15"
+      - "C:/xampp/php/gcc-ar15.com"
+      - "C:/xampp/php/gcc-ar15.exe"
+      - "C:/xampp/php/gcc-ar15"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ar15.com"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ar15.exe"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ar15"
+      - "C:/Program Files/CMake/bin/gcc-ar15.com"
+      - "C:/Program Files/CMake/bin/gcc-ar15.exe"
+      - "C:/Program Files/CMake/bin/gcc-ar15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ar15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ar15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ar15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ar15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ar15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ar15"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ar15.com"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ar15.exe"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ar15"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ar15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ar15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ar15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ar15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ar15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ar15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ar15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ar15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ar15"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ar15.com"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ar15.exe"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ar15"
+      - "C:/msys64/mingw64/bin/gcc-ar.com"
+    found: "C:/msys64/mingw64/bin/gcc-ar.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcc-ranlib-15.2"
+      - "gcc-ranlib-15"
+      - "gcc-ranlib15"
+      - "gcc-ranlib"
+    candidate_directories:
+      - "C:/msys64/mingw64/bin/"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+    searched_directories:
+      - "C:/msys64/mingw64/bin/gcc-ranlib-15.2.com"
+      - "C:/msys64/mingw64/bin/gcc-ranlib-15.2.exe"
+      - "C:/msys64/mingw64/bin/gcc-ranlib-15.2"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ranlib-15.2.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ranlib-15.2.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ranlib-15.2"
+      - "C:/Windows/System32/gcc-ranlib-15.2.com"
+      - "C:/Windows/System32/gcc-ranlib-15.2.exe"
+      - "C:/Windows/System32/gcc-ranlib-15.2"
+      - "C:/Windows/gcc-ranlib-15.2.com"
+      - "C:/Windows/gcc-ranlib-15.2.exe"
+      - "C:/Windows/gcc-ranlib-15.2"
+      - "C:/Windows/System32/wbem/gcc-ranlib-15.2.com"
+      - "C:/Windows/System32/wbem/gcc-ranlib-15.2.exe"
+      - "C:/Windows/System32/wbem/gcc-ranlib-15.2"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib-15.2.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib-15.2.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib-15.2"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib-15.2.com"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib-15.2.exe"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib-15.2"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ranlib-15.2.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ranlib-15.2"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ranlib-15.2.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ranlib-15.2"
+      - "C:/Program Files/Git/cmd/gcc-ranlib-15.2.com"
+      - "C:/Program Files/Git/cmd/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/Git/cmd/gcc-ranlib-15.2"
+      - "C:/Program Files/nodejs/gcc-ranlib-15.2.com"
+      - "C:/Program Files/nodejs/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/nodejs/gcc-ranlib-15.2"
+      - "C:/xampp/php/gcc-ranlib-15.2.com"
+      - "C:/xampp/php/gcc-ranlib-15.2.exe"
+      - "C:/xampp/php/gcc-ranlib-15.2"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ranlib-15.2.com"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ranlib-15.2"
+      - "C:/Program Files/CMake/bin/gcc-ranlib-15.2.com"
+      - "C:/Program Files/CMake/bin/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/CMake/bin/gcc-ranlib-15.2"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ranlib-15.2.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ranlib-15.2.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ranlib-15.2"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ranlib-15.2.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ranlib-15.2.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ranlib-15.2"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ranlib-15.2.com"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ranlib-15.2.exe"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ranlib-15.2"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ranlib-15.2.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ranlib-15.2.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ranlib-15.2"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ranlib-15.2.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ranlib-15.2.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ranlib-15.2"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ranlib-15.2.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ranlib-15.2.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ranlib-15.2"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ranlib-15.2.com"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ranlib-15.2.exe"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ranlib-15.2"
+      - "C:/msys64/mingw64/bin/gcc-ranlib-15.com"
+      - "C:/msys64/mingw64/bin/gcc-ranlib-15.exe"
+      - "C:/msys64/mingw64/bin/gcc-ranlib-15"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ranlib-15.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ranlib-15.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ranlib-15"
+      - "C:/Windows/System32/gcc-ranlib-15.com"
+      - "C:/Windows/System32/gcc-ranlib-15.exe"
+      - "C:/Windows/System32/gcc-ranlib-15"
+      - "C:/Windows/gcc-ranlib-15.com"
+      - "C:/Windows/gcc-ranlib-15.exe"
+      - "C:/Windows/gcc-ranlib-15"
+      - "C:/Windows/System32/wbem/gcc-ranlib-15.com"
+      - "C:/Windows/System32/wbem/gcc-ranlib-15.exe"
+      - "C:/Windows/System32/wbem/gcc-ranlib-15"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib-15.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib-15.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib-15"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib-15.com"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib-15.exe"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib-15"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ranlib-15.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ranlib-15.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ranlib-15"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ranlib-15.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ranlib-15.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ranlib-15"
+      - "C:/Program Files/Git/cmd/gcc-ranlib-15.com"
+      - "C:/Program Files/Git/cmd/gcc-ranlib-15.exe"
+      - "C:/Program Files/Git/cmd/gcc-ranlib-15"
+      - "C:/Program Files/nodejs/gcc-ranlib-15.com"
+      - "C:/Program Files/nodejs/gcc-ranlib-15.exe"
+      - "C:/Program Files/nodejs/gcc-ranlib-15"
+      - "C:/xampp/php/gcc-ranlib-15.com"
+      - "C:/xampp/php/gcc-ranlib-15.exe"
+      - "C:/xampp/php/gcc-ranlib-15"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ranlib-15.com"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ranlib-15.exe"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ranlib-15"
+      - "C:/Program Files/CMake/bin/gcc-ranlib-15.com"
+      - "C:/Program Files/CMake/bin/gcc-ranlib-15.exe"
+      - "C:/Program Files/CMake/bin/gcc-ranlib-15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ranlib-15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ranlib-15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ranlib-15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ranlib-15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ranlib-15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ranlib-15"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ranlib-15.com"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ranlib-15.exe"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ranlib-15"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ranlib-15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ranlib-15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ranlib-15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ranlib-15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ranlib-15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ranlib-15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ranlib-15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ranlib-15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ranlib-15"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ranlib-15.com"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ranlib-15.exe"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ranlib-15"
+      - "C:/msys64/mingw64/bin/gcc-ranlib15.com"
+      - "C:/msys64/mingw64/bin/gcc-ranlib15.exe"
+      - "C:/msys64/mingw64/bin/gcc-ranlib15"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ranlib15.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ranlib15.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/gcc-ranlib15"
+      - "C:/Windows/System32/gcc-ranlib15.com"
+      - "C:/Windows/System32/gcc-ranlib15.exe"
+      - "C:/Windows/System32/gcc-ranlib15"
+      - "C:/Windows/gcc-ranlib15.com"
+      - "C:/Windows/gcc-ranlib15.exe"
+      - "C:/Windows/gcc-ranlib15"
+      - "C:/Windows/System32/wbem/gcc-ranlib15.com"
+      - "C:/Windows/System32/wbem/gcc-ranlib15.exe"
+      - "C:/Windows/System32/wbem/gcc-ranlib15"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib15.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib15.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/gcc-ranlib15"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib15.com"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib15.exe"
+      - "C:/Windows/System32/OpenSSH/gcc-ranlib15"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ranlib15.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ranlib15.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/gcc-ranlib15"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ranlib15.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ranlib15.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/gcc-ranlib15"
+      - "C:/Program Files/Git/cmd/gcc-ranlib15.com"
+      - "C:/Program Files/Git/cmd/gcc-ranlib15.exe"
+      - "C:/Program Files/Git/cmd/gcc-ranlib15"
+      - "C:/Program Files/nodejs/gcc-ranlib15.com"
+      - "C:/Program Files/nodejs/gcc-ranlib15.exe"
+      - "C:/Program Files/nodejs/gcc-ranlib15"
+      - "C:/xampp/php/gcc-ranlib15.com"
+      - "C:/xampp/php/gcc-ranlib15.exe"
+      - "C:/xampp/php/gcc-ranlib15"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ranlib15.com"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ranlib15.exe"
+      - "C:/Program Files/PostgreSQL/17/bin/gcc-ranlib15"
+      - "C:/Program Files/CMake/bin/gcc-ranlib15.com"
+      - "C:/Program Files/CMake/bin/gcc-ranlib15.exe"
+      - "C:/Program Files/CMake/bin/gcc-ranlib15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ranlib15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ranlib15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/gcc-ranlib15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ranlib15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ranlib15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/gcc-ranlib15"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ranlib15.com"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ranlib15.exe"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/gcc-ranlib15"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ranlib15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ranlib15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/gcc-ranlib15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ranlib15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ranlib15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/gcc-ranlib15"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ranlib15.com"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ranlib15.exe"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/gcc-ranlib15"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ranlib15.com"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ranlib15.exe"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/gcc-ranlib15"
+      - "C:/msys64/mingw64/bin/gcc-ranlib.com"
+    found: "C:/msys64/mingw64/bin/gcc-ranlib.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineRCCompiler.cmake:40 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/Platform/Windows-GNU.cmake:167 (enable_language)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/Platform/Windows-GNU-C.cmake:2 (__windows_compiler_gnu)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeCInformation.cmake:48 (include)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_RC_COMPILER"
+    description: "RC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "windres"
+      - "windres"
+    candidate_directories:
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/"
+      - "C:/msys64/mingw64/bin/"
+      - "C:/Program Files/Git/cmd/"
+      - "C:/Program Files/nodejs/"
+      - "C:/xampp/php/"
+      - "C:/Program Files/PostgreSQL/17/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Python/Python313/"
+      - "C:/Program Files/MySQL/MySQL Shell 8.0/bin/"
+      - "C:/Users/DhavalBavda/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/mongosh/"
+      - "C:/Users/DhavalBavda/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/DhavalBavda/AppData/Roaming/npm/"
+      - "C:/Program Files/bin/"
+      - "C:/Program Files/sbin/"
+      - "C:/Program Files/"
+      - "C:/Program Files (x86)/bin/"
+      - "C:/Program Files (x86)/sbin/"
+      - "C:/Program Files (x86)/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/CMake/sbin/"
+      - "C:/Program Files/CMake/"
+      - "C:/Program Files (x86)/hiredis/bin/"
+      - "C:/Program Files (x86)/hiredis/sbin/"
+      - "C:/Program Files (x86)/hiredis/"
+    searched_directories:
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/windres.com"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/windres.exe"
+      - "C:/oraclexe/app/oracle/product/11.2.0/server/bin/windres"
+      - "C:/Windows/System32/windres.com"
+      - "C:/Windows/System32/windres.exe"
+      - "C:/Windows/System32/windres"
+      - "C:/Windows/windres.com"
+      - "C:/Windows/windres.exe"
+      - "C:/Windows/windres"
+      - "C:/Windows/System32/wbem/windres.com"
+      - "C:/Windows/System32/wbem/windres.exe"
+      - "C:/Windows/System32/wbem/windres"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/windres.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/windres.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/windres"
+      - "C:/Windows/System32/OpenSSH/windres.com"
+      - "C:/Windows/System32/OpenSSH/windres.exe"
+      - "C:/Windows/System32/OpenSSH/windres"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/windres.com"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/windres.exe"
+      - "C:/Program Files/MySQL/MySQL Server 8.0/bin/windres"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/windres.com"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/windres.exe"
+      - "C:/Program Files/MongoDB/Server/8.0/bin/windres"
+      - "C:/msys64/mingw64/bin/windres.com"
+    found: "C:/msys64/mingw64/bin/windres.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\bin"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin"
+        - "C:\\Program Files\\MongoDB\\Server\\8.0\\bin"
+        - "C:\\msys64\\mingw64\\bin"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\nodejs\\"
+        - "C:\\xampp\\php"
+        - "C:\\Program Files\\PostgreSQL\\17\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Program Files\\MySQL\\MySQL Shell 8.0\\bin\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\mongosh\\"
+        - "C:\\Users\\DhavalBavda\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\DhavalBavda\\AppData\\Roaming\\npm"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/hiredis"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "C:/Program Files"
+        - "C:/Program Files (x86)"
+        - "C:/Program Files/CMake"
+        - "C:/Program Files (x86)/hiredis"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/TRAINING/C++ Code Practice/hiredis/build/CMakeFiles/CMakeScratch/TryCompile-pv5eiu"
+      binary: "C:/TRAINING/C++ Code Practice/hiredis/build/CMakeFiles/CMakeScratch/TryCompile-pv5eiu"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/TRAINING/C++ Code Practice/hiredis/build/CMakeFiles/CMakeScratch/TryCompile-pv5eiu'
+        
+        Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/msys64/mingw64/bin/mingw32-make.exe -f Makefile cmTC_00a97/fast
+        C:/msys64/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_00a97.dir\\build.make CMakeFiles/cmTC_00a97.dir/build
+        mingw32-make[1]: Entering directory 'C:/TRAINING/C++ Code Practice/hiredis/build/CMakeFiles/CMakeScratch/TryCompile-pv5eiu'
+        Building C object CMakeFiles/cmTC_00a97.dir/CMakeCCompilerABI.c.obj
+        C:\\msys64\\mingw64\\bin\\cc.exe   -v -o CMakeFiles\\cmTC_00a97.dir\\CMakeCCompilerABI.c.obj -c "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
+        Using built-in specs.
+        COLLECT_GCC=C:\\msys64\\mingw64\\bin\\cc.exe
+        Target: x86_64-w64-mingw32
+        Configured with: ../gcc-15.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=nocona --with-tune=generic --enable-mingw-wildcard --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-backtrace=yes --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-libssp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev8, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --with-libstdcxx-zoneinfo=yes --disable-libstdcxx-debug --enable-plugin --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 15.2.0 (Rev8, Built by MSYS2 project) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\\cmTC_00a97.dir\\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\\cmTC_00a97.dir\\'
+         C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/cc1.exe -quiet -v -iprefix C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/ -D_REENTRANT C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles\\cmTC_00a97.dir\\ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=nocona -version -o C:\\Users\\DHAVAL~1\\AppData\\Local\\Temp\\ccdUQkhi.s
+        GNU C23 (Rev8, Built by MSYS2 project) version 15.2.0 (x86_64-w64-mingw32)
+        	compiled by GNU C version 15.2.0, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.27-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include"
+        ignoring duplicate directory "C:/msys64/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/15.2.0/include"
+        ignoring nonexistent directory "D:/M/msys64/mingw64/include"
+        ignoring nonexistent directory "/mingw64/include"
+        ignoring duplicate directory "C:/msys64/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"
+        ignoring nonexistent directory "C:/msys64/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include"
+        ignoring nonexistent directory "D:/M/msys64/mingw64/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include
+         C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include
+         C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed
+        End of search list.
+        Compiler executable checksum: feaaa8b8d0ead308dc62d839201f7330
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\\cmTC_00a97.dir\\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\\cmTC_00a97.dir\\'
+         C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\\cmTC_00a97.dir\\CMakeCCompilerABI.c.obj C:\\Users\\DHAVAL~1\\AppData\\Local\\Temp\\ccdUQkhi.s
+        GNU assembler version 2.45 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.45
+        COMPILER_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/;C:/msys64/mingw64/bin/../lib/gcc/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/;C:/msys64/mingw64/bin/../lib/gcc/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\\cmTC_00a97.dir\\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\\cmTC_00a97.dir\\CMakeCCompilerABI.c.'
+        Linking C executable cmTC_00a97.exe
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\cmTC_00a97.dir\\link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=C:\\msys64\\mingw64\\bin\\cc.exe
+        COLLECT_LTO_WRAPPER=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper.exe
+        Target: x86_64-w64-mingw32
+        Configured with: ../gcc-15.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=nocona --with-tune=generic --enable-mingw-wildcard --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-backtrace=yes --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-libssp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev8, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --with-libstdcxx-zoneinfo=yes --disable-libstdcxx-debug --enable-plugin --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 15.2.0 (Rev8, Built by MSYS2 project) 
+        COMPILER_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/;C:/msys64/mingw64/bin/../lib/gcc/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/;C:/msys64/mingw64/bin/../lib/gcc/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/;C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_00a97.exe' '-mtune=generic' '-march=nocona' '-dumpdir' 'cmTC_00a97.'
+         C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/collect2.exe -plugin C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.dll -plugin-opt=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\DHAVAL~1\\AppData\\Local\\Temp\\ccC6omyp.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_00a97.exe C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/crt2.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0 -LC:/msys64/mingw64/bin/../lib/gcc -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../.. -v --whole-archive CMakeFiles\\cmTC_00a97.dir/objects.a --no-whole-archive --out-implib libcmTC_00a97.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/default-manifest.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o
+        collect2 version 15.2.0
+        C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe -plugin C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.dll -plugin-opt=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\DHAVAL~1\\AppData\\Local\\Temp\\ccC6omyp.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_00a97.exe C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/crt2.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0 -LC:/msys64/mingw64/bin/../lib/gcc -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../.. -v --whole-archive CMakeFiles\\cmTC_00a97.dir/objects.a --no-whole-archive --out-implib libcmTC_00a97.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/default-manifest.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o
+        GNU ld (GNU Binutils) 2.45
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_00a97.exe' '-mtune=generic' '-march=nocona' '-dumpdir' 'cmTC_00a97.'
+        "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f CMakeFiles\\cmTC_00a97.dir/objects.a
+        C:\\msys64\\mingw64\\bin\\ar.exe qc CMakeFiles\\cmTC_00a97.dir/objects.a @CMakeFiles\\cmTC_00a97.dir\\objects1.rsp
+        C:\\msys64\\mingw64\\bin\\cc.exe  -v -Wl,-v -Wl,--whole-archive CMakeFiles\\cmTC_00a97.dir/objects.a -Wl,--no-whole-archive -o cmTC_00a97.exe -Wl,--out-implib,libcmTC_00a97.dll.a -Wl,--major-image-version,0,--minor-image-version,0
+        mingw32-make[1]: Leaving directory 'C:/TRAINING/C++ Code Practice/hiredis/build/CMakeFiles/CMakeScratch/TryCompile-pv5eiu'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include]
+          add: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include]
+          add: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed]
+        end of search list found
+        collapse include dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include] ==> [C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include]
+        collapse include dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include] ==> [C:/msys64/mingw64/include]
+        collapse include dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed] ==> [C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed]
+        implicit include dirs: [C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include;C:/msys64/mingw64/include;C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: 'C:/TRAINING/C++ Code Practice/hiredis/build/CMakeFiles/CMakeScratch/TryCompile-pv5eiu']
+        ignore line: []
+        ignore line: [Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/msys64/mingw64/bin/mingw32-make.exe -f Makefile cmTC_00a97/fast]
+        ignore line: [C:/msys64/mingw64/bin/mingw32-make.exe  -f CMakeFiles\\cmTC_00a97.dir\\build.make CMakeFiles/cmTC_00a97.dir/build]
+        ignore line: [mingw32-make[1]: Entering directory 'C:/TRAINING/C++ Code Practice/hiredis/build/CMakeFiles/CMakeScratch/TryCompile-pv5eiu']
+        ignore line: [Building C object CMakeFiles/cmTC_00a97.dir/CMakeCCompilerABI.c.obj]
+        ignore line: [C:\\msys64\\mingw64\\bin\\cc.exe   -v -o CMakeFiles\\cmTC_00a97.dir\\CMakeCCompilerABI.c.obj -c "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=C:\\msys64\\mingw64\\bin\\cc.exe]
+        ignore line: [Target: x86_64-w64-mingw32]
+        ignore line: [Configured with: ../gcc-15.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=nocona --with-tune=generic --enable-mingw-wildcard --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-backtrace=yes --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-libssp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev8, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --with-libstdcxx-zoneinfo=yes --disable-libstdcxx-debug --enable-plugin --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 15.2.0 (Rev8  Built by MSYS2 project) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\\cmTC_00a97.dir\\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\\cmTC_00a97.dir\\']
+        ignore line: [ C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/cc1.exe -quiet -v -iprefix C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/ -D_REENTRANT C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles\\cmTC_00a97.dir\\ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=nocona -version -o C:\\Users\\DHAVAL~1\\AppData\\Local\\Temp\\ccdUQkhi.s]
+        ignore line: [GNU C23 (Rev8  Built by MSYS2 project) version 15.2.0 (x86_64-w64-mingw32)]
+        ignore line: [	compiled by GNU C version 15.2.0  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.27-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include"]
+        ignore line: [ignoring duplicate directory "C:/msys64/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/15.2.0/include"]
+        ignore line: [ignoring nonexistent directory "D:/M/msys64/mingw64/include"]
+        ignore line: [ignoring nonexistent directory "/mingw64/include"]
+        ignore line: [ignoring duplicate directory "C:/msys64/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed"]
+        ignore line: [ignoring nonexistent directory "C:/msys64/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include"]
+        ignore line: [ignoring nonexistent directory "D:/M/msys64/mingw64/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include]
+        ignore line: [ C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../include]
+        ignore line: [ C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: feaaa8b8d0ead308dc62d839201f7330]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\\cmTC_00a97.dir\\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\\cmTC_00a97.dir\\']
+        ignore line: [ C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\\cmTC_00a97.dir\\CMakeCCompilerABI.c.obj C:\\Users\\DHAVAL~1\\AppData\\Local\\Temp\\ccdUQkhi.s]
+        ignore line: [GNU assembler version 2.45 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.45]
+        ignore line: [COMPILER_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/]
+        ignore line: [LIBRARY_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\\cmTC_00a97.dir\\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=nocona' '-dumpdir' 'CMakeFiles\\cmTC_00a97.dir\\CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_00a97.exe]
+        ignore line: ["C:\\Program Files\\CMake\\bin\\cmake.exe" -E cmake_link_script CMakeFiles\\cmTC_00a97.dir\\link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=C:\\msys64\\mingw64\\bin\\cc.exe]
+        ignore line: [COLLECT_LTO_WRAPPER=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper.exe]
+        ignore line: [Target: x86_64-w64-mingw32]
+        ignore line: [Configured with: ../gcc-15.2.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --with-native-system-header-dir=/mingw64/include --libexecdir=/mingw64/lib --enable-bootstrap --enable-checking=release --with-arch=nocona --with-tune=generic --enable-mingw-wildcard --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++,jit --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-backtrace=yes --enable-libstdcxx-filesystem-ts --enable-libstdcxx-time --disable-libstdcxx-pch --enable-lto --enable-libgomp --disable-libssp --disable-multilib --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev8, Built by MSYS2 project' --with-bugurl=https://github.com/msys2/MINGW-packages/issues --with-gnu-as --with-gnu-ld --with-libstdcxx-zoneinfo=yes --disable-libstdcxx-debug --enable-plugin --with-boot-ldflags=-static-libstdc++ --with-stage1-ldflags=-static-libstdc++]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 15.2.0 (Rev8  Built by MSYS2 project) ]
+        ignore line: [COMPILER_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/]
+        ignore line: [LIBRARY_PATH=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_00a97.exe' '-mtune=generic' '-march=nocona' '-dumpdir' 'cmTC_00a97.']
+        link line: [ C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/collect2.exe -plugin C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.dll -plugin-opt=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\DHAVAL~1\\AppData\\Local\\Temp\\ccC6omyp.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_00a97.exe C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/crt2.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0 -LC:/msys64/mingw64/bin/../lib/gcc -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../.. -v --whole-archive CMakeFiles\\cmTC_00a97.dir/objects.a --no-whole-archive --out-implib libcmTC_00a97.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/default-manifest.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+          arg [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/collect2.exe] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.dll] ==> ignore
+          arg [-plugin-opt=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper.exe] ==> ignore
+          arg [-plugin-opt=-fresolution=C:\\Users\\DHAVAL~1\\AppData\\Local\\Temp\\ccC6omyp.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_eh] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingwex] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmsvcrt] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
+          arg [-plugin-opt=-pass-through=-ladvapi32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lshell32] ==> ignore
+          arg [-plugin-opt=-pass-through=-luser32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_eh] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingwex] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmsvcrt] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-m] ==> ignore
+          arg [i386pep] ==> ignore
+          arg [-Bdynamic] ==> search dynamic
+          arg [-o] ==> ignore
+          arg [cmTC_00a97.exe] ==> ignore
+          arg [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/crt2.o] ==> obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/crt2.o]
+          arg [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o] ==> obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o]
+          arg [-LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0] ==> dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0]
+          arg [-LC:/msys64/mingw64/bin/../lib/gcc] ==> dir [C:/msys64/mingw64/bin/../lib/gcc]
+          arg [-LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib] ==> dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib]
+          arg [-LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib] ==> dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib]
+          arg [-LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib] ==> dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib]
+          arg [-LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../..] ==> dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../..]
+          arg [-v] ==> ignore
+          arg [--whole-archive] ==> ignore
+          arg [CMakeFiles\\cmTC_00a97.dir/objects.a] ==> ignore
+          arg [--no-whole-archive] ==> ignore
+          arg [--out-implib] ==> ignore
+          arg [libcmTC_00a97.dll.a] ==> ignore
+          arg [--major-image-version] ==> ignore
+          arg [0] ==> ignore
+          arg [--minor-image-version] ==> ignore
+          arg [0] ==> ignore
+          arg [-lmingw32] ==> lib [mingw32]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lgcc_eh] ==> lib [gcc_eh]
+          arg [-lmingwex] ==> lib [mingwex]
+          arg [-lmsvcrt] ==> lib [msvcrt]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [-lpthread] ==> lib [pthread]
+          arg [-ladvapi32] ==> lib [advapi32]
+          arg [-lshell32] ==> lib [shell32]
+          arg [-luser32] ==> lib [user32]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [-lmingw32] ==> lib [mingw32]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lgcc_eh] ==> lib [gcc_eh]
+          arg [-lmingwex] ==> lib [mingwex]
+          arg [-lmsvcrt] ==> lib [msvcrt]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/default-manifest.o] ==> obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/default-manifest.o]
+          arg [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o] ==> obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+        ignore line: [collect2 version 15.2.0]
+        ignore line: [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe -plugin C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.dll -plugin-opt=C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\DHAVAL~1\\AppData\\Local\\Temp\\ccC6omyp.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_00a97.exe C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/crt2.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0 -LC:/msys64/mingw64/bin/../lib/gcc -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -LC:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../.. -v --whole-archive CMakeFiles\\cmTC_00a97.dir/objects.a --no-whole-archive --out-implib libcmTC_00a97.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt -lkernel32 C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/default-manifest.o C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+        linker tool for 'C': C:/msys64/mingw64/x86_64-w64-mingw32/bin/ld.exe
+        remove lib [gcc_eh]
+        remove lib [msvcrt]
+        remove lib [gcc_eh]
+        remove lib [msvcrt]
+        collapse obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/crt2.o] ==> [C:/msys64/mingw64/lib/crt2.o]
+        collapse obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o] ==> [C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o]
+        collapse obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib/default-manifest.o] ==> [C:/msys64/mingw64/lib/default-manifest.o]
+        collapse obj [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o] ==> [C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+        collapse library dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0] ==> [C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0]
+        collapse library dir [C:/msys64/mingw64/bin/../lib/gcc] ==> [C:/msys64/mingw64/lib/gcc]
+        collapse library dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib] ==> [C:/msys64/mingw64/x86_64-w64-mingw32/lib]
+        collapse library dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../lib] ==> [C:/msys64/mingw64/lib]
+        collapse library dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib] ==> [C:/msys64/mingw64/x86_64-w64-mingw32/lib]
+        collapse library dir [C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/15.2.0/../../..] ==> [C:/msys64/mingw64/lib]
+        implicit libs: [mingw32;gcc;mingwex;kernel32;pthread;advapi32;shell32;user32;kernel32;mingw32;gcc;mingwex;kernel32]
+        implicit objs: [C:/msys64/mingw64/lib/crt2.o;C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o;C:/msys64/mingw64/lib/default-manifest.o;C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+        implicit dirs: [C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0;C:/msys64/mingw64/lib/gcc;C:/msys64/mingw64/x86_64-w64-mingw32/lib;C:/msys64/mingw64/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:17 (PROJECT)"
+    message: |
+      Running the C compiler's linker: "C:/msys64/mingw64/x86_64-w64-mingw32/bin/ld.exe" "-v"
+      GNU ld (GNU Binutils) 2.45
+...
