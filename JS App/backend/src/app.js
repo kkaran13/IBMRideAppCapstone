@@ -30,7 +30,6 @@ app.use(session({
 import userRoute from "./routes/UserRoutes.js";
 import vehicleRoute from "./routes/VehicleRoutes.js";
 import deviceRouter from "./routes/DeviceTokenRoutes.js";
-import driverRoute from './routes/DriverRoutes.js'
 import rideRoute from "./routes/RideRoutes.js"
 
 // Python App APIs
@@ -42,7 +41,6 @@ import ratingRouter from "./routes/RatingRoutes.js";
 app.use("/user", userRoute); //User Routes
 app.use("/vehicle", vehicleRoute); //Vehicle Routes
 app.use("/device", deviceRouter); //Device Routes
-app.use("/driver", driverRoute);  // Driver Routes
 app.use("/rating",ratingRouter);
 app.use("/ride", rideRoute);
 
