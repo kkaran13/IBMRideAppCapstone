@@ -2,6 +2,7 @@ import config from './config/Config.js';
 import app from "./app.js";
 import mongoConnect from "./config/mongo.js";
 import {checkMySqlConnection, syncSqlDatabase} from './config/mysql.js';
+import cors from "cors";
 import redisClient from './config/redisClient.js';
 
 const PORT = config.NODE_PORT;
