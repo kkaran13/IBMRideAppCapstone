@@ -7,6 +7,7 @@ import { authorizeRole } from "../middlewares/roleMiddleware.js";
 
 const router = express.Router();
 
+
 // Public
 router.post("/register", uploadMultiple , userController.register);
 router.post("/verify-otp", UserController.verifyOtp)
@@ -15,6 +16,9 @@ router.post("/forgot-password", userController.forgotPassword);
 router.post("/verify-password-otp",userController.verifyForgotPasswordOtp)
 router.post("/reset-password", userController.resetPassword);
 router.post("/recover-account", userController.recoverAccount);
+
+//Admin Login Route
+router.post("/admin/login",userController.adminLogin)
 
 // // Protected (after login)
 router.get("/profile", authenticateJWT ,userController.profile);

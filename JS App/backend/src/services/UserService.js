@@ -7,7 +7,7 @@ import { generateRidesPDF } from "../utils/pdfGenerator.js"
 import CommonMethods from "../utils/CommonMethods.js";
 import Config from "../config/Config.js";
 import redisClient from '../config/redisClient.js'
-
+import axios from "axios";
 class UserService {
   // ----------------- REGISTER -----------------
 // userService.js
@@ -190,6 +190,55 @@ class UserService {
     throw new ApiError(400, "No OTP request found. Please register or recover again.");
   }
 
+<<<<<<< HEAD
+  async loginAdmin({ email, password }) {
+    if (!email || !password) {
+      throw new ApiError(400, "Email and Password are required");
+    }
+
+    try {
+      // 🔗 Call Python API
+      const response = await axios.post("http://127.0.0.1:8000/analysis/login/", {
+        email,
+        password,
+      });
+
+      if (response.status !== 200) {
+        throw new ApiError(response.status, "Invalid credentials");
+      }
+
+      const adminData = response.data.admin; // from Python API
+      const message = response.data.message;
+
+      // 🔑 Generate JWT Token
+      const accessToken = jwt.sign(
+        { id: adminData.id, email: adminData.email, role: "admin" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      // 🍪 Cookie Options
+      const cookieOptions = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Strict",
+        maxAge: 60 * 60 * 1000, // 1 hour
+      };
+
+      return { user: adminData, accessToken, cookieOptions, message };
+    } catch (error) {
+      if (error.response) {
+        throw new ApiError(error.response.status, error.response.data);
+      }
+      console.log(error);
+      
+      throw new ApiError(500, "Unable to connect to Python API");
+    }
+  }
+
+
+
+=======
   async recoverAccount(email, req) {
     if (!email) {
       throw new ApiError(400,"Email is required")
@@ -219,6 +268,7 @@ class UserService {
 
     return { otpSent: true };
   }
+>>>>>>> 2f4beec28e8fdcf604db019c40e195bf2e51b7da
   // ----------------- LOGIN -----------------
   async loginUser({ email, password }) {
     if (!email || !password) {
