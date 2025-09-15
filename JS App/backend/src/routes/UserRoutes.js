@@ -4,9 +4,10 @@ import {uploadMultiple} from "../middlewares/multer.js";
 import { authenticateJWT } from "../middlewares/authMiddleware.js";
 import UserController from "../controllers/UserController.js";
 import { authorizeRole } from "../middlewares/roleMiddleware.js";
+import RideMatchScheduler from "../jobschedulers/RideMatchScheduler.js";
 
 const router = express.Router();
-
+router.post("/dummy", RideMatchScheduler.ridematch);
 
 // Public
 router.post("/register", uploadMultiple , userController.register);

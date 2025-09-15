@@ -1,3 +1,4 @@
+import redisClient from "../config/redisClient.js";
 import RideRepository from "../repositories/RideRepository.js";
 import UserRepository from "../repositories/UserRepository.js";
 import VehicleRepository from "../repositories/VehicleRepository.js";
@@ -151,7 +152,12 @@ class RideService {
             throw new ApiError(400, "Invalid vehicle for this driver");
 
         }
-        return await RideRepository.assignDriver(ride_id, driver_id, vehicle_id);
+        const rideData = await RideRepository.assignDriver(ride_id, driver_id, vehicle_id);
+        
+        // add the logic to update the redis store ride:accepted:${rideId}
+        redisClient.redis.set(`ride:accepted:${ride_id}`, driver_id, 'EX', 300);
+
+        return rideData;
     }
 
     async driverArriveRide(driver_id, ride_id) {

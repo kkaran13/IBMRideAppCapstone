@@ -150,7 +150,7 @@ class UserService {
       }
 
       // OTP valid → Create user in DB
-      await UserRepository.create({
+      const user = await UserRepository.create({
         ...pendingUser.userPayload,
         email_verified: true,
       });

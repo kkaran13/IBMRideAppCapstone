@@ -41,8 +41,8 @@ const Ride = sequelize.define(
         },
 
         rating_id: {
-        type: DataTypes.UUID,
-        allowNull: true, 
+            type: DataTypes.UUID,
+            allowNull: true, 
         },
 
         pickup_address: {
