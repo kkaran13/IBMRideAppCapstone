@@ -1,5 +1,5 @@
 import User from "../models/User.js";
-
+import { Op } from "sequelize";
 class UserRepository {
   async findById(user_id) {
     return User.findByPk(user_id);
@@ -23,7 +23,7 @@ class UserRepository {
   //   return user.update(updateData);
   // }
 
-  updatePassword = async (email, password_hash) => {
+  async updatePassword(email, password_hash) {
     return await User.update(
       { password_hash },
       { where: { email } }
@@ -52,12 +52,65 @@ class UserRepository {
     if (affectedRows === 0) return null;
     return await User.findOne({ where: { user_id } });
   }
+  
   async reactivate(user_id) {
     return await User.update(
       { account_status: "active" },
       { where: { user_id } }
     );
   }
+
+  async findAllUsers(page = 1, limit = 10, status = "active") {
+    const offset = (page - 1) * limit;
+
+    return await User.findAndCountAll({
+      where: { account_status: status, role: { [Op.ne]: 'admin' } },
+      limit,
+      offset,
+      order: [["created_at", "DESC"]],
+    });
+  }
+
+  async findUsersByVerificationStatus(status, driver_role, acc_status) {
+    return await User.findAll({
+      where: { verification_status: status, role: driver_role, account_status: acc_status },
+      attributes: [
+        "user_id",
+        "license_number",
+        "license_url",
+        "license_expiry_date",
+        "aadhar_number",
+        "aadhar_url",
+        "verification_status",
+        "verification_notes",
+      ],
+    });
+  }
+
+  async updateVerificationStatus(userId, { status, notes, adminId }) {
+    await User.update(
+      {
+        verification_status: status,      // update only status
+        verification_notes: notes || null,
+        verified_by: adminId,
+        verified_at: new Date(),
+      },
+      { where: { user_id: userId } }
+    );
+
+    return await User.findOne({
+      where: { user_id: userId },
+      attributes: [
+        "user_id",
+        "verification_status",
+        "verification_notes",
+        "verified_by",
+        "verified_at",
+      ],
+    });
+  }
+
+
 
 }
 

@@ -14,7 +14,7 @@ class Config{
         this.NODE_PORT = process.env.NODE_PORT;
         this.JWT_SECRET = process.env.JWT_SECRET; 
 
-        // this.MONGO_URI = process.env.MONGO_URI;
+        this.MONGO_URI = process.env.MONGO_URI;
 
         this.DB_NAME = process.env.DB_NAME;
         this.DB_USER = process.env.DB_USER;

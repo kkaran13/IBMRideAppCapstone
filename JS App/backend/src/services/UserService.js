@@ -7,9 +7,13 @@ import { generateRidesPDF } from "../utils/pdfGenerator.js"
 import CommonMethods from "../utils/CommonMethods.js";
 import Config from "../config/Config.js";
 import redisClient from '../config/redisClient.js'
+import axios from "axios";
+import DriverWalletService from "./wallets/DriverWalletService.js";
 
 class UserService {
   // ----------------- REGISTER -----------------
+  // userService.js
+
   async startRegistration(data, files, req) {
     if (!data) throw new ApiError(400, "Missing data");
 
@@ -25,20 +29,32 @@ class UserService {
       aadhar_number,
     } = data;
 
+    // ----------------- CHECK EXISTING USER -----------------
+    const existingUser = await UserRepository.findByEmail(email);
+
+    if (existingUser) {
+      if (existingUser.account_status === "inactive") {
+        // Instead of blocking, guide to recover
+        return {
+          alreadyRegistered: true,
+          message: "Account exists but inactive. Please recover your account.",
+          recover: true, // frontend can redirect to recover flow
+        };
+      }
+      throw new ApiError(409, "Email already registered and active");
+    }
+
     // ----------------- VALIDATIONS -----------------
     if (!firstname || !lastname || !email || !phone || !password) {
       throw new ApiError(400, "Missing required fields");
     }
 
-    if (await UserRepository.findByEmail(email)) {
-      throw new ApiError(409, "Email already registered");
-    }
     if (await UserRepository.findByPhone(phone)) {
       throw new ApiError(409, "Phone already registered");
     }
 
     if (password.length < 6) {
-      throw new ApiError(400, "Password length must be > 6")
+      throw new ApiError(400, "Password length must be > 6");
     }
 
     if (role === "driver") {
@@ -89,7 +105,7 @@ class UserService {
     req.session.pendingUser = {
       userPayload,
       otp,
-      expiresAt: Date.now() + 10 * 60 * 1000 // 10 min
+      expiresAt: Date.now() + 10 * 60 * 1000, // 10 min
     };
 
     // ----------------- SEND MAIL -----------------
@@ -98,55 +114,171 @@ class UserService {
       subject: "Welcome to Ride App!",
       htmlTemplate: "welcome.html", // your template file
       templateData: {
-        username: firstname,  // or firstname + lastname
+        username: firstname, // or firstname + lastname
         email: email,
         appname: "rideapp",
-        otpcode: otp  // add OTP to template data
-      }
+        otpcode: otp, // add OTP to template data
+      },
     };
-
 
     await HelperFunction.sendMail(mailObj);
 
-    return { otpSent: true }
+    return { otpSent: true };
   }
 
   async verifyEmailOtp(req) {
     // Check if OTP exists in session
+
     const pendingUser = req.session?.pendingUser;
+    const recoverOtp = req.session?.recoverOtp;
 
-    if (!pendingUser) {
-      throw new ApiError(400, "No OTP request found. Please register again.");
+    console.log(pendingUser, recoverOtp);
+
+
+    // ----------------- CASE 1: REGISTRATION OTP -----------------
+    if (pendingUser) {
+      if (pendingUser.userPayload.email !== req.body.email) {
+        throw new ApiError(400, "Email does not match OTP request");
+      }
+
+      if (pendingUser.otp !== req.body.otp) {
+        throw new ApiError(400, "Invalid OTP");
+      }
+
+      if (Date.now() > pendingUser.expiresAt) {
+        throw new ApiError(400, "OTP expired");
+      }
+
+      // OTP valid → Create user in DB
+      await UserRepository.create({
+        ...pendingUser.userPayload,
+        email_verified: true,
+      });
+
+      // Clear OTP from session
+      delete req.session.pendingUser;
+
+    // the driver crete wallet if the user is a driver
+    if(user?.role == "driver"){
+
+      const walletCreateObj = {
+        body : { driver_id : user.user_id }
+      }
+      const driverWalletData = await DriverWalletService.createDriverWallet(walletCreateObj);
+      console.log(driverWalletData);
+    
     }
 
-    if (pendingUser.userPayload.email !== req.body.email) {
-      console.log(req.email);
-      throw new ApiError(400, "Email does not match OTP request");
+      return { registered: true };
     }
 
-    if (pendingUser.otp !== req.body.otp) {
-      console.log(pendingUser.otp);
-      console.log(req.body.otp);
+    // ----------------- CASE 2: RECOVERY OTP -----------------
+    if (recoverOtp) {
+      if (recoverOtp.email !== req.body.email) {
+        throw new ApiError(400, "Email does not match recovery request");
+      }
 
-      throw new ApiError(400, "Invalid OTP");
+      if (recoverOtp.otp !== req.body.otp) {
+        throw new ApiError(400, "Invalid OTP");
+      }
+
+      if (Date.now() > recoverOtp.expiresAt) {
+        throw new ApiError(400, "OTP expired");
+      }
+
+      // OTP valid → Reactivate user
+      const user = await UserRepository.findByEmail(req.body.email);
+      if (!user) throw new ApiError(404, "User not found for recovery");
+
+      user.account_status = "active";
+      await user.save();
+
+      // Clear OTP from session
+      delete req.session.recoverOtp;
+
+      return { recovered: true };
     }
 
-    if (Date.now() > pendingUser.expiresAt) {
-      throw new ApiError(400, "OTP expired");
-    }
-
-    // OTP valid → Create user in DB
-    const user = await UserRepository.create({
-      ...pendingUser.userPayload,
-      email_verified: true,
-    });
-
-    // Clear OTP from session
-    delete req.session.pendingUser;
-
-    return true
+    // ----------------- NO SESSION FOUND -----------------
+    throw new ApiError(400, "No OTP request found. Please register or recover again.");
   }
 
+  async loginAdmin({ email, password }) {
+    if (!email || !password) {
+      throw new ApiError(400, "Email and Password are required");
+    }
+
+    try {
+      // 🔗 Call Python API
+      const response = await axios.post("http://127.0.0.1:8000/analysis/login/", {
+        email,
+        password,
+      });
+
+      if (response.status !== 200) {
+        throw new ApiError(response.status, "Invalid credentials");
+      }
+
+      const adminData = response.data.admin; // from Python API
+      const message = response.data.message;
+
+      // 🔑 Generate JWT Token
+      const accessToken = jwt.sign(
+        { id: adminData.id, email: adminData.email, role: "admin" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      // 🍪 Cookie Options
+      const cookieOptions = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Strict",
+        maxAge: 60 * 60 * 1000, // 1 hour
+      };
+
+      return { user: adminData, accessToken, cookieOptions, message };
+    } catch (error) {
+      if (error.response) {
+        throw new ApiError(error.response.status, error.response.data);
+      }
+      console.log(error);
+      
+      throw new ApiError(500, "Unable to connect to Python API");
+    }
+  }
+
+
+
+  async recoverAccount(email, req) {
+    if (!email) {
+      throw new ApiError(400, "Email is required")
+    }
+    const user = await UserRepository.findByEmail(email);
+    if (!user) throw new ApiError(404, "No account found with this email");
+
+    if (user.account_status === "active") {
+      throw new ApiError(400, "Account is already active");
+    }
+
+    // Generate OTP
+    const otp = "" + Math.floor(100000 + Math.random() * 900000);
+    req.session.recoverOtp = {
+      email,
+      otp,
+      expiresAt: Date.now() + 10 * 60 * 1000,
+    };
+
+    // Send mail
+    await HelperFunction.sendMail({
+      to: email,
+      subject: "Recover your Ride App account",
+      htmlTemplate: "recover.html",
+      templateData: { username: user.firstname, otpcode: otp },
+    });
+
+    return { otpSent: true };
+  }
   // ----------------- LOGIN -----------------
   async loginUser({ email, password }) {
     if (!email || !password) {
@@ -160,8 +292,7 @@ class UserService {
 
     if (user.account_status === "inactive") {
       // business rule: auto-reactivate on login
-      await UserRepository.reactivate(user.user_id);
-      user.account_status = "active"; // reflect change in memory
+      throw new ApiError(402, "Your account is deactivated.For activation please register again or recover...")
     }
     const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
@@ -422,7 +553,7 @@ class UserService {
 
   async deactivateUser(req) {
 
-      const { id } = req.user; // from auth middleware
+    const { id } = req.user; // from auth middleware
 
     const updatedUser = await UserRepository.updateIsActive(id, "inActive");
 
@@ -473,15 +604,15 @@ class UserService {
     return zipPath;
   }
 
- // Function to update (or insert) the user's location in Redis
+  // Function to update (or insert) the user's location in Redis
   async updateUserLocation(req) {
     // Get user ID from request
-    const { id } = req.user; 
+    const { id } = req.user;
     const data = req.body;
 
     // Validate required fields
-    if (!id || !data) { 
-      throw new ApiError(400, "Missing required data"); 
+    if (!id || !data) {
+      throw new ApiError(400, "Missing required data");
     }
 
     // Extract longitude and latitude from request body
@@ -489,16 +620,16 @@ class UserService {
     const latitude = data.latitude || null;
 
     // Ensure both coordinates are provided
-    if (!longitude || !latitude) { 
-      throw new ApiError(400, "Missing the user coordinates"); 
+    if (!longitude || !latitude) {
+      throw new ApiError(400, "Missing the user coordinates");
     }
 
     // Store the user’s location in Redis using GEOADD
     // If the user already exists, Redis will update their coordinates
     const redisStoreRes = await redisClient.redis.geoadd(
-      "users:location", 
-      longitude, 
-      latitude, 
+      "users:location",
+      longitude,
+      latitude,
       id?.toString()
     );
 
@@ -507,6 +638,64 @@ class UserService {
     // 0 -> existing element updated
     return redisStoreRes;
   }
+
+  async getAllUsers(page, limit) {
+    const result = await UserRepository.findAllUsers(page, limit, "active");
+    if (!result) {
+      throw new ApiError(400, "Currently they are no users")
+    }
+    return result;
+  }
+
+  async getPendingVerifications() {
+    const users = await UserRepository.findUsersByVerificationStatus("pending", "driver");
+    if (!users || users.length === 0) {
+      throw new ApiError(404, "No pending verifications found");
+    }
+    return users;
+  }
+
+  async approveUserVerification(req) {
+    const { id } = req.params;
+    const notes = req.body?.notes || null;   // safe access
+    const adminId = req.user.id;             // from auth middleware
+
+    const user = await UserRepository.findById(id);
+
+    // Only allow if account is active
+    if (user.account_status !== "active") {
+      throw new ApiError(400, "Only active accounts can be verified");
+    }
+
+    if (!user) throw new ApiError(404, "User not found");
+
+    return await UserRepository.updateVerificationStatus(id, {
+      status: "approved",   // 👈 now matches repo param
+      notes,
+      adminId,
+    });
+  }
+
+  async rejectUserVerification(req) {
+    const { id } = req.params;
+    const reason = req.body?.reason || null;   // safe access
+    const adminId = req.user.id;
+
+    const user = await UserRepository.findById(id);
+    if (!user) throw new ApiError(404, "User not found");
+
+    // Only allow if account is active
+    if (user.account_status !== "active") {
+      throw new ApiError(400, "Only active accounts can be rejected");
+    }
+    
+    return await UserRepository.updateVerificationStatus(id, {
+      status: "rejected",
+      notes: reason,
+      adminId,
+    }, "active");
+  }
+
 
 }
 export default new UserService();

@@ -117,7 +117,7 @@ class RideRepository {
         return ride;
     }
 
-    // Driver: update ride status (e.g., in_progress, completed)
+    // Driver: update ride status (e.g., ongoing, completed)
     async updateRideStatus(rideId, status) {
         const ride = await Ride.findByPk(rideId);
         if (!ride) return null;

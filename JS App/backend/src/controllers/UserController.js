@@ -11,9 +11,32 @@ class UserController {
     return res.status(200).json(new ApiResponse(200, null, "OTP sent to email. Please verify."));
   });
 
+  recoverAccount = asyncHandler(async (req, res) => {
+    const response = await UserService.recoverAccount(req.body.email, req);
+    return res
+      .status(200)
+      .json(new ApiResponse(200, response, "Recovery OTP sent to email"));
+  });
+
   verifyOtp = asyncHandler(async (req, res) => {
     const result = await UserService.verifyEmailOtp(req)
-    return res.status(201).json(new ApiResponse(200, result, "Email Verfied and User created successfully"))
+    return res.status(201).json(new ApiResponse(200, result, "Email Verfied."))
+  })
+
+
+ adminLogin=asyncHandler(async (req, res) => {
+    const result = await UserService.loginAdmin(req.body);
+    console.log(result)
+    // result = { user, accessToken, cookieOptions }
+    res.cookie("access_token", result.accessToken, result.cookieOptions);
+
+    return res.status(200).json(
+      new ApiResponse(
+        200,
+        { user: result.user, accessToken: result.accessToken },
+        "Login successful"
+      )
+    );
   })
 
   login = asyncHandler(async (req, res) => {
@@ -37,12 +60,12 @@ class UserController {
 
   verifyForgotPasswordOtp = asyncHandler(async (req, res) => {
     const result = await UserService.verifyForgotPasswordOtp(req);
-    return res.status(200).json(200,null,"Otp verified successfully");
+    return res.status(200).json(200, null, "Otp verified successfully");
   });
 
   resetPassword = asyncHandler(async (req, res) => {
     const result = await UserService.resetPassword(req);
-    return res.status(200).json(200,null,"Password reset successfully");
+    return res.status(200).json(200, null, "Password reset successfully");
   });
 
   logout = asyncHandler(async (req, res) => {
@@ -52,16 +75,16 @@ class UserController {
       .json(new ApiResponse(200, null, "Logged out successfully"));
   });
 
-  updateUser = asyncHandler(async (req,res) => {
+  updateUser = asyncHandler(async (req, res) => {
     const result = await UserService.updateProfile(req);
     return res.status(201).json(new ApiResponse(200, result, "profile updated successfully"))
-  }) 
+  })
 
-  profile = asyncHandler(async (req,res) => {
-    const result = await UserService.getProfile(req)    
+  profile = asyncHandler(async (req, res) => {
+    const result = await UserService.getProfile(req)
     return res
-    .status(200)
-    .json(new ApiResponse(200, result, "Profile fetched.."));
+      .status(200)
+      .json(new ApiResponse(200, result, "Profile fetched.."));
   })
 
   deactivateUser = asyncHandler(async (req, res) => {
@@ -82,8 +105,8 @@ class UserController {
       .json(new ApiResponse(200, result, "Location updated succesfully"));
   });
 
-  userRides = asyncHandler(async (req,res) => {
-      // totalDays can come from query params, default to 14
+  userRides = asyncHandler(async (req, res) => {
+    // totalDays can come from query params, default to 14
     const totalDays = parseInt(req.query.totalDays) || 14;
 
     // Call service to generate the ZIP and return its path
@@ -95,5 +118,42 @@ class UserController {
       .json(new ApiResponse(200, { zipPath }, "User rides exported successfully"));
   })
 
+  // controllers/userController.js
+  getAllUser = asyncHandler(async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+    const users = await UserService.getAllUsers(page, limit);
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, users, "Users fetched successfully"));
+  });
+
+  getPendingVerifications = asyncHandler(async (req, res) => {
+    const result = await UserService.getPendingVerifications();
+    return res
+      .status(200)
+      .json(new ApiResponse(200, result, "Pending verifications fetched"));
+  });
+
+  // Approve user verification
+  approveUserVerification = asyncHandler(async (req, res) => {
+
+    const result = await UserService.approveUserVerification(req);
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, result, "User verification approved"));
+  });
+
+
+  rejectUserVerification = asyncHandler(async (req, res) => {
+    const result = await UserService.rejectUserVerification(req);
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, result, "User verification rejected"));
+  })
 }
 export default new UserController();
