@@ -716,11 +716,32 @@ class UserService {
 
     if (!user) throw new ApiError(404, "User not found");
 
-    return await UserRepository.updateVerificationStatus(id, {
+    
+    const updateResponse = await UserRepository.updateVerificationStatus(id, {
       status: "approved",   // 👈 now matches repo param
       notes,
       adminId,
     });
+
+    // SEND MAIL AND NOTIFICATION OF VERIFICATION TO THE USER
+    
+    let mailObj = {
+      to : user.email,
+      subject : `Ride App Verification Approved – Welcome on Board, ${user.firstname ? user.firstname : ''} ${user.lastname ? user.lastname : ''}!`,
+      htmlTemplate : "driveraccountapproval",
+      templateData: {
+        driverName: user.firstname + user.lastname,
+        appName: "Ride App",
+        // loginUrl: "https://yourapp.com/login",
+        supportEmail: "support@yourapp.com",
+        year: new Date().getFullYear()
+      }
+    };
+    HelperFunction.sendMail(mailObj);
+
+    HelperFunction.sendFirebasePushNotification('driverVerificationApproved', {...templateData, ...user}, [user.id]);
+
+    return updateResponse;
   }
 
   async rejectUserVerification(req) {
@@ -736,11 +757,33 @@ class UserService {
       throw new ApiError(400, "Only active accounts can be rejected");
     }
     
-    return await UserRepository.updateVerificationStatus(id, {
+    const updateResponse = await UserRepository.updateVerificationStatus(id, {
       status: "rejected",
       notes: reason,
       adminId,
     }, "active");
+
+    // SEND MAIL AND NOTIFICATION OF VERIFICATION TO THE USER
+    
+    let mailObj = {
+      to : user.email,
+      subject : `Ride App Verification Approved – Welcome on Board, ${user.firstname ? user.firstname : ''} ${user.lastname ? user.lastname : ''}!`,
+      htmlTemplate : "driveraccountreject",
+      templateData: {
+        username: user.firstname + user.lastname,
+        driverName: user.firstname + user.lastname,
+        appname: "Ride App",
+        rejectionReason : reason,
+        // loginUrl: "https://yourapp.com/login",
+        supportEmail: "support@yourapp.com",
+        year: new Date().getFullYear()
+      }
+    };
+    HelperFunction.sendMail(mailObj);
+
+    HelperFunction.sendFirebasePushNotification('driverVerificationRejected', {...templateData, ...user}, [user.id]);
+
+    return updateResponse;
   }
 
 

@@ -103,6 +103,21 @@ class Config{
                 message: "The rider has cancelled the ride.",
                 appName: "RideApp",
                 icon: "ride_cancelled_icon"
+            },
+
+            // Driver Verification Notifications
+            driverVerificationApproved: {
+                title: "Verification Approved",
+                message: "Congratulations {{driverName}}! Your driver account has been verified. You can now start accepting rides.",
+                appName: "RideApp",
+                icon: "verification_approved_icon"
+            },
+            driverVerificationRejected: {
+                title: "Verification Rejected",
+                // message: "Sorry {{driverName}}, your verification was rejected. Reason: {{rejectionReason}}. Please resubmit your documents.",
+                message: "Sorry {{driverName}}, your verification was rejected. Reason: {{rejectionReason}}.",
+                appName: "RideApp",
+                icon: "verification_rejected_icon"
             }
         };
 
