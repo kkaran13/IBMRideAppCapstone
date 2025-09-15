@@ -103,6 +103,7 @@ class HelperFunction {
             }
 
             // call the api 
+            console.log(requestConfig);
             const response = await httpClient.request(requestConfig);
             return response.data;
 

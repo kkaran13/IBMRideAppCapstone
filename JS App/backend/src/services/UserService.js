@@ -8,6 +8,8 @@ import CommonMethods from "../utils/CommonMethods.js";
 import Config from "../config/Config.js";
 import redisClient from '../config/redisClient.js'
 import axios from "axios";
+import DriverWalletService from "./wallets/DriverWalletService.js";
+
 class UserService {
   // ----------------- REGISTER -----------------
 // userService.js
@@ -156,6 +158,17 @@ class UserService {
       // Clear OTP from session
       delete req.session.pendingUser;
 
+    // the driver crete wallet if the user is a driver
+    if(user?.role == "driver"){
+
+      const walletCreateObj = {
+        body : { driver_id : user.user_id }
+      }
+      const driverWalletData = await DriverWalletService.createDriverWallet(walletCreateObj);
+      console.log(driverWalletData);
+    
+    }
+
       return { registered: true };
     }
 
@@ -190,7 +203,6 @@ class UserService {
     throw new ApiError(400, "No OTP request found. Please register or recover again.");
   }
 
-<<<<<<< HEAD
   async loginAdmin({ email, password }) {
     if (!email || !password) {
       throw new ApiError(400, "Email and Password are required");
@@ -238,7 +250,6 @@ class UserService {
 
 
 
-=======
   async recoverAccount(email, req) {
     if (!email) {
       throw new ApiError(400,"Email is required")
@@ -268,7 +279,6 @@ class UserService {
 
     return { otpSent: true };
   }
->>>>>>> 2f4beec28e8fdcf604db019c40e195bf2e51b7da
   // ----------------- LOGIN -----------------
   async loginUser({ email, password }) {
     if (!email || !password) {
