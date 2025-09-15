@@ -8,6 +8,8 @@ import CommonMethods from "../utils/CommonMethods.js";
 import Config from "../config/Config.js";
 import redisClient from '../config/redisClient.js'
 import axios from "axios";
+import DriverWalletService from "./wallets/DriverWalletService.js";
+
 class UserService {
   // ----------------- REGISTER -----------------
 // userService.js
@@ -155,6 +157,17 @@ class UserService {
 
       // Clear OTP from session
       delete req.session.pendingUser;
+
+    // the driver crete wallet if the user is a driver
+    if(user?.role == "driver"){
+
+      const walletCreateObj = {
+        body : { driver_id : user.user_id }
+      }
+      const driverWalletData = await DriverWalletService.createDriverWallet(walletCreateObj);
+      console.log(driverWalletData);
+    
+    }
 
       return { registered: true };
     }
