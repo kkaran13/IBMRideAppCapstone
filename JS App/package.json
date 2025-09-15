@@ -26,6 +26,7 @@
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.7.0",
     "dayjs": "^1.11.18",
+    "dotenv": "^17.2.2",
     "express-session": "^1.18.2",
     "ioredis": "^5.7.0",
     "multer": "^2.0.2",

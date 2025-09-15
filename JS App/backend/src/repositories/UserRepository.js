@@ -59,6 +59,24 @@ class UserRepository {
     );
   }
 
+  async findAllUsers(page, limit) {
+    const offset = (page - 1) * limit;
+
+    const { rows, count } = await User.findAndCountAll({
+      offset,
+      limit,
+      order: [["created_at", "DESC"]],
+      attributes: { exclude: ["password"] }, // exclude sensitive fields
+    });
+
+    return {
+      users: rows,
+      total: count,
+      page,
+      totalPages: Math.ceil(count / limit),
+    };
+  }
+
 }
 
 export default new UserRepository();
