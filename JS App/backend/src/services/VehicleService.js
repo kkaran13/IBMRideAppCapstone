@@ -1,6 +1,7 @@
 import VehicleRepository from "../repositories/VehicleRepository.js";
 import User from "../models/User.js";
 import ApiError from "../utils/ApiError.js";
+import RideRepository from "../repositories/RideRepository.js";
 
 class VehicleService {
   async registerVehicle(data) {
@@ -85,8 +86,20 @@ class VehicleService {
         throw new ApiError(400, "Invalid status value. Allowed: active, inactive");
       }
 
+      const activeRide = await RideRepository.getActiveRideByDriver(vehicle.owner_id);
+      if (activeRide) {
+        
+        if (data.status === "inactive" && activeRide.vehicle_id === id) {
+          throw new ApiError(400, "vehicle is in an ongoing ride");
+        }
+
+        if (data.status === "active" && activeRide.vehicle_id !== id) {
+          throw new ApiError(400, "cannot change vehicle on ongoing ride");
+        }
+      }
      
       if (data.status === "active") {
+        
         await VehicleRepository.updateAllByOwnerExcept(vehicle.owner_id, id, {
           status: "inactive",
         });
@@ -106,10 +119,16 @@ class VehicleService {
   }
 
   async deactivateVehicle(id) {
-    const deactivated = await VehicleRepository.softDeleteVehicle(id);
-    if (!deactivated) throw new ApiError(404, "Vehicle not found");
-    return deactivated;
-  }
+     const vehicle = await VehicleRepository.findById(id);
+     if (!vehicle) throw new ApiError(404, "Vehicle not found");
+
+      const activeRide = await RideRepository.getActiveRideByDriver(vehicle.owner_id);
+      if (activeRide && activeRide.vehicle_id === id) {
+        throw new ApiError(400, "cannot deactivate this vehicle,it is in an ongoing ride");
+      }
+      const deactivated = await VehicleRepository.softDeleteVehicle(id);
+      return deactivated;
+    }
 
   async getVehiclesByDriver(driverId) {
     return await VehicleRepository.findByOwner(driverId);

@@ -225,7 +225,7 @@ class RideRepository {
     }
 
     async deleteRating(ratingId) {
-            return await Rating.findOneAndDelete({ rating_id: ratingId });
+            return await Ride.findOneAndDelete({ rating_id: ratingId });
         }
 
     //get active ride assigned to a particular vehicle
