@@ -2,7 +2,6 @@ import VehicleRepository from "../repositories/VehicleRepository.js";
 import RideRepository from "../repositories/RideRepository.js";
 import User from "../models/User.js";
 import ApiError from "../utils/ApiError.js";
-import RideRepository from "../repositories/RideRepository.js";
 
 class VehicleService {
   async registerVehicle(data) {
