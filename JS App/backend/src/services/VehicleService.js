@@ -1,4 +1,5 @@
 import VehicleRepository from "../repositories/VehicleRepository.js";
+import RideRepository from "../repositories/RideRepository.js";
 import User from "../models/User.js";
 import ApiError from "../utils/ApiError.js";
 
@@ -85,7 +86,7 @@ class VehicleService {
         throw new ApiError(400, "Invalid status value. Allowed: active, inactive");
       }
 
-     
+      
       if (data.status === "active") {
         await VehicleRepository.updateAllByOwnerExcept(vehicle.owner_id, id, {
           status: "inactive",
@@ -105,10 +106,24 @@ class VehicleService {
     return updated;
   }
 
-  async deactivateVehicle(id) {
-    const deactivated = await VehicleRepository.softDeleteVehicle(id);
-    if (!deactivated) throw new ApiError(404, "Vehicle not found");
-    return deactivated;
+  async deleteVehicle(id, user) {
+    const vehicle = await VehicleRepository.findById(id);
+
+    if (!vehicle || vehicle.owner_id !== user.id) {
+      throw new ApiError(404, "Vehicle not found");
+    }
+
+    if (user.role !== "driver") {
+      throw new ApiError(403, "Only drivers can delete vehicles");
+    }
+
+    const activeRide = await RideRepository.findActiveRideByVehicleId(id);
+    if (activeRide) {
+      throw new ApiError(400, "Vehicle cannot be deleted because it has active rides");
+    }
+
+    await VehicleRepository.deleteVehicle(id);
+    return true;
   }
 
   async getVehiclesByDriver(driverId) {
