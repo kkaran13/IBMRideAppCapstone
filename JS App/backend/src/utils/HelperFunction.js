@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import config from "../config/Config.js";
 // import firebaseadmin from '../config/firebaseMessage.js'
 import cloudinary from "../config/cloudinary.js";
+import httpClient from '../config/httpClient.js';
 
 // recreate __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
