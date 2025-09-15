@@ -1,29 +1,42 @@
+
 import mongoose from "mongoose";
 
 const ratingSchema = new mongoose.Schema({
-  rideId: {
-    type: String, // UUID from Postgres rides
-    required: true,
-    unique: true, // one rating per ride
+  rating_id: {
+    type: String, 
+    unique: true, 
+    required: true
   },
-  riderId: {
-    type: String, // UUID from Postgres users
-    required: true,
+  ride_id: { 
+    type: String, 
+    ref: "Ride", 
+    required: true 
   },
-  driverId: {
-    type: String, // UUID from Postgres users
-    required: true,
+  driver_id: { 
+    type: String, 
+    ref: "User", 
+    required: true
+   },
+   rider_id: { 
+    type: String, 
+    ref: "User", 
+    required: true },
+  score: { 
+    type: Number, 
+    min: 1, max: 5, 
+    required: true 
   },
-  rating: {
-    type: Number,
-    min: 1,
-    max: 5,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  comment: { 
+    type: String,
+    trim :true
+   },
+  timestamp: { 
+    type: Date, 
+    default: 
+    Date.now 
+  }
 });
 
-export default mongoose.model("Rating", ratingSchema);
+const Rating = mongoose.model("Rating", ratingSchema);
+
+export default Rating;
