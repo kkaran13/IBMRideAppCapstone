@@ -28,10 +28,7 @@
     "cookie-parser": "^1.4.7",
     "dayjs": "^1.11.18",
     "dotenv": "^17.2.2",
-<<<<<<< HEAD
     "express": "^5.1.0",
-=======
->>>>>>> 2f4beec28e8fdcf604db019c40e195bf2e51b7da
     "express-session": "^1.18.2",
     "ioredis": "^5.7.0",
     "multer": "^2.0.2",

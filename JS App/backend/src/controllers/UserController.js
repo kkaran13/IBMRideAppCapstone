@@ -155,5 +155,17 @@ class UserController {
       .status(200)
       .json(new ApiResponse(200, result, "User verification rejected"));
   })
+
+  adminRegister=asyncHandler(async (req, res) => {
+    const result = await UserService.AdminRegister(req.body);
+    console.log(result) 
+    return res.status(200).json(
+      new ApiResponse(
+        200,
+        { user: result.user, accessToken: result.accessToken },
+        "Admin Register Successfull"
+      )
+    );
+  })
 }
 export default new UserController();

@@ -18,7 +18,8 @@ router.post("/reset-password", userController.resetPassword);
 router.post("/recover-account", userController.recoverAccount);
 
 //Admin Login Route
-router.post("/admin/login",userController.adminLogin)
+router.post("/admin/login",authorizeRole("admin"),userController.adminLogin)
+router.post("/admin/register",authenticateJWT,authorizeRole("admin"),userController.adminRegister)
 
 // // Protected (after login)
 router.get("/profile", authenticateJWT ,userController.profile);

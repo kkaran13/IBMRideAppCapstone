@@ -203,6 +203,52 @@ class UserService {
     throw new ApiError(400, "No OTP request found. Please register or recover again.");
   }
 
+  async AdminRegister({ name, email, phone, password }) {
+    if (!name || !email || !phone || !password) {
+      throw new ApiError(400, "Name, Email, Phone and Password are required");
+    }
+
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/analysis/register/", {
+        name,
+        email,
+        phone,
+        password,
+      });
+
+      console.log("✅ Python API responded with:", response.status);
+
+      if (response.status !== 201) {
+        throw new ApiError(response.status, "Unexpected response from Python API");
+      }
+
+      return { user: response.data, message: "Admin registered successfully" };
+    } catch (error) {
+      if (error.response) {
+        console.error("❌ Python API Error:", error.response.status, error.response.data);
+ 
+        let friendlyMessage = "Registration failed";
+
+        const data = error.response.data;
+
+        if (data.email) {
+          friendlyMessage = `Email: ${data.email.join(", ")}`;
+        } else if (data.phone) {
+          friendlyMessage = `Phone: ${data.phone.join(", ")}`;
+        } else if (data.non_field_errors) {
+          friendlyMessage = data.non_field_errors.join(", ");
+        } else if (data.detail) {
+          friendlyMessage = data.detail;
+        }
+
+        throw new ApiError(error.response.status, friendlyMessage);
+      }
+
+      console.error("❌ Network/Other Error:", error.message);
+      throw new ApiError(500, "Unable to connect to Python API");
+    }
+  }
+
   async loginAdmin({ email, password }) {
     if (!email || !password) {
       throw new ApiError(400, "Email and Password are required");
