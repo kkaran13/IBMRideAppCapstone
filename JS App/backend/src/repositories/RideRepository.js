@@ -269,6 +269,18 @@ class RideRepository {
         await Ride.update(fields, { where: { ride_id: rideId } });
         return await Ride.findByPk(rideId);
     }
+
+    // for Vehicle delete
+    async findActiveRideByVehicleId(vehicleId) {
+        return await Ride.findOne({
+            where: {
+                vehicle_id: vehicleId,
+                ride_status: {
+                    [Op.notIn]: ["completed", "cancelled"],
+                },
+            },
+        });
+    }
 }
 
 export default new RideRepository();
