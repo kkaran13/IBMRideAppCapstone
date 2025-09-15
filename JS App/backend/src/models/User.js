@@ -66,7 +66,7 @@ const User = sequelize.define("User", {
   license_number: {
   type: DataTypes.STRING(50),
   unique: true,
-  allowNull: true, // changed from false to true
+  allowNull: true,
 },
 license_url: {
   type: DataTypes.STRING(500),

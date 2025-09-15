@@ -130,5 +130,30 @@ class UserController {
       .json(new ApiResponse(200, users, "Users fetched successfully"));
   });
 
+  getPendingVerifications = asyncHandler(async (req, res) => {
+    const result = await UserService.getPendingVerifications();
+    return res
+      .status(200)
+      .json(new ApiResponse(200, result, "Pending verifications fetched"));
+  });
+
+  // Approve user verification
+  approveUserVerification = asyncHandler(async (req, res) => {
+
+    const result = await UserService.approveUserVerification(req);
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, result, "User verification approved"));
+  });
+
+
+  rejectUserVerification = asyncHandler(async (req, res) => {
+    const result = await UserService.rejectUserVerification(req);
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, result, "User verification rejected"));
+  })
 }
 export default new UserController();
