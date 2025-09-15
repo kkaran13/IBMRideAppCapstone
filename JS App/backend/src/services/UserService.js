@@ -12,7 +12,7 @@ import DriverWalletService from "./wallets/DriverWalletService.js";
 
 class UserService {
   // ----------------- REGISTER -----------------
-// userService.js
+  // userService.js
 
   async startRegistration(data, files, req) {
     if (!data) throw new ApiError(400, "Missing data");
@@ -132,8 +132,8 @@ class UserService {
     const pendingUser = req.session?.pendingUser;
     const recoverOtp = req.session?.recoverOtp;
 
-    console.log(pendingUser,recoverOtp);
-    
+    console.log(pendingUser, recoverOtp);
+
 
     // ----------------- CASE 1: REGISTRATION OTP -----------------
     if (pendingUser) {
@@ -252,7 +252,7 @@ class UserService {
 
   async recoverAccount(email, req) {
     if (!email) {
-      throw new ApiError(400,"Email is required")
+      throw new ApiError(400, "Email is required")
     }
     const user = await UserRepository.findByEmail(email);
     if (!user) throw new ApiError(404, "No account found with this email");
@@ -292,7 +292,7 @@ class UserService {
 
     if (user.account_status === "inactive") {
       // business rule: auto-reactivate on login
-      throw new ApiError(402,"Your account is deactivated.For activation please register again or recover...")
+      throw new ApiError(402, "Your account is deactivated.For activation please register again or recover...")
     }
     const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
@@ -553,7 +553,7 @@ class UserService {
 
   async deactivateUser(req) {
 
-      const { id } = req.user; // from auth middleware
+    const { id } = req.user; // from auth middleware
 
     const updatedUser = await UserRepository.updateIsActive(id, "inActive");
 
@@ -604,15 +604,15 @@ class UserService {
     return zipPath;
   }
 
- // Function to update (or insert) the user's location in Redis
+  // Function to update (or insert) the user's location in Redis
   async updateUserLocation(req) {
     // Get user ID from request
-    const { id } = req.user; 
+    const { id } = req.user;
     const data = req.body;
 
     // Validate required fields
-    if (!id || !data) { 
-      throw new ApiError(400, "Missing required data"); 
+    if (!id || !data) {
+      throw new ApiError(400, "Missing required data");
     }
 
     // Extract longitude and latitude from request body
@@ -620,16 +620,16 @@ class UserService {
     const latitude = data.latitude || null;
 
     // Ensure both coordinates are provided
-    if (!longitude || !latitude) { 
-      throw new ApiError(400, "Missing the user coordinates"); 
+    if (!longitude || !latitude) {
+      throw new ApiError(400, "Missing the user coordinates");
     }
 
     // Store the user’s location in Redis using GEOADD
     // If the user already exists, Redis will update their coordinates
     const redisStoreRes = await redisClient.redis.geoadd(
-      "users:location", 
-      longitude, 
-      latitude, 
+      "users:location",
+      longitude,
+      latitude,
       id?.toString()
     );
 
@@ -640,12 +640,62 @@ class UserService {
   }
 
   async getAllUsers(page, limit) {
-    const result = await UserRepository.findAllUsers(page, limit);
+    const result = await UserRepository.findAllUsers(page, limit, "active");
     if (!result) {
-      throw new ApiError(400,"Currently they are no users")
+      throw new ApiError(400, "Currently they are no users")
     }
     return result;
   }
+
+  async getPendingVerifications() {
+    const users = await UserRepository.findUsersByVerificationStatus("pending", "driver");
+    if (!users || users.length === 0) {
+      throw new ApiError(404, "No pending verifications found");
+    }
+    return users;
+  }
+
+  async approveUserVerification(req) {
+    const { id } = req.params;
+    const notes = req.body?.notes || null;   // safe access
+    const adminId = req.user.id;             // from auth middleware
+
+    const user = await UserRepository.findById(id);
+
+    // Only allow if account is active
+    if (user.account_status !== "active") {
+      throw new ApiError(400, "Only active accounts can be verified");
+    }
+
+    if (!user) throw new ApiError(404, "User not found");
+
+    return await UserRepository.updateVerificationStatus(id, {
+      status: "approved",   // 👈 now matches repo param
+      notes,
+      adminId,
+    });
+  }
+
+  async rejectUserVerification(req) {
+    const { id } = req.params;
+    const reason = req.body?.reason || null;   // safe access
+    const adminId = req.user.id;
+
+    const user = await UserRepository.findById(id);
+    if (!user) throw new ApiError(404, "User not found");
+
+    // Only allow if account is active
+    if (user.account_status !== "active") {
+      throw new ApiError(400, "Only active accounts can be rejected");
+    }
+    
+    return await UserRepository.updateVerificationStatus(id, {
+      status: "rejected",
+      notes: reason,
+      adminId,
+    }, "active");
+  }
+
 
 }
 export default new UserService();
