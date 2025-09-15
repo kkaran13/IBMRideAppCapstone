@@ -4,11 +4,19 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import Config from "./config/Config.js";
+import cors from "cors";
+
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.use(cors({
+  origin: "http://127.0.0.1:5500", // or "*" to allow all
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  credentials: true
+}));
 
 app.use(session({
   secret: Config.SESSION_SECRET, // use env var
