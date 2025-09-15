@@ -265,6 +265,17 @@ class RideRepository {
         await Ride.update(fields, { where: { ride_id: rideId } });
         return await Ride.findByPk(rideId);
     }
+
+    async updatePaymentStatus(rideId, status) {
+        const ride = await Ride.findByPk(rideId);
+        if (!ride) return null;
+
+        ride.payment_status = status;
+
+        await ride.save();
+
+        return ride;
+    }
 }
 
 export default new RideRepository();
