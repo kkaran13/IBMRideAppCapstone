@@ -25,6 +25,9 @@ router.get("/export-rides", authenticateJWT, UserController.userRides);
 router.post("/update-location", authenticateJWT, userController.udpateUserLocation);
 
 // admin protected
-router.get("/getalluser",authenticateJWT,authorizeRole(['admin']),userController.getAllUser)
+router.get("/getalluser",authenticateJWT,authorizeRole(["admin"]),userController.getAllUser)
+router.get("/pending-verifications",authenticateJWT,authorizeRole(["admin"]), userController.getPendingVerifications);
+router.post("/:id/approve", authenticateJWT,authorizeRole(["admin"]),userController.approveUserVerification);
+router.post("/:id/reject", authenticateJWT,authorizeRole(["admin"]),userController.rejectUserVerification);
 
 export default router;
