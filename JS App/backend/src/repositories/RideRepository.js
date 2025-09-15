@@ -117,7 +117,7 @@ class RideRepository {
         return ride;
     }
 
-    // Driver: update ride status (e.g., in_progress, completed)
+    // Driver: update ride status (e.g., ongoing, completed)
     async updateRideStatus(rideId, status) {
         const ride = await Ride.findByPk(rideId);
         if (!ride) return null;
@@ -154,7 +154,7 @@ class RideRepository {
         return await Ride.findOne({
             where: {
                 driver_id: driverId,
-                ride_status: { [Op.in]: ["accepted", "in_progress"] },
+                ride_status: { [Op.in]: ["accepted", "ongoing"] },
             },
         });
     }
@@ -164,7 +164,7 @@ class RideRepository {
         return await Ride.findOne({
             where: {
                 rider_id: riderId,
-                ride_status: { [Op.in]: ["requested", "accepted", "in_progress"] },
+                ride_status: { [Op.in]: ["accepted", "ongoing"] },
             },
         });
     }
