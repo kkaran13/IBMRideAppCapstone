@@ -16,6 +16,22 @@ class UserController {
     return res.status(201).json(new ApiResponse(200, result, "Email Verfied and User created successfully"))
   })
 
+
+ adminLogin=asyncHandler(async (req, res) => {
+    const result = await UserService.loginAdmin(req.body);
+    console.log(result)
+    // result = { user, accessToken, cookieOptions }
+    res.cookie("access_token", result.accessToken, result.cookieOptions);
+
+    return res.status(200).json(
+      new ApiResponse(
+        200,
+        { user: result.user, accessToken: result.accessToken },
+        "Login successful"
+      )
+    );
+  })
+
   login = asyncHandler(async (req, res) => {
     const result = await UserService.loginUser(req.body);
 

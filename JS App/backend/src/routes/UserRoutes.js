@@ -6,6 +6,7 @@ import UserController from "../controllers/UserController.js";
 
 const router = express.Router();
 
+
 // Public
 router.post("/register", uploadMultiple , userController.register);
 router.post("/verify-otp", UserController.verifyOtp)
@@ -13,6 +14,9 @@ router.post("/login", userController.login);
 router.post("/forgot-password", userController.forgotPassword);
 router.post("/verify-password-otp",userController.verifyForgotPasswordOtp)
 router.post("/reset-password", userController.resetPassword);
+
+//Admin Login Route
+router.post("/admin/login",userController.adminLogin)
 
 // // Protected (after login)
 router.get("/profile", authenticateJWT ,userController.profile);
