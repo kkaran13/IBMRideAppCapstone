@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureAuth - Authentication System</title>
+    <link rel="stylesheet" href="../../css/user/user.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1 class="auth-title">SecureAuth</h1>
+                <p class="auth-subtitle">Complete Authentication System</p>
+            </div>
+
+            <div style="display: grid; gap: 1rem; margin-bottom: 2rem;">
+                <h3 style="color: var(--primary); font-size: 1.125rem; margin-bottom: 0.5rem;">User Authentication</h3>
+                
+                <a href="register.html" class="btn btn-primary">
+                    Create New Account
+                </a>
+                
+                <a href="../../html/user/login.html" class="btn btn-secondary">
+                    Sign In
+                </a>
+                
+                <a href="../../html/user/verify-otp.html" class="btn btn-secondary">
+                    Verify Account
+                </a>
+            </div>
+
+            <div style="display: grid; gap: 1rem; margin-bottom: 2rem;">
+                <h3 style="color: var(--primary); font-size: 1.125rem; margin-bottom: 0.5rem;">Password Recovery</h3>
+                
+                <a href="../../html/user/forgot-password.html" class="btn btn-secondary">
+                    Forgot Password
+                </a>
+                
+                <a href="../../html/user/verify-password-otp.html" class="btn btn-secondary">
+                    Verify Reset Code
+                </a>
+                
+                <a href="../../html/user/reset-password.html" class="btn btn-secondary">
+                    Reset Password
+                </a>
+            </div>
+
+            <div style="display: grid; gap: 1rem; margin-bottom: 2rem;">
+                <h3 style="color: var(--primary); font-size: 1.125rem; margin-bottom: 0.5rem;">Account Management</h3>
+
+                <a href="../../html/user/recover-account.html" class="btn btn-secondary">
+                    Recover Account
+                </a>
+
+                <a href="../../html/user/admin-login.html" class="btn btn-secondary">
+                    Admin Login
+                </a>
+            </div>
+
+            <div style="background: var(--muted); padding: 1.5rem; border-radius: var(--radius); margin-top: 2rem;">
+                <h4 style="color: var(--primary); margin-bottom: 1rem; font-size: 1rem;">System Features</h4>
+                <ul style="margin: 0; padding-left: 1.25rem; color: var(--muted-foreground); font-size: 0.875rem; line-height: 1.6;">
+                    <li>User registration with file uploads</li>
+                    <li>OTP verification for account activation</li>
+                    <li>Secure user and admin login</li>
+                    <li>Password recovery with email verification</li>
+                    <li>Account recovery for deactivated accounts</li>
+                    <li>Responsive design with modern UI</li>
+                    <li>Form validation and error handling</li>
+                    <li>Loading states and user feedback</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+                <p style="color: var(--muted-foreground); font-size: 0.875rem;">
+                    Built with HTML, CSS, and JavaScript
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/user/auth-utils.js"></script>
+    <script>
+        // Check authentication status and show appropriate message
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = AuthUtils.isAuthenticated();
+            const isAdmin = AuthUtils.isAuthenticated(true);
+            
+            if (isLoggedIn || isAdmin) {
+                const role = isAdmin ? 'Admin' : 'User';
+                const alertContainer = document.createElement('div');
+                alertContainer.style.marginBottom = '1rem';
+                
+                AuthUtils.showAlert(alertContainer, 
+                    `You are currently logged in as ${role}. <a href="#" onclick="logout()" style="color: var(--primary); text-decoration: underline;">Logout</a>`, 
+                    'success'
+                );
+                
+                document.querySelector('.auth-card').insertBefore(
+                    alertContainer, 
+                    document.querySelector('.auth-card').firstElementChild.nextElementSibling
+                );
+            }
+        });
+
+        function logout() {
+            AuthUtils.clearAuthData();
+            location.reload();
+        }
+    </script>
+</body>
+</html>
