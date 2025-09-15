@@ -154,7 +154,7 @@ class RideRepository {
         return await Ride.findOne({
             where: {
                 driver_id: driverId,
-                ride_status: { [Op.in]: ["accepted", "in_progress"] },
+                ride_status: { [Op.in]: ["accepted", "ongoing"] },
             },
         });
     }
@@ -164,7 +164,7 @@ class RideRepository {
         return await Ride.findOne({
             where: {
                 rider_id: riderId,
-                ride_status: { [Op.in]: ["requested", "accepted", "in_progress"] },
+                ride_status: { [Op.in]: ["accepted", "ongoing"] },
             },
         });
     }
@@ -264,6 +264,18 @@ class RideRepository {
         fields.updated_at = new Date();
         await Ride.update(fields, { where: { ride_id: rideId } });
         return await Ride.findByPk(rideId);
+    }
+
+    // for Vehicle delete
+    async findActiveRideByVehicleId(vehicleId) {
+        return await Ride.findOne({
+            where: {
+                vehicle_id: vehicleId,
+                ride_status: {
+                    [Op.notIn]: ["completed", "cancelled"],
+                },
+            },
+        });
     }
 }
 

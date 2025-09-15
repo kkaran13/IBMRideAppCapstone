@@ -1,4 +1,5 @@
 import Vehicle from "../models/Vehicle.js";
+import Ride from "../models/Ride.js";
 import { Op } from "sequelize";
 
 class VehicleRepository {
@@ -24,17 +25,15 @@ class VehicleRepository {
     return await vehicle.update(data);
   }
 
-  // Soft delete
-  async softDeleteVehicle(id) {
+  async deleteVehicle(id) {
     const vehicle = await Vehicle.findByPk(id);
     if (!vehicle) return null;
-    return await vehicle.update({
-      status: "inactive",
-      is_deleted: true,
-    });
+
+    await vehicle.destroy({ force: true });
+    return vehicle;
   }
 
-   async updateAllByOwnerExcept(ownerId, excludeVehicleId, updateFields) {
+  async updateAllByOwnerExcept(ownerId, excludeVehicleId, updateFields) {
     return await Vehicle.update(updateFields, {
       where: {
         owner_id: ownerId,
@@ -44,22 +43,11 @@ class VehicleRepository {
   }
 
   async findByOwnerAndId(ownerId, vehicleId, options = {}) {
-  return await Vehicle.findOne({
-    where: { owner_id: ownerId, vehicle_id: vehicleId },
-    ...options,
-  });
-}
-
-
-  // Reactivate (admin)
-  // async reactivateVehicle(id) {
-  //   const vehicle = await Vehicle.findByPk(id);
-  //   if (!vehicle) return null;
-  //   return await vehicle.update({
-  //     status: "active",
-  //     is_deleted: false,
-  //   });
-  // }
+    return await Vehicle.findOne({
+      where: { owner_id: ownerId, vehicle_id: vehicleId },
+      ...options,
+    });
+  }
 }
 
 export default new VehicleRepository();

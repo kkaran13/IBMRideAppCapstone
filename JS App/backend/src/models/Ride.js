@@ -42,7 +42,7 @@ const Ride = sequelize.define(
 
         pickup_address: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
         },
         pickup_latitude: {
             type: DataTypes.DECIMAL(10, 8),
@@ -56,7 +56,7 @@ const Ride = sequelize.define(
         },
         dropoff_address: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
         },
         dropoff_latitude: {
             type: DataTypes.DECIMAL(10, 8),

@@ -6,7 +6,7 @@ import UserRepository from "../repositories/UserRepository.js";
 
 class VehicleController {
   registerVehicle = asyncHandler(async (req, res) => {
-   
+
     if (req.user.role !== "driver") {
       throw new ApiError(403, "Only drivers can register vehicles");
     }
@@ -23,18 +23,11 @@ class VehicleController {
     res.status(200).json(new ApiResponse(200, updatedVehicle, "Vehicle updated successfully"));
   });
 
-
-  deactivateVehicle = asyncHandler(async (req, res) => {
-    const vehicle = await VehicleService.deactivateVehicle(req.params.id);
-    if (!vehicle) throw new ApiError(404, "Vehicle not found");
-
-    // Only the owner driver can deactivate
-    if (req.user.role !== "driver" || req.user.id !== vehicle.owner_id) {
-      throw new ApiError(403, "You cannot delete another driver’s vehicle");
-    }
-
-    await VehicleService.deactivateVehicle(req.params.id);
-    res.status(200).json(new ApiResponse(200, null, "Vehicle deleted successfully"));
+  deleteVehicle = asyncHandler(async (req, res) => {
+    const vehicle = await VehicleService.deleteVehicle(req.params.id, req.user);
+    res
+      .status(200)
+      .json(new ApiResponse(200, vehicle, "Vehicle deleted successfully"));
   });
 
   getVehiclesByDriver = asyncHandler(async (req, res) => {
@@ -52,6 +45,5 @@ class VehicleController {
     res.status(200).json(new ApiResponse(200, vehicles, "Vehicles fetched successfully"));
   });
 }
-
 
 export default new VehicleController();
