@@ -225,7 +225,7 @@ class RideRepository {
     }
 
     async deleteRating(ratingId) {
-            return await Ride.findOneAndDelete({ rating_id: ratingId });
+            return await Ride.findOneAndUpdate( { rating_id: ratingId },{ $set: { rating_id: null } },);
         }
 
     //get active ride assigned to a particular vehicle
