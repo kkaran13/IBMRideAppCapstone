@@ -332,6 +332,7 @@ class UserService {
     }
 
     const user = await UserRepository.findByEmail(email);
+    
     if (!user) {
       throw new ApiError(401, "Invalid credentials");
     }
