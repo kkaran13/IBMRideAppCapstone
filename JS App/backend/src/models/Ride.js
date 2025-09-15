@@ -40,6 +40,11 @@ const Ride = sequelize.define(
             onDelete: "RESTRICT",
         },
 
+        rating_id: {
+        type: DataTypes.UUID,
+        allowNull: true, 
+        },
+
         pickup_address: {
             type: DataTypes.TEXT,
             allowNull: false,

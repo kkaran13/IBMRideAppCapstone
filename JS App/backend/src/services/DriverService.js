@@ -2,7 +2,7 @@
 import RideRepository from "../repositories/RideRepository.js";
 import VehicleRepository from "../repositories/VehicleRepository.js";
 import UserRepository from "../repositories/UserRepository.js";
-// import deviceTokenService from "./DeviceTokenService.js";
+import DeviceTokenService from "./DeviceTokenService.js";
 import ApiError from "../utils/ApiError.js";
 // import HF from "../utils/HelperFunction.js";
 
@@ -51,7 +51,7 @@ class DriverService {
 
       // Notifications
       try {
-        const tokens = await deviceTokenService.getUserTokens(ride.rider_id);
+        const tokens = await DeviceTokenService.getUserTokens(ride.rider_id);
         if (tokens?.length) {
           await HF.sendFirebasePushNotification(
             { title: "Ride Accepted", body: "A driver has accepted your ride." },
@@ -108,7 +108,7 @@ class DriverService {
             });
 
       try {
-        const tokens = await deviceTokenService.getUserTokens(ride.rider_id);
+        const tokens = await DeviceTokenService.getUserTokens(ride.rider_id);
         if (tokens?.length) {
           await HF.sendFirebasePushNotification(
             { title: "Ride Started", body: "Your trip has started." },
@@ -141,7 +141,7 @@ class DriverService {
             });
 
       try {
-        const tokens = await deviceTokenService.getUserTokens(ride.rider_id);
+        const tokens = await DeviceTokenService.getUserTokens(ride.rider_id);
         if (tokens?.length) {
           await HF.sendFirebasePushNotification(
             { title: "Ride Completed", body: "Your trip has completed." },
@@ -201,7 +201,7 @@ class DriverService {
             });
 
       try {
-        const tokens = await deviceTokenService.getUserTokens(ride.rider_id);
+        const tokens = await DeviceTokenService.getUserTokens(ride.rider_id);
         if (tokens?.length) {
           await HF.sendFirebasePushNotification(
             { title: "Ride Cancelled", body: "Your driver cancelled the ride." },

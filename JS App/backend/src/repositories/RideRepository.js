@@ -116,7 +116,7 @@ class RideRepository {
 
     // Driver: get rides with status = "requested" (available rides)
     async getAvailableRides() {
-        return await Ride.findAll({ where: { status: "requested" } });
+        return await Ride.findAll({ where: { ride_status: "requested" } });
     }
 
     // Driver: check if driver has an active ride
@@ -195,6 +195,9 @@ class RideRepository {
         });
     }
 
+    async deleteRating(ratingId) {
+            return await Rating.findOneAndDelete({ rating_id: ratingId });
+        }
 
     //get active ride assigned to a particular vehicle
     async getActiveRideByVehicle(vehicleId) {
@@ -222,6 +225,7 @@ class RideRepository {
             "duration_minutes",
             "payment_status",
             "otp_verified_at",
+            "rating_id",
         ];
 
         const invalidFields = Object.keys(fields).filter(
