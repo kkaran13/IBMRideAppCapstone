@@ -30,7 +30,7 @@ app.use(session({
 import userRoute from "./routes/UserRoutes.js";
 import vehicleRoute from "./routes/VehicleRoutes.js";
 import deviceRouter from "./routes/DeviceTokenRoutes.js";
-import driverRoute from './routes/DriverRoutes.js'
+// import driverRoute from './routes/DriverRoutes.js'
 import rideRoute from "./routes/RideRoutes.js"
 
 // Python App APIs
