@@ -13,54 +13,72 @@ class RideRepository {
     }
 
     // Rider: get all rides for a rider
+    async getRidesByRider(riderId) {
+        return await Ride.findAll({ where: { rider_id: riderId } });
+    }
+
+    // Driver: get all rides for a driver
     async getRidesByDriver(
-            driverId,
-            { page = 1, limit = 10, status, startDate, endDate } = {}) {
-            const where = { driver_id: driverId };
+        driverId,
+        { page = 1, limit = 10, status, startDate, endDate } = {}) {
+        const where = { driver_id: driverId };
 
-            // filter by ride status
-            if (status) {
+        // filter by ride status
+        if (status) {
             where.ride_status = status;
-            }
+        }
 
-            // filter by date range (created_at)
-            if (startDate && endDate) {
+        // filter by date range (created_at)
+        if (startDate && endDate) {
             where.created_at = { [Op.between]: [startDate, endDate] };
-            } else if (startDate) {
+        } else if (startDate) {
             where.created_at = { [Op.gte]: startDate }; // greater than or equal
-            } else if (endDate) {
+        } else if (endDate) {
             where.created_at = { [Op.lte]: endDate }; // less than or equal
-            }
+        }
 
-            const offset = (page - 1) * limit;
+        const offset = (page - 1) * limit;
 
-            const { rows, count } = await Ride.findAndCountAll({
+        const { rows, count } = await Ride.findAndCountAll({
             where,
             limit,
             offset,
             order: [["created_at", "DESC"]],
-            });
+        });
 
-            return {
+        return {
             rides: rows,
             total: count,
             page,
             totalPages: Math.ceil(count / limit),
-            };
-        }
-
+        };
+    }
 
     // Rider: cancel a ride (only if not completed)
     async cancelRide(rideId, reason) {
         const ride = await Ride.findByPk(rideId);
         if (!ride) return null;
 
-        if (["completed", "cancelled"].includes(ride.status)) {
+        if (["completed", "cancelled"].includes(ride.ride_status)) {
             throw new Error("Ride cannot be cancelled");
         }
 
-        ride.status = "cancelled";
+        ride.ride_status = "cancelled";
         ride.cancellation_reason = reason;
+        ride.cancelled_at = new Date();
+        await ride.save();
+
+        return ride;
+    }
+
+    // Reject Ride
+    async rejectRide(userId, rideId) {
+        const ride = await Ride.findByPk(rideId);
+        if (!ride) return null;
+
+        ride.ride_status = "rejected";
+        ride.rejected_at = new Date();
+        ride.rejected_by = userId;
         await ride.save();
 
         return ride;
@@ -71,7 +89,7 @@ class RideRepository {
         const ride = await Ride.findByPk(rideId);
         if (!ride) return null;
 
-        ride.status = "completed";
+        ride.ride_status = "completed";
         ride.fare = fare;
         ride.distance = distance;
         ride.duration = duration;
@@ -86,24 +104,30 @@ class RideRepository {
         const ride = await Ride.findByPk(rideId);
         if (!ride) return null;
 
-        if (ride.status !== "requested") {
+        if (ride.ride_status !== "requested") {
             throw new Error("Ride is not available for assignment");
         }
 
         ride.driver_id = driverId;
         ride.vehicle_id = vehicleId;
-        ride.status = "accepted";
+        ride.ride_status = "accepted";
+        ride.accepted = new Date();
         await ride.save();
 
         return ride;
     }
 
-    // Driver: update ride status (e.g., started, completed)
+    // Driver: update ride status (e.g., in_progress, completed)
     async updateRideStatus(rideId, status) {
         const ride = await Ride.findByPk(rideId);
         if (!ride) return null;
 
-        ride.status = status;
+        ride.ride_status = status;
+
+        if (status === "ongoing") {
+            ride.started_at = new Date();
+        }
+
         await ride.save();
 
         return ride;
@@ -111,12 +135,18 @@ class RideRepository {
 
     // Admin: delete a ride (hard delete, e.g., fraud/test data)
     async deleteRide(rideId) {
-        return await Ride.destroy({ where: { id: rideId } });
+        return await Ride.destroy({ where: { ride_id: rideId } });
     }
 
     // Driver: get rides with status = "requested" (available rides)
     async getAvailableRides() {
-        return await Ride.findAll({ where: { status: "requested" } });
+        return await Ride.findAll({
+            where:
+            {
+                ride_status: "requested", driver_id: null,
+            },
+            order: [["requested_at", "ASC"]]
+        });
     }
 
     // Driver: check if driver has an active ride
@@ -124,7 +154,7 @@ class RideRepository {
         return await Ride.findOne({
             where: {
                 driver_id: driverId,
-                status: { [Op.in]: ["accepted", "started"] },
+                ride_status: { [Op.in]: ["accepted", "in_progress"] },
             },
         });
     }
@@ -134,7 +164,7 @@ class RideRepository {
         return await Ride.findOne({
             where: {
                 rider_id: riderId,
-                status: { [Op.in]: ["requested", "accepted", "started"] },
+                ride_status: { [Op.in]: ["requested", "accepted", "in_progress"] },
             },
         });
     }
@@ -160,7 +190,7 @@ class RideRepository {
         const ride = await Ride.findByPk(rideId);
         if (!ride) return null;
 
-        ride.status = "cancelled";
+        ride.ride_status = "cancelled";
         ride.cancellation_reason = reason || "Cancelled by admin";
         await ride.save();
 
@@ -170,8 +200,8 @@ class RideRepository {
     // Admin: aggregated stats (total rides, completed, cancelled, avg fare, etc.)
     async getRideStats() {
         const total = await Ride.count();
-        const completed = await Ride.count({ where: { status: "completed" } });
-        const cancelled = await Ride.count({ where: { status: "cancelled" } });
+        const completed = await Ride.count({ where: { ride_status: "completed" } });
+        const cancelled = await Ride.count({ where: { ride_status: "cancelled" } });
         const avgFare = await Ride.aggregate("fare", "avg", { plain: true });
 
         return {
@@ -182,16 +212,15 @@ class RideRepository {
         };
     }
 
-
     async getUserRidesByDateRange(user_id, startDate, endDate) {
         return await Ride.findAll({
-        where: {
-            rider_id: user_id,
-            requested_at: {
-            [Op.between]: [startDate, endDate],
+            where: {
+                rider_id: user_id,
+                requested_at: {
+                    [Op.between]: [startDate, endDate],
+                },
             },
-        },
-        order: [["requested_at", "ASC"]], // earliest rides first
+            order: [["requested_at", "ASC"]], // earliest rides first
         });
     }
 
@@ -200,11 +229,11 @@ class RideRepository {
     async getActiveRideByVehicle(vehicleId) {
         return await Ride.findOne({
             where: {
-            vehicle_id: vehicleId,
-            ride_status: { [Op.in]: ["accepted", "started"] }, 
+                vehicle_id: vehicleId,
+                ride_status: { [Op.in]: ["accepted", "started"] },
             },
         });
-        }
+    }
 
     //safely update ride fields
     async safeUpdateRideFields(rideId, fields) {
@@ -235,9 +264,7 @@ class RideRepository {
         fields.updated_at = new Date();
         await Ride.update(fields, { where: { ride_id: rideId } });
         return await Ride.findByPk(rideId);
-        }
-
-
+    }
 }
 
 export default new RideRepository();

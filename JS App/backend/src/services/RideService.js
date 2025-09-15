@@ -6,7 +6,7 @@ import ApiError from "../utils/ApiError.js";
 class RideService {
 
     // Rider Methods
-    async createRide(data, rider_id) {
+    async createRide(data, rider_id, role) {
         const {
             pickup_address,
             pickup_latitude,
@@ -16,20 +16,46 @@ class RideService {
             dropoff_longitude,
         } = data;
 
-        if (
-            !pickup_address ||
-            pickup_latitude == null ||
-            pickup_longitude == null ||
-            !dropoff_address ||
-            dropoff_latitude == null ||
-            dropoff_longitude == null
-        ) {
-            throw new ApiError(400, "Pickup and dropoff details are required");
+        if (pickup_address) {
+            // Address provided → coordinates optional
+            if (pickup_latitude || pickup_longitude) {
+                throw new ApiError(
+                    400,
+                    "Provide either pickup address OR coordinates, not both"
+                );
+            }
+        } else {
+            // Address missing → coordinates required
+            if (!pickup_latitude || !pickup_longitude) {
+                throw new ApiError(
+                    400,
+                    "Pickup latitude and longitude are required when no address is provided"
+                );
+            }
         }
 
-        // Edit - done
+        if (dropoff_address) {
+            if (dropoff_latitude || dropoff_longitude) {
+                throw new ApiError(
+                    400,
+                    "Provide either dropoff address OR coordinates, not both"
+                );
+            }
+        } else {
+            if (!dropoff_latitude || !dropoff_longitude) {
+                throw new ApiError(
+                    400,
+                    "Dropoff latitude and longitude are required when no address is provided"
+                );
+            }
+        }
+
         const rider = await UserRepository.findById(rider_id);
-        if (!rider || rider.role !== "rider") {
+        if (!rider) {
+            throw new ApiError(404, "Rider not found");
+        }
+
+        if (role !== "rider") {
             throw new ApiError(403, "Only riders can request rides");
         }
 
@@ -61,9 +87,16 @@ class RideService {
         return rides.filter(r => ["completed", "cancelled"].includes(r.ride_status));
     }
 
+    // Ride Cancel senecio
+    // Rider -> requested, accepted, not after started
+    // Driver -> accepted, not after started
     async cancelRide(user_id, ride_id, reason, role) {
         const ride = await RideRepository.getRideById(ride_id);
         if (!ride) throw new ApiError(404, "Ride not found");
+
+        if (ride.ride_status === "rejected") {
+            throw new ApiError(400, "Rejected ride cannot be modified");
+        }
 
         // Rider rules
         if (role === "rider") {
@@ -76,7 +109,7 @@ class RideService {
         // Driver rules
         if (role === "driver") {
             if (ride.driver_id !== user_id) throw new ApiError(403, "Not your ride");
-            if (ride.ride_status !== "requested") {
+            if (ride.ride_status !== "accepted") {
                 throw new ApiError(409, "Driver can only cancel ride before it is accepted");
             }
         }
@@ -84,12 +117,25 @@ class RideService {
         return await RideRepository.cancelRide(ride_id, reason);
     }
 
+    // Reject Ride
+    async rejectRide(user_id, ride_id) {
+        const ride = await RideRepository.getRideById(ride_id);
+        if (!ride) throw new ApiError(404, "Ride not found");
+
+        if (ride.ride_status === "rejected") {
+            throw new ApiError(400, "Ride Already Rejected");
+        }
+
+        if (ride.ride_status !== "requested") {
+            throw new ApiError(409, "Driver can only reject a ride if it is requested");
+        }
+        return await RideRepository.rejectRide(user_id, ride_id);
+    }
 
     async getOngoingRidesByRider(rider_id) {
-        return await RideRepository.getRidesByRider(rider_id)
-            .then(rides => rides.filter(r =>
-                ["requested", "accepted", "driver_arrived", "in_progress"].includes(r.ride_status)
-            ));
+        const ride = await RideRepository.getActiveRideByRider(rider_id);
+        if (!ride) throw new ApiError(404, "Ride not found");
+        return ride;
     }
 
     // Driver Methods
@@ -98,59 +144,119 @@ class RideService {
         return await RideRepository.getAvailableRides();
     }
 
+    // accept ride service
     async acceptRide(driver_id, ride_id, vehicle_id) {
         const ride = await RideRepository.getRideById(ride_id);
         if (!ride) throw new ApiError(404, "Ride not found");
-        if (ride.ride_status !== "requested") throw new ApiError(409, "Ride already accepted");
 
+        if (ride.ride_status === "rejected") {
+            throw new ApiError(400, "Rejected ride cannot be modified");
+        }
+
+        if (ride.ride_status !== "requested") throw new ApiError(409, "Ride already accepted");
         const driverBusy = await RideRepository.getActiveRideByDriver(driver_id);
         if (driverBusy) throw new ApiError(409, "Driver already has an ongoing ride");
-
-        // Edit - done
+        // Edit - done 
         const vehicle = await VehicleRepository.findById(vehicle_id);
         if (!vehicle || vehicle.owner_id !== driver_id) {
             throw new ApiError(400, "Invalid vehicle for this driver");
+
+        }
+        return await RideRepository.assignDriver(ride_id, driver_id, vehicle_id);
+    }
+
+    async driverArriveRide(driver_id, ride_id) {
+        const ride = await RideRepository.getRideById(ride_id);
+        if (!ride) throw new ApiError(404, "Ride not found");
+
+        if (ride.ride_status === "rejected") {
+            throw new ApiError(400, "Rejected ride cannot be modified");
         }
 
-        return await RideRepository.assignDriver(ride_id, driver_id, vehicle_id);
+        if (ride.driver_id !== driver_id) throw new ApiError(403, "Not your ride");
+        switch (ride.ride_status) {
+            case "accepted":
+                // first hit → move to driver_arrived
+                return await RideRepository.updateRideStatus(ride_id, "driver_arrived");
+
+            case "driver_arrived":
+                // second hit → move to started
+                throw new ApiError(409, `Ride cannot be started from current status: ${ride.ride_status}`);
+
+            default:
+                throw new ApiError(409, `Ride cannot be started from current status: ${ride.ride_status}`);
+        }
     }
 
     async startRide(driver_id, ride_id) {
         const ride = await RideRepository.getRideById(ride_id);
         if (!ride) throw new ApiError(404, "Ride not found");
-        if (ride.driver_id !== driver_id) throw new ApiError(403, "Not your ride");
-        if (ride.ride_status !== "accepted") throw new ApiError(409, "Ride not accepted yet");
 
-        return await RideRepository.updateRideStatus(ride_id, "driver_arrived");
+        if (ride.ride_status === "rejected") {
+            throw new ApiError(400, "Rejected ride cannot be modified");
+        }
+
+        if (ride.driver_id !== driver_id) throw new ApiError(403, "Not your ride");
+        switch (ride.ride_status) {
+            case "driver_arrived":
+                // first hit → move to driver_arrived
+                return await RideRepository.updateRideStatus(ride_id, "ongoing");
+
+            case "ongoing":
+                // second hit → move to started
+                throw new ApiError(409, `Ride cannot be started from current status: ${ride.ride_status}`);
+
+            default:
+                throw new ApiError(409, `Ride cannot be started from current status: ${ride.ride_status}`);
+        }
     }
 
     async completeRide(driver_id, ride_id, fare, distance, duration) {
         const ride = await RideRepository.getRideById(ride_id);
         if (!ride) throw new ApiError(404, "Ride not found");
+
+        if (ride.ride_status === "rejected") {
+            throw new ApiError(400, "Rejected ride cannot be modified");
+        }
         if (ride.driver_id !== driver_id) throw new ApiError(403, "Not your ride");
 
         return await RideRepository.completeRide(ride_id, fare, distance, duration);
     }
 
     async getOngoingRides(driver_id) {
-        return await RideRepository.getOngoingRidesByDriver(driver_id);
+        const ride = await RideRepository.getActiveRideByDriver(driver_id);
+        if (!ride) throw new ApiError(404, "Ride not found");
+        return ride;
     }
 
     async getRideHistoryByDriver(driver_id) {
-        return await RideRepository.getRideHistoryByDriver(driver_id);
+        return await RideRepository.getRidesByDriver(driver_id);
     }
 
     // Admin Methods
 
     async getAllRides(filter = {}) {
-        return await RideRepository.getAllRides(filter);
+        const rides = await RideRepository.getAllRides(filter);
+        return rides;
     }
 
     async forceCancelRide(ride_id, reason) {
+        const ride = await RideRepository.getRideById(ride_id);
+        if (!ride) {
+            throw new ApiError(404, "Ride not found");
+        }
+        if (ride.ride_status === "rejected" || ride.ride_status === "completed" || ride.ride_status === "cancelled") {
+            throw new ApiError(400, `Ride is already ${ride.ride_status}, cannot force cancel.`);
+        }
+
         return await RideRepository.forceCancelRide(ride_id, reason);
     }
 
     async deleteRide(ride_id) {
+        const ride = await RideRepository.getRideById(ride_id);
+        if (!ride) {
+            throw new ApiError(404, "Ride not found");
+        }
         return await RideRepository.deleteRide(ride_id);
     }
 
@@ -158,11 +264,26 @@ class RideService {
         return await RideRepository.getRideStats();
     }
 
-    // General method for any user
-
-    async getRide(ride_id) {
+    async getRide(ride_id, user) {
         const ride = await RideRepository.getRideById(ride_id);
-        if (!ride) throw new ApiError(404, "Ride not found");
+        if (!ride) {
+            throw new ApiError(404, "Ride not found");
+        }
+
+        // Admin
+        if (user.role === "admin") {
+            return ride;
+        }
+
+        // Rider rule: can only see their own ride
+        if (user.role === "rider" && ride.rider_id !== user.id) {
+            throw new ApiError(404, "Ride not found");
+        }
+
+        // Driver rule: can only see ride if accepted
+        if (user.role === "driver" && ride.driver_id !== user.id) {
+            throw new ApiError(404, "Ride not found");
+        }
         return ride;
     }
 
@@ -174,5 +295,3 @@ class RideService {
 }
 
 export default new RideService();
-
-
