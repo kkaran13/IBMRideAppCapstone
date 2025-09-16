@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify OTP - SecureAuth</title>
     <link rel="stylesheet" href="../../css/user/user.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=DM+Sans:wght@400;500&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <div class="auth-card">
@@ -18,15 +22,29 @@
             <div id="alert-container"></div>
 
             <form id="otpForm">
+                <!-- Email OTP -->
                 <div class="form-group">
-                    <label class="form-label">Enter 6-digit verification code</label>
-                    <div class="otp-inputs">
-                        <input type="text" class="otp-input" maxlength="1" data-index="0">
-                        <input type="text" class="otp-input" maxlength="1" data-index="1">
-                        <input type="text" class="otp-input" maxlength="1" data-index="2">
-                        <input type="text" class="otp-input" maxlength="1" data-index="3">
-                        <input type="text" class="otp-input" maxlength="1" data-index="4">
-                        <input type="text" class="otp-input" maxlength="1" data-index="5">
+                    <label class="form-label">Enter 6-digit Email OTP</label>
+                    <div class="otp-inputs" id="email-otp">
+                        <input type="text" class="otp-input" maxlength="1" data-group="email" data-index="0">
+                        <input type="text" class="otp-input" maxlength="1" data-group="email" data-index="1">
+                        <input type="text" class="otp-input" maxlength="1" data-group="email" data-index="2">
+                        <input type="text" class="otp-input" maxlength="1" data-group="email" data-index="3">
+                        <input type="text" class="otp-input" maxlength="1" data-group="email" data-index="4">
+                        <input type="text" class="otp-input" maxlength="1" data-group="email" data-index="5">
+                    </div>
+                </div>
+
+                <!-- Phone OTP -->
+                <div class="form-group">
+                    <label class="form-label">Enter 6-digit Phone OTP</label>
+                    <div class="otp-inputs" id="phone-otp">
+                        <input type="text" class="otp-input" maxlength="1" data-group="phone" data-index="0">
+                        <input type="text" class="otp-input" maxlength="1" data-group="phone" data-index="1">
+                        <input type="text" class="otp-input" maxlength="1" data-group="phone" data-index="2">
+                        <input type="text" class="otp-input" maxlength="1" data-group="phone" data-index="3">
+                        <input type="text" class="otp-input" maxlength="1" data-group="phone" data-index="4">
+                        <input type="text" class="otp-input" maxlength="1" data-group="phone" data-index="5">
                     </div>
                 </div>
 
@@ -34,6 +52,7 @@
                     Verify Account
                 </button>
             </form>
+
 
             <div class="auth-link">
                 <p>Didn't receive the code?</p>
@@ -50,4 +69,5 @@
 
     <script type="module" src="../../js/user/verify-otp.js"></script>
 </body>
+
 </html>
