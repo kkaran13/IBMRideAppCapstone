@@ -45,6 +45,20 @@ class UserController {
     // service returns: { user, accessToken, cookieOptions }
     res.cookie("access_token", result.accessToken, result.cookieOptions);
 
+    // User details cookie (readable on frontend)
+    res.cookie("user_info", JSON.stringify({
+        id: result.user.id,
+        firstname: result.user.firstname,
+        lastname: result.user.lastname,
+        email: result.user.email,
+        role : result.user.role
+    }), {
+        httpOnly: false, // frontend can read this
+        secure: process?.env?.NODE_ENV === "production" || false,
+        sameSite: "lax",
+        maxAge: 60 * 60 * 1000
+    });
+
     return res
       .status(200)
       .json(new ApiResponse(200, { user: result.user, accessToken: result.accessToken }, "Login successful"));

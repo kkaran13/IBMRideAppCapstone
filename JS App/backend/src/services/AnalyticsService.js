@@ -32,5 +32,13 @@ class AnalyticsService {
 
         return apiResponseData;
     }
+    // calculated the fare for the ride
+    async getAllCompletedPayments(){
+          
+
+        const apiResponseData = await HelperFunction.axiosSendRequest("get", "payments/completed-payments/");
+
+        return apiResponseData;
+    }
 }
 export default new AnalyticsService();

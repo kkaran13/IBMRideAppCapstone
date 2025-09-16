@@ -52,6 +52,31 @@ class DriverWalletService {
         
         return apiResponseData;
 
+    }// In DriverWalletService.js
+    async addBonusByWalleteId(req) {
+        
+        const { walletId } = req.params;
+        const { amount } = req.body;
+      
+        let wallet_id = walletId
+        
+        if (!walletId) throw new Error("Wallet ID is required");
+        if (!amount) throw new Error("Bonus amount is required");
+         
+        const apiResponseData = await HelperFunction.axiosSendRequest("post", `wallet/bonus/${wallet_id}/`,{amount:amount});
+        
+        
+        return apiResponseData;
+    }
+
+    // get All The driver wallet details
+    async addBonusAllAallet(req){
+        const { amount } = req.body;
+        
+        const apiResponseData = await HelperFunction.axiosSendRequest("post", `wallet/bonus/`,{amount:amount});
+        
+        return apiResponseData;
+
     }
 
     // deactivate the driver wallet

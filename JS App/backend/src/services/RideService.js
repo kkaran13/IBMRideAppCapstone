@@ -1,8 +1,10 @@
+import Config from "../config/Config.js";
 import redisClient from "../config/redisClient.js";
 import RideRepository from "../repositories/RideRepository.js";
 import UserRepository from "../repositories/UserRepository.js";
 import VehicleRepository from "../repositories/VehicleRepository.js";
 import ApiError from "../utils/ApiError.js";
+import HelperFunction from "../utils/HelperFunction.js";
 
 class RideService {
 
@@ -134,7 +136,6 @@ class RideService {
         return await RideRepository.getAvailableRides();
     }
 
-    // accept ride service
     async acceptRide(driver_id, ride_id, vehicle_id) {
         const ride = await RideRepository.getRideById(ride_id);
         if (!ride) throw new ApiError(404, "Ride not found");
@@ -144,19 +145,43 @@ class RideService {
         }
 
         if (ride.ride_status !== "requested") throw new ApiError(409, "Ride already accepted");
+
         const driverBusy = await RideRepository.getActiveRideByDriver(driver_id);
         if (driverBusy) throw new ApiError(409, "Driver already has an ongoing ride");
-        // Edit - done 
+
         const vehicle = await VehicleRepository.findById(vehicle_id);
         if (!vehicle || vehicle.owner_id !== driver_id) {
             throw new ApiError(400, "Invalid vehicle for this driver");
-
         }
-        const rideData = await RideRepository.assignDriver(ride_id, driver_id, vehicle_id);
-        
-        // add the logic to update the redis store ride:accepted:${rideId}
-        redisClient.redis.set(`ride:accepted:${ride_id}`, driver_id, 'EX', 300);
 
+        // Generate a 6 digit OTP
+        const otp = "" + Math.floor(100000 + Math.random() * 900000);
+        // Assign driver + save OTP in DB
+        const rideData = await RideRepository.assignDriverWithOtp(
+            ride_id,
+            driver_id,
+            vehicle_id,
+            otp
+        );
+
+        // get rider id from ride (ride has rider_id for passenger)
+        const riderId = rideData.rider_id;
+
+        const driver = await UserRepository.findById(driver_id);
+
+        // build notification data
+        const notificationData = {
+            driverName: driver.fullname,
+            rideId: ride_id,
+            otp: otp,
+            ...rideData
+        };
+
+        HelperFunction.sendFirebasePushNotification(
+            "rideAcceptedToRider",   // template key
+            notificationData,        // placeholders
+            riderId                  // single user or array of ids
+        );
         return rideData;
     }
 
@@ -183,9 +208,18 @@ class RideService {
         }
     }
 
-    async startRide(driver_id, ride_id) {
+    async startRide(driver_id, ride_id , body) {
         const ride = await RideRepository.getRideById(ride_id);
         if (!ride) throw new ApiError(404, "Ride not found");
+
+        ride_otp = ride.otp || null;
+        if(!ride_otp){
+            throw new ApiError(404,"No otp found")
+        }
+
+        if (ride_otp !== body.otp){
+            throw new ApiError(400, "OTP didn't match")
+        }
 
         if (ride.ride_status === "rejected") {
             throw new ApiError(400, "Rejected ride cannot be modified");

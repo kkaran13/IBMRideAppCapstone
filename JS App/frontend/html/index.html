@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ride Hailing App</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/maps/maps.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <h1 class="logo">Uber</h1>
+            <ul class="nav-links">
+                <li class="active"><i class="icon">🚗</i> Ride</li>
+                <li><i class="icon">🔑</i> Rent</li>
+                <li><i class="icon">🍴</i> Eat</li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <a href="#" class="login">Login</a>
+            <a href="#" class="signup">Sign up</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="ride-form">
+            <h2>Get a ride</h2>
+            <div class="form-group">
+                <input type="text" id="pickup" placeholder="Pickup location" />
+            </div>
+            <div class="form-group">
+                <input type="text" id="dropoff" placeholder="Dropoff location" />
+            </div>
+            <div class="form-group">
+                <select>
+                    <option>Pickup now</option>
+                    <option>Schedule for later</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select>
+                    <option>For me</option>
+                    <option>For someone else</option>
+                </select>
+            </div>
+            <button id="searchBtn" class="search-btn">Search</button>
+            <button id="startRide" class="start-ride">Start Ride</button>
+        </div>
+
+        <div id="map" style="height:500px;"></div>
+    </section>
+
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/maps/maps-web.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../js/script.js"></script>
+    <script type="module" src="../js/backendCoordinates.js"></script>
+    <script type="module" src="../js/startRideHandler.js"></script>
+
+</body>
+
+</html>
