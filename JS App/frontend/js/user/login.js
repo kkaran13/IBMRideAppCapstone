@@ -45,9 +45,15 @@ class LoginForm {
 
       // Store token
       if (data.accessToken) AuthUtils.storeAuthToken(data.accessToken);
-
-      // Redirect
-      AuthUtils.redirectTo(data.redirectUrl || "../../html/ride/ride.html", 1500);
+      
+      const loggedInUser = AuthUtils.getUserInfo();
+      if(loggedInUser?.role == "driver"){
+        AuthUtils.redirectTo(data.redirectUrl || "../driver/driver-dashboard.html", 1500);
+      }
+      else if(loggedInUser?.role = "rider") {
+        AuthUtils.redirectTo(data.redirectUrl || "../../html/ride/ride.html", 1500);
+      }
+      
     } else {
       AuthUtils.showAlert(this.alertContainer, error, "error", 3000);
     }

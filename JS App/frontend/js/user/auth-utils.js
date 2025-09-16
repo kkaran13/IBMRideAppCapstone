@@ -17,6 +17,13 @@ export class AuthUtils {
     resetPassword: `${this.BASE_URL}/user/reset-password`,
     recoverAccount: `${this.BASE_URL}/user/recover-account`,
 
+
+    // driver-dashboard
+    getActiveVehicle : `${this.BASE_URL}/vehicle/active-vehicle`,
+    getDriverWalletDetails : `${this.BASE_URL}/wallet/driver-wallet/:driver_id`,
+    getOngoingRidesDriver : `${this.BASE_URL}/ride/ongoing/driver`,
+    setDriverAvailableForRide : `${this.BASE_URL}/user/set-available`,
+
   }
 
   // Local storage keys
