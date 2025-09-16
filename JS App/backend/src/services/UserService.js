@@ -449,10 +449,24 @@ class UserService {
     const password_hash = await bcrypt.hash(newPassword, 10);
 
     // Update password in DB
-    await UserRepository.updatePassword(email, password_hash);
+    const user = await UserRepository.updatePassword(email, password_hash);
 
     // Clear session OTP
     delete req.session.forgotPassword;
+
+    // SEND MAIL TO THE USER ABOUT THE PASSWORD CHANGE 
+    let mailObj = {
+      to : email,
+      subject : `Your Ride App password was changed successfully`,
+      htmlTemplate : "passwordchangesuccess",
+      templateData: {
+        username: user.firstname + user.lastname,
+        appName: "Ride App",
+        // resetUrl: "https://yourapp.com/login",
+        year: new Date().getFullYear()
+      }
+    };
+    HelperFunction.sendMail(mailObj);
 
     return true
   }
