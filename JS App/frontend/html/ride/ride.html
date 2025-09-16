@@ -48,7 +48,7 @@
             <div class="button-row">
                 <button id="searchBtn" class="search-btn">Search</button>
                 <button id="fareBtn" class="fare-btn">Prices</button>
-                <button id="requestRide" class="request-ride">Request Ride</button>
+                <button id="requestRide" class="request-ride">Book Ride</button>
             </div>
 
             <div id="fareResult" class="fare-result hidden">
@@ -60,6 +60,25 @@
         </div>
 
         <div id="map" style="height:500px;"></div>
+
+        <!-- Ride Confirmation Modal -->
+        <div id="rideModal" class="modal">
+            <div class="modal-content">
+                <span id="closeModal" class="close">&times;</span>
+                <h2 id="rideStatus" class="success-text"></h2>
+                <p><strong>Pickup:</strong> <span id="pickupText"></span></p>
+                <p><strong>Drop:</strong> <span id="dropText"></span></p>
+                <p><strong>Fare:</strong> ₹<span id="fareText"></span></p>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="requested-rides">
+        <h2>Your Requested Rides</h2>
+        <div id="ridesList" class="rides-list">
+            <p class="no-rides">No rides requested yet.</p>
+        </div>
     </section>
 
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/maps/maps-web.min.js"></script>
