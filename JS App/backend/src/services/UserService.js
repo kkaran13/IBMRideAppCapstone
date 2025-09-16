@@ -65,7 +65,18 @@ class UserService {
         );
       }
     }
-
+    //  Require photo for driver
+    if (!files?.avatar?.[0]) {
+      throw new ApiError(422, "Driver must upload profile photo.");
+    }
+    //  Require license photo for driver
+    if (!files?.license?.[0]) {
+      throw new ApiError(422, "Driver must upload license photo.");
+    }
+    //  Require photo for driver
+    if (!files?.aadhar?.[0]) {
+      throw new ApiError(422, "Driver must upload aadhar photo.");
+    }
     // ----------------- PASSWORD -----------------
     const password_hash = await bcrypt.hash(password, 10);
 
@@ -123,7 +134,7 @@ class UserService {
       },
     };
 
-    await HelperFunction.sendOtp(phone,phone_otp);
+    await HelperFunction.sendOtp(phone, phone_otp);
     await HelperFunction.sendMail(mailObj);
 
     return { otpSent: true };
@@ -148,8 +159,8 @@ class UserService {
         throw new ApiError(400, "Invalid OTP");
       }
 
-      if (pendingUser.phone_otp !== req.body.phone_otp){
-        throw new ApiError(400,"Invalid OTP")
+      if (pendingUser.phone_otp !== req.body.phone_otp) {
+        throw new ApiError(400, "Invalid OTP")
       }
 
       if (Date.now() > pendingUser.expiresAt) {
@@ -160,21 +171,21 @@ class UserService {
       const user = await UserRepository.create({
         ...pendingUser.userPayload,
         email_verified: true,
-        phone_verified : true,
+        phone_verified: true,
       });
 
       // Clear OTP from session
       delete req.session.pendingUser;
 
       // the driver crete wallet if the user is a driver
-      if(user?.role == "driver"){
+      if (user?.role == "driver") {
 
         const walletCreateObj = {
-          body : { driver_id : user.user_id }
+          body: { driver_id: user.user_id }
         }
         const driverWalletData = await DriverWalletService.createDriverWallet(walletCreateObj);
         console.log(driverWalletData);
-      
+
       }
 
       return { registered: true };
@@ -236,7 +247,7 @@ class UserService {
     } catch (error) {
       if (error.response) {
         console.error("❌ Python API Error:", error.response.status, error.response.data);
- 
+
         let friendlyMessage = "Registration failed";
 
         const data = error.response.data;
@@ -299,7 +310,7 @@ class UserService {
         throw new ApiError(error.response.status, error.response.data);
       }
       console.log(error);
-      
+
       throw new ApiError(500, "Unable to connect to Python API");
     }
   }
@@ -342,7 +353,7 @@ class UserService {
     }
 
     const user = await UserRepository.findByEmail(email);
-    
+
     if (!user) {
       throw new ApiError(401, "Invalid credentials");
     }
@@ -466,9 +477,9 @@ class UserService {
 
     // SEND MAIL TO THE USER ABOUT THE PASSWORD CHANGE 
     let mailObj = {
-      to : email,
-      subject : `Your Ride App password was changed successfully`,
-      htmlTemplate : "passwordchangesuccess",
+      to: email,
+      subject: `Your Ride App password was changed successfully`,
+      htmlTemplate: "passwordchangesuccess",
       templateData: {
         username: user.firstname + user.lastname,
         appName: "Ride App",
@@ -746,7 +757,7 @@ class UserService {
 
     if (!user) throw new ApiError(404, "User not found");
 
-    
+
     const updateResponse = await UserRepository.updateVerificationStatus(id, {
       status: "approved",   // 👈 now matches repo param
       notes,
@@ -754,11 +765,11 @@ class UserService {
     });
 
     // SEND MAIL AND NOTIFICATION OF VERIFICATION TO THE USER
-    
+
     let mailObj = {
-      to : user.email,
-      subject : `Ride App Verification Approved – Welcome on Board, ${user.firstname ? user.firstname : ''} ${user.lastname ? user.lastname : ''}!`,
-      htmlTemplate : "driveraccountapproval",
+      to: user.email,
+      subject: `Ride App Verification Approved – Welcome on Board, ${user.firstname ? user.firstname : ''} ${user.lastname ? user.lastname : ''}!`,
+      htmlTemplate: "driveraccountapproval",
       templateData: {
         driverName: user.firstname + user.lastname,
         appName: "Ride App",
@@ -769,7 +780,7 @@ class UserService {
     };
     HelperFunction.sendMail(mailObj);
 
-    HelperFunction.sendFirebasePushNotification('driverVerificationApproved', {...templateData, ...user}, [user.id]);
+    HelperFunction.sendFirebasePushNotification('driverVerificationApproved', { ...templateData, ...user }, [user.id]);
 
     return updateResponse;
   }
@@ -786,7 +797,7 @@ class UserService {
     if (user.account_status !== "active") {
       throw new ApiError(400, "Only active accounts can be rejected");
     }
-    
+
     const updateResponse = await UserRepository.updateVerificationStatus(id, {
       status: "rejected",
       notes: reason,
@@ -794,16 +805,16 @@ class UserService {
     }, "active");
 
     // SEND MAIL AND NOTIFICATION OF VERIFICATION TO THE USER
-    
+
     let mailObj = {
-      to : user.email,
-      subject : `Ride App Verification Approved – Welcome on Board, ${user.firstname ? user.firstname : ''} ${user.lastname ? user.lastname : ''}!`,
-      htmlTemplate : "driveraccountreject",
+      to: user.email,
+      subject: `Ride App Verification Approved – Welcome on Board, ${user.firstname ? user.firstname : ''} ${user.lastname ? user.lastname : ''}!`,
+      htmlTemplate: "driveraccountreject",
       templateData: {
         username: user.firstname + user.lastname,
         driverName: user.firstname + user.lastname,
         appname: "Ride App",
-        rejectionReason : reason,
+        rejectionReason: reason,
         // loginUrl: "https://yourapp.com/login",
         supportEmail: "support@yourapp.com",
         year: new Date().getFullYear()
@@ -811,7 +822,7 @@ class UserService {
     };
     HelperFunction.sendMail(mailObj);
 
-    HelperFunction.sendFirebasePushNotification('driverVerificationRejected', {...templateData, ...user}, [user.id]);
+    HelperFunction.sendFirebasePushNotification('driverVerificationRejected', { ...templateData, ...user }, [user.id]);
 
     return updateResponse;
   }

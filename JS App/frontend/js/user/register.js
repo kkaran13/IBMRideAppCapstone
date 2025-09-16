@@ -35,14 +35,14 @@ async handleSubmit(e) {
   AuthUtils.setButtonLoading(this.registerBtn, true, "Signing Up...", "Sign Up");
 
   try {
-    // 🔥 Use apiRequest instead of raw fetch
+    //  Use apiRequest
     const result = await AuthUtils.apiRequest(AuthUtils.API_ENDPOINTS.register, {
       method: "POST",
       body: formData, // wrapper handles FormData properly
     });
 
     console.log("Register response:", result);
-
+    
     if (result.success) {
       if (dataObj.email) {
         // Store pending email for OTP verification
