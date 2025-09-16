@@ -1,12 +1,12 @@
 import mailTranspoter from "../config/mailTranspoter.js";
 import fs from 'fs/promises';
-import fsSync from 'fs';
 import path from "path";
 import { fileURLToPath } from "url";
 import config from "../config/Config.js";
-// import firebaseadmin from '../config/firebaseMessage.js'
+import firebaseadmin from '../config/firebaseMessage.js'
 import cloudinary from "../config/cloudinary.js";
 import httpClient from '../config/httpClient.js';
+import DeviceTokenService from "../services/DeviceTokenService.js";
 
 // recreate __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -103,6 +103,7 @@ class HelperFunction {
             }
 
             // call the api 
+            console.log(requestConfig);
             const response = await httpClient.request(requestConfig);
             return response.data;
 
@@ -135,7 +136,7 @@ class HelperFunction {
      * @function sendFirebasePushNotification
      * @param {string} templateName - Notification template key (e.g. "rideAcceptedToRider")
      * @param {Object} data - Placeholder values and extra data (e.g. { driverName: "Amit", rideId: "123" })
-     * @param {string[]} deviceTokens - Array of FCM tokens to send notification to
+     * @param {string[]} userids - Array of user ids to send notification to
      *
      * @returns {Promise<Object>} Firebase response with success & failure counts for each token
      *
@@ -145,14 +146,29 @@ class HelperFunction {
      * await HF.sendFirebasePushNotification(
      *   "rideAcceptedToRider",
      *   { driverName: "Amit", rideId: "123" },
-     *   ["token1", "token2"]
+     *   ["userid1", "userid2"]
      * );
      */
-    async sendFirebasePushNotification(templateName, data, deviceTokens) {
+    async sendFirebasePushNotification(templateName, data, userids) {
         try {
-            if (!Array.isArray(deviceTokens) || deviceTokens.length === 0) {
-                throw new Error("No device tokens provided for push notification");
+            // if (!Array.isArray(userids) || userids.length === 0) {
+            //     throw new Error("No users provided for push notification");
+            // }
+
+            // if (!Array.isArray(userids) || userids.length === 0) {
+            //     throw new Error("No device tokens provided for push notification");
+            // }
+
+            if(!userids){
+                return {}
             }
+
+            if(!Array.isArray(userids)){
+                userids = [userids]
+            }
+
+            // get the device tokens for these users
+            const deviceTokens = await DeviceTokenService.getMultipleUsersTokens(userids);
 
             // Build notification payload (title/message placeholders replaced with `data`)
             const payload = getNotificationTemplate(templateName, data);
@@ -166,7 +182,7 @@ class HelperFunction {
                 tokens: deviceTokens,
             };
 
-            const response = await admin.messaging().sendEachForMulticast(message);
+            const response = await firebaseadmin.messaging().sendEachForMulticast(message);
 
             console.log(`Push notification sent: ${response.successCount} success, ${response.failureCount} failures`);
 
@@ -180,6 +196,9 @@ class HelperFunction {
                     }
                 });
             }
+
+            // remove the invalid tokens from the db
+            DeviceTokenService.removeInvalidTokens(failedTokens);
 
             return { ...response, failedTokens };
         } catch (error) {

@@ -1,3 +1,4 @@
+import redisClient from "../config/redisClient.js";
 import RideRepository from "../repositories/RideRepository.js";
 import UserRepository from "../repositories/UserRepository.js";
 import VehicleRepository from "../repositories/VehicleRepository.js";
@@ -16,54 +17,43 @@ class RideService {
             dropoff_longitude,
         } = data;
 
-        if (pickup_address) {
-            // Address provided → coordinates optional
-            if (pickup_latitude || pickup_longitude) {
-                throw new ApiError(
-                    400,
-                    "Provide either pickup address OR coordinates, not both"
-                );
-            }
-        } else {
-            // Address missing → coordinates required
-            if (!pickup_latitude || !pickup_longitude) {
-                throw new ApiError(
-                    400,
-                    "Pickup latitude and longitude are required when no address is provided"
-                );
-            }
+        // Pickup validation
+        const validPickup =
+            (pickup_address && !pickup_latitude && !pickup_longitude) || // case 1 & 2
+            (!pickup_address && pickup_latitude != null && pickup_longitude != null) || // case 3 & 4
+            (pickup_address && pickup_latitude != null && pickup_longitude != null); // case 5
+
+        if (!validPickup) {
+            throw new ApiError(
+                400,
+                "Invalid pickup input. Acceptable: address only, coordinates only, or both."
+            );
         }
 
-        if (dropoff_address) {
-            if (dropoff_latitude || dropoff_longitude) {
-                throw new ApiError(
-                    400,
-                    "Provide either dropoff address OR coordinates, not both"
-                );
-            }
-        } else {
-            if (!dropoff_latitude || !dropoff_longitude) {
-                throw new ApiError(
-                    400,
-                    "Dropoff latitude and longitude are required when no address is provided"
-                );
-            }
+        // Dropoff validation
+        const validDropoff =
+            (dropoff_address && !dropoff_latitude && !dropoff_longitude) || // case 1 & 3
+            (!dropoff_address && dropoff_latitude != null && dropoff_longitude != null) || // case 2 & 4
+            (dropoff_address && dropoff_latitude != null && dropoff_longitude != null); // case 5
+
+        if (!validDropoff) {
+            throw new ApiError(
+                400,
+                "Invalid dropoff input. Acceptable: address only, coordinates only, or both."
+            );
         }
 
+        // Rider existence
         const rider = await UserRepository.findById(rider_id);
-        if (!rider) {
-            throw new ApiError(404, "Rider not found");
-        }
+        if (!rider) throw new ApiError(404, "Rider not found");
 
-        if (role !== "rider") {
-            throw new ApiError(403, "Only riders can request rides");
-        }
+        if (role !== "rider") throw new ApiError(403, "Only riders can request rides");
 
+        // Active ride check
         const existingRide = await RideRepository.getActiveRideByRider(rider_id);
-        if (existingRide) {
-            throw new ApiError(409, "You already have an ongoing ride");
-        }
+        if (existingRide) throw new ApiError(409, "You already have an ongoing ride");
 
+        // Create ride
         return await RideRepository.createRide({
             rider_id,
             driver_id: null,
@@ -162,7 +152,12 @@ class RideService {
             throw new ApiError(400, "Invalid vehicle for this driver");
 
         }
-        return await RideRepository.assignDriver(ride_id, driver_id, vehicle_id);
+        const rideData = await RideRepository.assignDriver(ride_id, driver_id, vehicle_id);
+        
+        // add the logic to update the redis store ride:accepted:${rideId}
+        redisClient.redis.set(`ride:accepted:${ride_id}`, driver_id, 'EX', 300);
+
+        return rideData;
     }
 
     async driverArriveRide(driver_id, ride_id) {

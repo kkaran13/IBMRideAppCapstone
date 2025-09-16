@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config({ path: path.join(__dirname, "../../../.env") });
+dotenv.config({ path: path.join(__dirname, "../../.env") });
 class Config{
 
     constructor(){
@@ -14,7 +14,7 @@ class Config{
         this.NODE_PORT = process.env.NODE_PORT;
         this.JWT_SECRET = process.env.JWT_SECRET; 
 
-        // this.MONGO_URI = process.env.MONGO_URI;
+        this.MONGO_URI = process.env.MONGO_URI;
 
         this.DB_NAME = process.env.DB_NAME;
         this.DB_USER = process.env.DB_USER;
@@ -103,6 +103,21 @@ class Config{
                 message: "The rider has cancelled the ride.",
                 appName: "RideApp",
                 icon: "ride_cancelled_icon"
+            },
+
+            // Driver Verification Notifications
+            driverVerificationApproved: {
+                title: "Verification Approved",
+                message: "Congratulations {{driverName}}! Your driver account has been verified. You can now start accepting rides.",
+                appName: "RideApp",
+                icon: "verification_approved_icon"
+            },
+            driverVerificationRejected: {
+                title: "Verification Rejected",
+                // message: "Sorry {{driverName}}, your verification was rejected. Reason: {{rejectionReason}}. Please resubmit your documents.",
+                message: "Sorry {{driverName}}, your verification was rejected. Reason: {{rejectionReason}}.",
+                appName: "RideApp",
+                icon: "verification_rejected_icon"
             }
         };
 

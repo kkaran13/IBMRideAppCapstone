@@ -11,7 +11,7 @@ router.use(authenticateJWT, authorizeRole("driver"));
 // Vehicle management
 router.post("/register", VehicleController.registerVehicle);
 router.patch("/update/:id", VehicleController.updateVehicle);
-router.patch("/deactivate/:id", VehicleController.deactivateVehicle);
+router.delete("/delete/:id", VehicleController.deleteVehicle);
 
 // Admin or driver himself can view vehicles by driver
 router.get("/driver/:driverId", authenticateJWT, authorizeRole(["driver", "admin"]), VehicleController.getVehiclesByDriver);

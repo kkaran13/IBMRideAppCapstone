@@ -224,6 +224,9 @@ class RideRepository {
         });
     }
 
+    async deleteRating(ratingId) {
+            return await Ride.findOneAndUpdate( { rating_id: ratingId },{ $set: { rating_id: null } },);
+        }
 
     //get active ride assigned to a particular vehicle
     async getActiveRideByVehicle(vehicleId) {
@@ -251,6 +254,7 @@ class RideRepository {
             "duration_minutes",
             "payment_status",
             "otp_verified_at",
+            "rating_id",
         ];
 
         const invalidFields = Object.keys(fields).filter(
@@ -275,6 +279,16 @@ class RideRepository {
         await ride.save();
 
         return ride;
+    // for Vehicle delete
+    async findActiveRideByVehicleId(vehicleId) {
+        return await Ride.findOne({
+            where: {
+                vehicle_id: vehicleId,
+                ride_status: {
+                    [Op.notIn]: ["completed", "cancelled"],
+                },
+            },
+        });
     }
 }
 

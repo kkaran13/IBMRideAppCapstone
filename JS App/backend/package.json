@@ -17,6 +17,8 @@
     "cloudinary": "^2.7.0",
     "cookie-parser": "^1.4.7",
     "dayjs": "^1.11.18",
+    "child_process": "^1.0.2",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
