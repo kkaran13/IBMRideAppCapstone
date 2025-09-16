@@ -100,7 +100,7 @@ class RideRepository {
     }
 
     // Driver: accept a ride request (assign driver + vehicle)
-    async assignDriver(rideId, driverId, vehicleId) {
+    async assignDriver(rideId, driverId, vehicleId,otp) {
         const ride = await Ride.findByPk(rideId);
         if (!ride) return null;
 
@@ -112,6 +112,8 @@ class RideRepository {
         ride.vehicle_id = vehicleId;
         ride.ride_status = "accepted";
         ride.accepted = new Date();
+        ride.otp = otp;
+
         await ride.save();
 
         return ride;
@@ -270,6 +272,16 @@ class RideRepository {
         return await Ride.findByPk(rideId);
     }
 
+    async updatePaymentStatus(rideId, status) {
+        const ride = await Ride.findByPk(rideId);
+        if (!ride) return null;
+
+        ride.payment_status = status;
+
+        await ride.save();
+
+        return ride;
+    }
     // for Vehicle delete
     async findActiveRideByVehicleId(vehicleId) {
         return await Ride.findOne({

@@ -77,7 +77,7 @@ class RideController {
     });
 
     startRide = asyncHandler(async (req, res) => {
-        const ride = await RideService.startRide(req.user.id, req.params.id);
+        const ride = await RideService.startRide(req.user.id, req.params.id,req.body);
         res.status(200).json(new ApiResponse(200, ride, "Ride started"));
     });
 

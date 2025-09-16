@@ -10,6 +10,15 @@ class AnalyticsController {
         return res.status(201).json(new ApiResponse(201, result, ""))
     
     });
+    getAllCompletedPayments= asyncHandler(async (req, res) => {
+     
+        const result = await AnalyticsService.getAllCompletedPayments(req.body);
+   
+        return res.status(200).json(new ApiResponse(200, result, ""))
+    
+    });
+
+
 
 }
 export default new AnalyticsController();

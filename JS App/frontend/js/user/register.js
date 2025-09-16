@@ -20,51 +20,60 @@ class RegisterForm {
     });
   }
 
-  async handleSubmit(e) {
-    e.preventDefault();
+async handleSubmit(e) {
+  e.preventDefault();
 
-    const formData = new FormData(this.form);
+  const formData = new FormData(this.form);
 
-    // Convert FormData to object for validation and debugging
-    const dataObj = {};
-    formData.forEach((value, key) => (dataObj[key] = value));
-    console.log("Register form data:", dataObj);
+  // Convert FormData to object for validation and debugging
+  const dataObj = {};
+  formData.forEach((value, key) => (dataObj[key] = value));
+  console.log("Register form data:", dataObj);
 
-    if (!this.validateForm(dataObj)) return;
+  if (!this.validateForm(dataObj)) return;
 
-    AuthUtils.setButtonLoading(this.registerBtn, true, "Signing Up...", "Sign Up");
+  AuthUtils.setButtonLoading(this.registerBtn, true, "Signing Up...", "Sign Up");
 
-    // Send form as multipart/form-data
-    try {
-      const response = await fetch(AuthUtils.API_ENDPOINTS.register, {
-        method: "POST",
-        body: formData,
-      });
+  try {
+    // 🔥 Use apiRequest instead of raw fetch
+    const result = await AuthUtils.apiRequest(AuthUtils.API_ENDPOINTS.register, {
+      method: "POST",
+      body: formData, // wrapper handles FormData properly
+    });
 
-      const result = await response.json();
-      console.log("Register response:", result);
+    console.log("Register response:", result);
 
-      if (response.ok) {
-        if (dataObj.email) {
-          // Store pending email for OTP verification
-          localStorage.setItem(AuthUtils.STORAGE_KEYS.pendingEmail, dataObj.email);
-        }
-
-        AuthUtils.showAlert(this.alertContainer, "Registration successful! Check your email for OTP.", "success", 3000);
-
-        setTimeout(() => {
-          window.location.href = "verify-otp.html";
-        }, 2000);
-      } else {
-        AuthUtils.showAlert(this.alertContainer, result.message || "Registration failed.", "error");
+    if (result.success) {
+      if (dataObj.email) {
+        // Store pending email for OTP verification
+        localStorage.setItem(AuthUtils.STORAGE_KEYS.pendingEmail, dataObj.email);
       }
-    } catch (err) {
-      console.error("Network/Fetch Error:", err);
-      AuthUtils.showAlert(this.alertContainer, "Network error. Please try again.", "error");
-    } finally {
-      AuthUtils.setButtonLoading(this.registerBtn, false, "Signing Up...", "Sign Up");
+
+      AuthUtils.showAlert(
+        this.alertContainer,
+        "Registration successful! Check your email for OTP.",
+        "success",
+        3000
+      );
+
+      setTimeout(() => {
+        window.location.href = "verify-otp.html";
+      }, 2000);
+    } else {
+      AuthUtils.showAlert(
+        this.alertContainer,
+        result.error || "Registration failed.",
+        "error"
+      );
     }
+  } catch (err) {
+    console.error("Network/Request Error:", err);
+    AuthUtils.showAlert(this.alertContainer, "Network error. Please try again.", "error");
+  } finally {
+    AuthUtils.setButtonLoading(this.registerBtn, false, "Signing Up...", "Sign Up");
   }
+}
+
 
   validateForm(data) {
     if (!data.email || !data.password || !data.role) {

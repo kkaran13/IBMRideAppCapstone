@@ -30,7 +30,7 @@ const User = sequelize.define("User", {
     allowNull: false,
   },
   role: {
-    type: DataTypes.ENUM("rider", "driver", "admin"),
+    type: DataTypes.ENUM("rider", "driver"),
     defaultValue: "rider",
     allowNull: false,
   },
@@ -98,6 +98,10 @@ aadhar_url: {
   verified_at: {
     type: DataTypes.DATE,
   },
+  isAvailable : {
+    type : DataTypes.BOOLEAN,
+    defaultValue: false,
+  }
 }, {
   tableName: "users",
   timestamps: true,

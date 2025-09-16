@@ -158,16 +158,16 @@ class UserService {
       // Clear OTP from session
       delete req.session.pendingUser;
 
-    // the driver crete wallet if the user is a driver
-    if(user?.role == "driver"){
+      // the driver crete wallet if the user is a driver
+      if(user?.role == "driver"){
 
-      const walletCreateObj = {
-        body : { driver_id : user.user_id }
+        const walletCreateObj = {
+          body : { driver_id : user.user_id }
+        }
+        const driverWalletData = await DriverWalletService.createDriverWallet(walletCreateObj);
+        console.log(driverWalletData);
+      
       }
-      const driverWalletData = await DriverWalletService.createDriverWallet(walletCreateObj);
-      console.log(driverWalletData);
-    
-    }
 
       return { registered: true };
     }
@@ -195,6 +195,8 @@ class UserService {
 
       // Clear OTP from session
       delete req.session.recoverOtp;
+
+      // ACCOUNT RECOVERED SUCCESS MAIL
 
       return { recovered: true };
     }
@@ -449,10 +451,24 @@ class UserService {
     const password_hash = await bcrypt.hash(newPassword, 10);
 
     // Update password in DB
-    await UserRepository.updatePassword(email, password_hash);
+    const user = await UserRepository.updatePassword(email, password_hash);
 
     // Clear session OTP
     delete req.session.forgotPassword;
+
+    // SEND MAIL TO THE USER ABOUT THE PASSWORD CHANGE 
+    let mailObj = {
+      to : email,
+      subject : `Your Ride App password was changed successfully`,
+      htmlTemplate : "passwordchangesuccess",
+      templateData: {
+        username: user.firstname + user.lastname,
+        appName: "Ride App",
+        // resetUrl: "https://yourapp.com/login",
+        year: new Date().getFullYear()
+      }
+    };
+    HelperFunction.sendMail(mailObj);
 
     return true
   }
@@ -595,6 +611,12 @@ class UserService {
       sameSite: "strict",
     });
 
+    res.clearCookie("user_info", {
+      httpOnly: false,
+      secure: Config.NODE_ENV === "production",
+      sameSite: "lax"
+    });
+
     return true;
   }
 
@@ -716,11 +738,32 @@ class UserService {
 
     if (!user) throw new ApiError(404, "User not found");
 
-    return await UserRepository.updateVerificationStatus(id, {
+    
+    const updateResponse = await UserRepository.updateVerificationStatus(id, {
       status: "approved",   // 👈 now matches repo param
       notes,
       adminId,
     });
+
+    // SEND MAIL AND NOTIFICATION OF VERIFICATION TO THE USER
+    
+    let mailObj = {
+      to : user.email,
+      subject : `Ride App Verification Approved – Welcome on Board, ${user.firstname ? user.firstname : ''} ${user.lastname ? user.lastname : ''}!`,
+      htmlTemplate : "driveraccountapproval",
+      templateData: {
+        driverName: user.firstname + user.lastname,
+        appName: "Ride App",
+        // loginUrl: "https://yourapp.com/login",
+        supportEmail: "support@yourapp.com",
+        year: new Date().getFullYear()
+      }
+    };
+    HelperFunction.sendMail(mailObj);
+
+    HelperFunction.sendFirebasePushNotification('driverVerificationApproved', {...templateData, ...user}, [user.id]);
+
+    return updateResponse;
   }
 
   async rejectUserVerification(req) {
@@ -736,11 +779,33 @@ class UserService {
       throw new ApiError(400, "Only active accounts can be rejected");
     }
     
-    return await UserRepository.updateVerificationStatus(id, {
+    const updateResponse = await UserRepository.updateVerificationStatus(id, {
       status: "rejected",
       notes: reason,
       adminId,
     }, "active");
+
+    // SEND MAIL AND NOTIFICATION OF VERIFICATION TO THE USER
+    
+    let mailObj = {
+      to : user.email,
+      subject : `Ride App Verification Approved – Welcome on Board, ${user.firstname ? user.firstname : ''} ${user.lastname ? user.lastname : ''}!`,
+      htmlTemplate : "driveraccountreject",
+      templateData: {
+        username: user.firstname + user.lastname,
+        driverName: user.firstname + user.lastname,
+        appname: "Ride App",
+        rejectionReason : reason,
+        // loginUrl: "https://yourapp.com/login",
+        supportEmail: "support@yourapp.com",
+        year: new Date().getFullYear()
+      }
+    };
+    HelperFunction.sendMail(mailObj);
+
+    HelperFunction.sendFirebasePushNotification('driverVerificationRejected', {...templateData, ...user}, [user.id]);
+
+    return updateResponse;
   }
 
 
