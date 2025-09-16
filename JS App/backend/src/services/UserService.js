@@ -196,6 +196,8 @@ class UserService {
       // Clear OTP from session
       delete req.session.recoverOtp;
 
+      // ACCOUNT RECOVERED SUCCESS MAIL
+
       return { recovered: true };
     }
 
@@ -607,6 +609,12 @@ class UserService {
       httpOnly: true,
       secure: Config.NODE_ENV === "production",
       sameSite: "strict",
+    });
+
+    res.clearCookie("user_info", {
+      httpOnly: false,
+      secure: Config.NODE_ENV === "production",
+      sameSite: "lax"
     });
 
     return true;
