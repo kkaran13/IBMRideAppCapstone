@@ -50,7 +50,7 @@ class LoginForm {
       if(loggedInUser?.role == "driver"){
         AuthUtils.redirectTo(data.redirectUrl || "../driver/driver-dashboard.html", 1500);
       }
-      else if(loggedInUser?.role = "rider") {
+      else if(loggedInUser?.role == "rider") {
         AuthUtils.redirectTo(data.redirectUrl || "../../html/ride/ride.html", 1500);
       }
       
