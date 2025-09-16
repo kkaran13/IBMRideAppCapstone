@@ -102,9 +102,11 @@ class UserService {
 
     // ----------------- OTP -----------------
     const otp = "" + Math.floor(100000 + Math.random() * 900000); // 6 digit
+    const phone_otp = "" + Math.floor(100000 + Math.random() * 900000); // phone otp 
     req.session.pendingUser = {
       userPayload,
       otp,
+      phone_otp,
       expiresAt: Date.now() + 10 * 60 * 1000, // 10 min
     };
 
@@ -121,6 +123,7 @@ class UserService {
       },
     };
 
+    await HelperFunction.sendOtp(phone,phone_otp);
     await HelperFunction.sendMail(mailObj);
 
     return { otpSent: true };
@@ -132,7 +135,7 @@ class UserService {
     const pendingUser = req.session?.pendingUser;
     const recoverOtp = req.session?.recoverOtp;
 
-    console.log(pendingUser, recoverOtp);
+    // console.log(pendingUser, recoverOtp);
 
 
     // ----------------- CASE 1: REGISTRATION OTP -----------------
@@ -145,6 +148,10 @@ class UserService {
         throw new ApiError(400, "Invalid OTP");
       }
 
+      if (pendingUser.phone_otp !== req.body.phone_otp){
+        throw new ApiError(400,"Invalid OTP")
+      }
+
       if (Date.now() > pendingUser.expiresAt) {
         throw new ApiError(400, "OTP expired");
       }
@@ -153,6 +160,7 @@ class UserService {
       const user = await UserRepository.create({
         ...pendingUser.userPayload,
         email_verified: true,
+        phone_verified : true,
       });
 
       // Clear OTP from session

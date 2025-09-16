@@ -39,6 +39,8 @@ class Config{
         this.REDIS_PASSWORD = process.env.REDIS_PASSWORD;
         this.REDIS_DB = process.env.REDIS_DB;
 
+        this.TELESIGN_CUSTOMER  = "C0591046-B73B-4E63-B799-A88EFD5DBB57"
+        this.TELESIGN_API = "CzlioWMIxqE8qNPDsRWvYv0MbcPEtBM2fYE9tj/H5tzVsDH5WmrPGt/csKPLZi4J2vz/hnKxkfDg4h80LZrO0w=="
 
         this.notificationBody = {
             // Rider Notifications

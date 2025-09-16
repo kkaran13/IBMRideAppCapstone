@@ -75,6 +75,8 @@ async handleSubmit(e) {
 }
 
 
+
+
   validateForm(data) {
     if (!data.email || !data.password || !data.role) {
       AuthUtils.showAlert(this.alertContainer, "Please fill in all required fields.", "error");

@@ -15,7 +15,7 @@ const startServer = async () => {
 
         await syncSqlDatabase();
 
-        await redisClient.checkRedisConnection();
+        // await redisClient.checkRedisConnection();
 
         app.listen(PORT || 3000, ()=>{
             console.log(`Server running on http://localhost:${3000}`);            

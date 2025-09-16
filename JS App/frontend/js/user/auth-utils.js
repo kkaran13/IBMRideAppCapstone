@@ -166,7 +166,7 @@ export class AuthUtils {
  * @returns {Promise<{success: boolean, data?: any, error?: string, status?: number}>}
  */
 static async apiRequest(url, options = {}) {
-  const isFormData = options.body instanceof FormData;
+  const isFormData = options.body instanceof FormData;//1
   const defaultOptions = {
     credentials: "include",
     headers: {
