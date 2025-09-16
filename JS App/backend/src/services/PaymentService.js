@@ -4,80 +4,64 @@ import RideRepository from "../repositories/RideRepository.js";
 
 class PaymentService {
 
-    async createDriverWallet(reqObj){
+    async createCheckout(reqObj){
         
-        const { driver_id } = reqObj.body;
+        const { ride_id, wallet_id, rider_id, driver_id, amount, payment_method } = reqObj.body;
 
-        if(!driver_id) { throw new ApiError(400, "Missing the driver id") };
+        if (!ride_id) { throw new ApiError(400, "Missing the ride id"); }
+        if (!wallet_id) { throw new ApiError(400, "Missing the wallet id"); }
+        if (!rider_id) { throw new ApiError(400, "Missing the rider id"); }
+        if (!driver_id) { throw new ApiError(400, "Missing the driver id"); }
+        if (!amount) { throw new ApiError(400, "Missing the amount"); }
+        if (!payment_method) { throw new ApiError(400, "Missing the payment method"); }
 
-        const driverData = await UserRepository.findById(driver_id);
+        const payload = {
+            ride_id,
+            wallet_id,
+            rider_id,
+            driver_id,
+            amount,
+            payment_method
+        };
 
-        if(!driverData) { throw new ApiError(400, "User not found") };
-
-        const apiResponseData = await HelperFunction.axiosSendRequest("post", `wallet/driver-wallet/${driver_id}`);
-        
-        return apiResponseData;
-
-    }
-
-    // get the driver wallet details
-    async getDriverWalletDetails(reqObj){
-
-        if(!reqObj) { throw new ApiError(400, "Missing the required data") };
-
-        const { driver_id } = reqObj.params;
-
-        if(!driver_id) { throw new ApiError(400, "Missing the driver id") };
-
-        const loggedInUser = reqObj.user;
-        if(!loggedInUser) { throw new ApiError(401, "Unauthenticated user") };
-
-        if(loggedInUser.id != driver_id) { throw new ApiError(401, "Unauthorised user") }
-
-        const driverData = await UserRepository.findById(driver_id);
-
-        if(!driverData) { throw new ApiError(400, "User not found") };
-
-        const apiResponseData = await HelperFunction.axiosSendRequest("get", `wallet/driver-wallet/${driver_id}`);
+        const apiResponseData = await HelperFunction.axiosSendRequest("post", `payments/create-order/`, payload);
         
         return apiResponseData;
 
     }
 
-    // get All The driver wallet details
-    async getAllDriverWalletDetails(){
+    async verifyPayment(reqObj) {
+        const { razorpay_order_id, razorpay_payment_id, razorpay_signature, payment_id , ride_id } = reqObj.body;
 
-        const apiResponseData = await HelperFunction.axiosSendRequest("get", `wallet/driver-wallet/`);
+        if (!razorpay_order_id) { throw new ApiError(400, "Missing razorpay_order_id"); }
+        if (!razorpay_payment_id) { throw new ApiError(400, "Missing razorpay_payment_id"); }
+        if (!razorpay_signature) { throw new ApiError(400, "Missing razorpay_signature"); }
+        if (!payment_id) { throw new ApiError(400, "Missing payment_id"); }
+
+        const payload = {
+            razorpay_order_id,
+            razorpay_payment_id,
+            razorpay_signature,
+            payment_id,
+            ride_id
+        };
+
+        const apiResponseData = await HelperFunction.axiosSendRequest("post", `payments/verify-payment/`, payload);
         
-        return apiResponseData;
+        if (apiResponseData.error) { throw new ApiError(400, apiResponseData.error); }
+        
+        let pay_status;
 
+        if (apiResponseData.status === "SUCCESS") { 
+            pay_status = "completed" ;
+        } else {
+            pay_status = "failed";
+        }
+
+        await RideRepository.updatePaymentStatus(ride_id, pay_status);
+
+        return apiResponseData;
     }
 
-    // deactivate the driver wallet
-    async deactivateDriverWallet(reqObj){
-
-        if(!reqObj) { throw new ApiError(400, "Missing the required data") };
-
-        const { driver_id } = reqObj.params;
-
-        if(!driver_id) { throw new ApiError(400, "Missing the driver id") };
-
-        const loggedInUser = reqObj.user;
-        if(!loggedInUser) { throw new ApiError(401, "Unauthenticated user") };
-
-        if(loggedInUser.id != driver_id) { throw new ApiError(401, "Unauthorised user") }
-
-        const driverData = await UserRepository.findById(driver_id);
-
-        if(!driverData) { throw new ApiError(400, "User not found") };
-
-        const apiResponseData = await HelperFunction.axiosSendRequest("patch", `wallet/driver-wallet/${driver_id}`);
-        
-        return apiResponseData;
-
-    }
-
-
-    
 }
 export default new PaymentService();

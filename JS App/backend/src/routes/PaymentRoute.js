@@ -5,8 +5,7 @@ import { authorizeRole } from '../middlewares/roleMiddleware.js'
 
 const paymentRouter = express.Router();
 
-// paymentRouter.get('/:driver_id', authenticateJWT, authorizeRole(['driver', 'admin']), DriverWalletController.getDriverWalletDetails); // get wallet details
-// paymentRouter.get('/', authenticateJWT, authorizeRole(['admin']), DriverWalletController.getAllDriverWalletDetails); // Get all the wallets
-// paymentRouter.patch('/:driver_id', authenticateJWT, authorizeRole(['driver', 'admin']), DriverWalletController.deactivateDriverWallet); // deactivate the wallet
+paymentRouter.post('/create-order', PaymentController.createCheckoutOrder);
+paymentRouter.post('/verify-payment',  PaymentController.verifyPaymentStatus); 
 
 export default paymentRouter;

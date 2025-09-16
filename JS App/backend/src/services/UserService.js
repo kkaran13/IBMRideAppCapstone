@@ -190,7 +190,6 @@ class UserService {
     throw new ApiError(400, "No OTP request found. Please register or recover again.");
   }
 
-<<<<<<< HEAD
   async loginAdmin({ email, password }) {
     if (!email || !password) {
       throw new ApiError(400, "Email and Password are required");
@@ -238,7 +237,6 @@ class UserService {
 
 
 
-=======
   async recoverAccount(email, req) {
     if (!email) {
       throw new ApiError(400,"Email is required")
@@ -268,7 +266,6 @@ class UserService {
 
     return { otpSent: true };
   }
->>>>>>> 2f4beec28e8fdcf604db019c40e195bf2e51b7da
   // ----------------- LOGIN -----------------
   async loginUser({ email, password }) {
     if (!email || !password) {
