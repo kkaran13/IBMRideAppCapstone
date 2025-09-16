@@ -26,6 +26,12 @@ class PaymentService {
 
         const apiResponseData = await HelperFunction.axiosSendRequest("post", `payments/create-order/`, payload);
         
+        console.log("API Response:", apiResponseData);
+
+        if (apiResponseData.error) {
+            throw new ApiError(400, apiResponseData.error);
+        }
+
         return apiResponseData;
 
     }
@@ -42,11 +48,12 @@ class PaymentService {
             razorpay_order_id,
             razorpay_payment_id,
             razorpay_signature,
-            payment_id,
-            ride_id
+            payment_id
         };
 
         const apiResponseData = await HelperFunction.axiosSendRequest("post", `payments/verify-payment/`, payload);
+        
+        console.log("Verify Payment API Response:", apiResponseData);
         
         if (apiResponseData.error) { throw new ApiError(400, apiResponseData.error); }
         

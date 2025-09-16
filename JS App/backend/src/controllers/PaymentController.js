@@ -9,7 +9,7 @@ class PaymentController {
         const result = await PaymentService.createCheckout(req);
         return res
             .status(201)
-            .json(new ApiResponse(200, result, ""));
+            .json(result);
         
     });
 
@@ -18,7 +18,7 @@ class PaymentController {
         const result = await PaymentService.verifyPayment(req);
         return res
             .status(201)
-            .json(new ApiResponse(200, result, ""));
+            .json(result);
         
     });
 
