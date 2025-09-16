@@ -47,7 +47,7 @@ class UserController {
 
     // User details cookie (readable on frontend)
     res.cookie("user_info", JSON.stringify({
-        id: result.user.id,
+        id: result.user.user_id,
         firstname: result.user.firstname,
         lastname: result.user.lastname,
         email: result.user.email,
