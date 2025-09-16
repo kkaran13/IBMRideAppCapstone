@@ -158,16 +158,16 @@ class UserService {
       // Clear OTP from session
       delete req.session.pendingUser;
 
-    // the driver crete wallet if the user is a driver
-    if(user?.role == "driver"){
+      // the driver crete wallet if the user is a driver
+      if(user?.role == "driver"){
 
-      const walletCreateObj = {
-        body : { driver_id : user.user_id }
+        const walletCreateObj = {
+          body : { driver_id : user.user_id }
+        }
+        const driverWalletData = await DriverWalletService.createDriverWallet(walletCreateObj);
+        console.log(driverWalletData);
+      
       }
-      const driverWalletData = await DriverWalletService.createDriverWallet(walletCreateObj);
-      console.log(driverWalletData);
-    
-    }
 
       return { registered: true };
     }
