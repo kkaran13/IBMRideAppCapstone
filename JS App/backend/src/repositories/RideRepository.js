@@ -279,6 +279,7 @@ class RideRepository {
         await ride.save();
 
         return ride;
+    }
     // for Vehicle delete
     async findActiveRideByVehicleId(vehicleId) {
         return await Ride.findOne({
