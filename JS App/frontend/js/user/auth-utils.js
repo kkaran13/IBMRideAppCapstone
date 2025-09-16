@@ -29,6 +29,13 @@ export class AuthUtils {
     resetToken: "resetToken",
   }
 
+  // Cookie store keys
+  static COOKIE_STORE_KEYS = {
+    userInfo: "user_info",
+    // Add other cookie keys here if needed in the future
+  }
+
+
   /**
    * Validate email format
    * @param {string} email
@@ -152,10 +159,12 @@ export class AuthUtils {
  * @returns {Promise<{success: boolean, data?: any, error?: string, status?: number}>}
  */
 static async apiRequest(url, options = {}) {
+  const isFormData = options.body instanceof FormData;
   const defaultOptions = {
     credentials: "include",
     headers: {
-      "Content-Type": "application/json",
+      // "Content-Type": "application/json",
+      ...(isFormData ? {} : { "Content-Type": "application/json" }),
       ...(options.headers || {}),
     },
     ...options,
@@ -163,7 +172,6 @@ static async apiRequest(url, options = {}) {
 
   try {
     const response = await fetch(url, defaultOptions);
-    console.log(response);
     
     // Handle empty response (e.g., 204 No Content)
     const text = await response.text();
@@ -315,6 +323,32 @@ static async apiRequest(url, options = {}) {
       minute: "2-digit",
     })
   }
+
+  /**
+  * Get user_info cookie and parse it as JSON
+  * @returns {object|null} Parsed user info object or null if not found/invalid
+  */
+  static getUserInfo() {
+    const cookieName = this.COOKIE_STORE_KEYS.userInfo + "=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookies = decodedCookie.split(';');
+
+    for (let cookie of cookies) {
+      cookie = cookie.trim();
+      if (cookie.indexOf(cookieName) === 0) {
+        const cookieValue = cookie.substring(cookieName.length);
+        try {
+          return JSON.parse(cookieValue);
+        } catch (e) {
+          console.error("Failed to parse user_info cookie:", e);
+          return null;
+        }
+      }
+    }
+    return null; // cookie not found
+  }
+
+
 }
 
 // // Export for use in other files

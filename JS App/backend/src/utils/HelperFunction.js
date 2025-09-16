@@ -232,7 +232,7 @@ class HelperFunction {
      * }
      */
     getNotificationTemplate(templateName, data = {}) {
-        const template = Config.notificationBody[templateName];
+        const template = config.notificationBody[templateName];
 
         if (!template) {
             throw new Error(`Notification template "${templateName}" not found`);
