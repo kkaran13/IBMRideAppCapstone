@@ -47,7 +47,7 @@ class LoginForm {
       if (data.accessToken) AuthUtils.storeAuthToken(data.accessToken);
 
       // Redirect
-      AuthUtils.redirectTo(data.redirectUrl || "dashboard.html", 1500);
+      AuthUtils.redirectTo(data.redirectUrl || "../../html/ride/ride.html", 1500);
     } else {
       AuthUtils.showAlert(this.alertContainer, error, "error", 3000);
     }

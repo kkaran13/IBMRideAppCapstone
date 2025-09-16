@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ride Hailing App</title>
-    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../../css/ride/ride.css" />
     <link rel="stylesheet" href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/maps/maps.css">
 </head>
 
@@ -16,8 +16,6 @@
             <h1 class="logo">Uber</h1>
             <ul class="nav-links">
                 <li class="active"><i class="icon">🚗</i> Ride</li>
-                <li><i class="icon">🔑</i> Rent</li>
-                <li><i class="icon">🍴</i> Eat</li>
             </ul>
         </div>
         <div class="nav-right">
@@ -47,8 +45,18 @@
                     <option>For someone else</option>
                 </select>
             </div>
-            <button id="searchBtn" class="search-btn">Search</button>
-            <button id="startRide" class="start-ride">Start Ride</button>
+            <div class="button-row">
+                <button id="searchBtn" class="search-btn">Search</button>
+                <button id="fareBtn" class="fare-btn">Prices</button>
+                <button id="requestRide" class="request-ride">Request Ride</button>
+            </div>
+
+            <div id="fareResult" class="fare-result hidden">
+                <h3>Fare Estimate</h3>
+                <p><strong>Distance:</strong> <span id="distance"></span> km</p>
+                <p><strong>Duration:</strong> <span id="duration"></span> mins</p>
+                <p><strong>Estimated Fare:</strong> ₹<span id="fare"></span></p>
+            </div>
         </div>
 
         <div id="map" style="height:500px;"></div>
@@ -56,9 +64,9 @@
 
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/maps/maps-web.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="../js/script.js"></script>
-    <script type="module" src="../js/backendCoordinates.js"></script>
-    <script type="module" src="../js/startRideHandler.js"></script>
+    <script src="../../js/ride/script.js"></script>
+    <script type="module" src="../../js/ride/backendCoordinates.js"></script>
+    <script type="module" src="../../js/ride/startRideHandler.js"></script>
 
 </body>
 
