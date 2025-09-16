@@ -15,7 +15,7 @@ class DriverWalletService {
 
         if(!driverData) { throw new ApiError(400, "User not found") };
 
-        const apiResponseData = await HelperFunction.axiosSendRequest("post", `wallet/driver-wallet/${driver_id}`);
+        const apiResponseData = await HelperFunction.axiosSendRequest("post", `wallet/driver-wallet/${driver_id}/`);
         
         return apiResponseData;
 
