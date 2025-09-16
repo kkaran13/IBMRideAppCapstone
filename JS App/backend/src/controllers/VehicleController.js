@@ -2,7 +2,7 @@ import { asyncHandler } from "../utils/asynHandler.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import ApiError from "../utils/ApiError.js";
 import VehicleService from "../services/VehicleService.js";
-import UserRepository from "../repositories/UserRepository.js";
+
 
 class VehicleController {
   registerVehicle = asyncHandler(async (req, res) => {
@@ -11,14 +11,14 @@ class VehicleController {
       throw new ApiError(403, "Only drivers can register vehicles");
     }
     // Force owner_id to be the logged-in driver
-    req.body.owner_id = req.user.id; // JWT contains id of logged-in user
+    req.body.owner_id = req.user.id; 
 
     const vehicle = await VehicleService.registerVehicle(req.body);
     res.status(201).json(new ApiResponse(201, vehicle, "Vehicle registered successfully"));
   });
 
   updateVehicle = asyncHandler(async (req, res) => {
-    // Service will check existence, ownership, and deletion
+  
     const updatedVehicle = await VehicleService.updateVehicle(req.params.id, req.body, req.user);
     res.status(200).json(new ApiResponse(200, updatedVehicle, "Vehicle updated successfully"));
   });
@@ -48,8 +48,8 @@ class VehicleController {
     );
   });
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
+
   getActiveVehicle = asyncHandler(async (req, res) => {
 
     const result = await VehicleService.getActiveVehicle(req);
@@ -58,9 +58,7 @@ class VehicleController {
       .json(new ApiResponse(200, result, "Active Vehicles Data")); 
   
   });
-=======
-=======
->>>>>>> Stashed changes
+
 
   getMyVehicles = asyncHandler(async (req, res) => {
       const driverId = req.user.id; 
@@ -82,10 +80,6 @@ class VehicleController {
       );
     });
 
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 }
 
 export default new VehicleController();
