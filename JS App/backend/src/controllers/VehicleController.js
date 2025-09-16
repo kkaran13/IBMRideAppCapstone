@@ -49,6 +49,7 @@ class VehicleController {
   });
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   getActiveVehicle = asyncHandler(async (req, res) => {
 
     const result = await VehicleService.getActiveVehicle(req);
@@ -58,6 +59,8 @@ class VehicleController {
   
   });
 =======
+=======
+>>>>>>> Stashed changes
 
   getMyVehicles = asyncHandler(async (req, res) => {
       const driverId = req.user.id; 
@@ -79,6 +82,9 @@ class VehicleController {
       );
     });
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }
 
