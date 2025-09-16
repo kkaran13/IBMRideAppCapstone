@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ride Hailing App</title>
+    <link rel="stylesheet" href="../../css/ride/ride.css" />
+    <link rel="stylesheet" href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/maps/maps.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <h1 class="logo">Uber</h1>
+            <ul class="nav-links">
+                <li class="active"><i class="icon">🚗</i> Ride</li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <a href="#" class="login">Login</a>
+            <a href="#" class="signup">Sign up</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="ride-form">
+            <h2>Get a ride</h2>
+            <div class="form-group">
+                <input type="text" id="pickup" placeholder="Pickup location" />
+            </div>
+            <div class="form-group">
+                <input type="text" id="dropoff" placeholder="Dropoff location" />
+            </div>
+            <div class="form-group">
+                <select>
+                    <option>Pickup now</option>
+                    <option>Schedule for later</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select>
+                    <option>For me</option>
+                    <option>For someone else</option>
+                </select>
+            </div>
+            <div class="button-row">
+                <button id="searchBtn" class="search-btn">Search</button>
+                <button id="fareBtn" class="fare-btn">Prices</button>
+                <button id="requestRide" class="request-ride">Request Ride</button>
+            </div>
+
+            <div id="fareResult" class="fare-result hidden">
+                <h3>Fare Estimate</h3>
+                <p><strong>Distance:</strong> <span id="distance"></span> km</p>
+                <p><strong>Duration:</strong> <span id="duration"></span> mins</p>
+                <p><strong>Estimated Fare:</strong> ₹<span id="fare"></span></p>
+            </div>
+        </div>
+
+        <div id="map" style="height:500px;"></div>
+    </section>
+
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/maps/maps-web.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../../js/ride/script.js"></script>
+    <script type="module" src="../../js/ride/backendCoordinates.js"></script>
+    <script type="module" src="../../js/ride/startRideHandler.js"></script>
+
+</body>
+
+</html>

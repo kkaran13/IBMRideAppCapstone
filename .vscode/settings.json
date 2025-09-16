@@ -72,5 +72,6 @@
         "xtree": "cpp",
         "xutility": "cpp"
     },
-    "cmake.sourceDirectory": "C:/TRAINING/RideAppCapstone/CPP App/hiredis"
+    "cmake.sourceDirectory": "C:/TRAINING/RideAppCapstone/CPP App/hiredis",
+    "liveServer.settings.port": 5501
 }

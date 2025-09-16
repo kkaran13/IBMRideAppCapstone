@@ -163,8 +163,7 @@ static async apiRequest(url, options = {}) {
   const defaultOptions = {
     credentials: "include",
     headers: {
-      // "Content-Type": "application/json",
-      ...(isFormData ? {} : { "Content-Type": "application/json" }),
+      ...(isFormData ? {} : {"Content-Type": "application/json"}),
       ...(options.headers || {}),
     },
     ...options,
