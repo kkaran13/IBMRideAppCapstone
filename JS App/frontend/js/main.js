@@ -32,7 +32,7 @@ function updateNav() {
   if (role === "driver") {
     headerLinks = `
       <a href="#">Home</a>
-      <a href="#">Vehicles</a>
+      <a href="../html/vehicles-dashboard.html">Vehicles</a>
       <a href="#">Rides</a>
       <a href="#">Ratings</a>
       <a href="#">Wallet</a>
