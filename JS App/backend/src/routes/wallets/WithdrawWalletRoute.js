@@ -1,9 +1,20 @@
-// import express from "express";
+import express from "express";
+import WithdrawWalletController from "../../controllers/wallets/WithdrawWalletController.js";
+import { authenticateJWT } from '../../middlewares/authMiddleware.js';
+import { authorizeRole } from '../../middlewares/roleMiddleware.js'
 
-// const withdrawWalletRouter = express.Router();
+const withdrawWalletRouter = express.Router();
 
-// withdrawWalletRouter.get('/:driver_id'); // Get Withdrawals (Driver)
-// withdrawWalletRouter.post('/:driver_id'); // Withdraw Money Request
-// withdrawWalletRouter.patch('/status/:withdraw_id'); // Update Withdrawal Status
+ 
+withdrawWalletRouter.get(
+  "/",
+  authenticateJWT,
+  authorizeRole(["admin"]),
+  WithdrawWalletController.getWithDrawReqDetails
+);
+ withdrawWalletRouter.patch(
+  "/status/:withdraw_id",
+  WithdrawWalletController.changeReqStatus
+);
 
-// export default withdrawWalletRouter;
+export default withdrawWalletRouter;
