@@ -1,5 +1,6 @@
 import VehicleRepository from "../repositories/VehicleRepository.js";
 import RideRepository from "../repositories/RideRepository.js";
+import UserRepository from "../repositories/UserRepository.js";
 import User from "../models/User.js";
 import ApiError from "../utils/ApiError.js";
 
@@ -138,14 +139,66 @@ class VehicleService {
     return true;
   }
 
-  async getVehiclesByDriver(driverId) {
-    return await VehicleRepository.findByOwner(driverId);
-  }
-
   async getActiveVehicle(reqObj) {
     const { id } = reqObj.user;
     return await VehicleRepository.getActiveVehicle(id);
   }
+
+  async getVehiclesByDriver(driverId, currentUser) {
+      const driver = await UserRepository.findById(driverId);
+      if (!driver || driver.role !== "driver") {
+        throw new ApiError(404, "Driver not found");
+      }
+
+      // Only admin or the driver himself can view
+      if (currentUser.role !== "admin" && currentUser.id !== driver.user_id) {
+        throw new ApiError(403, "You cannot view vehicles of another driver");
+      }
+
+      return await VehicleRepository.findByOwner(driverId);
+    }
+
+   
+  async getVehicleById(vehicleId, driverId) {
+      const vehicle = await VehicleRepository.findById(vehicleId);
+
+      if (!vehicle) {
+        throw new ApiError(404, "Vehicle not found");
+      }
+      if (vehicle.owner_id !== driverId) {
+        throw new ApiError(403, "You cannot access another driver’s vehicle");
+      }
+
+      return vehicle;
+    }
+
+  async getMyVehicles(driverId, filters) {
+    const { page, limit, status, type, make, model, year, q } = filters;
+
+  
+    const allowedStatus = ["active", "inactive"];
+    if (status && !allowedStatus.includes(status)) {
+      throw new ApiError(400, "Invalid status filter. Allowed: active, inactive");
+    }
+
+    const allowedTypes = ["hatchback", "sedan", "suv", "auto", "bike"];
+    if (type && !allowedTypes.includes(type)) {
+      throw new ApiError(400, `Invalid type filter. Allowed: ${allowedTypes.join(", ")}`);
+    }
+
+    return await VehicleRepository.findByOwnerWithFilters(driverId, {
+      page,
+      limit,
+      status,
+      type,
+      make,
+      model,
+      year,
+      q,
+    });
+  }
+
+
 }
 
 export default new VehicleService();
