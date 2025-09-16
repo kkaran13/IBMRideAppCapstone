@@ -515,6 +515,7 @@ class UserService {
       last_login_at: user.last_login_at,
       created_at: user.created_at,
       updated_at: user.updated_at,
+      isAvailable : user.isAvailable
     };
 
     if (role === "driver") {
@@ -622,7 +623,7 @@ class UserService {
     return { updatedUser };
   }
 
-  async logoutUser(res) {
+  async logoutUser(req, res) {
     // Clear the cookie where token is stored
     res.clearCookie("access_token", {
       httpOnly: true,
@@ -635,6 +636,9 @@ class UserService {
       secure: Config.NODE_ENV === "production",
       sameSite: "lax"
     });
+
+    // add the logic to make isAvailable = false
+    await UserRepository.updateById(req.user.id, {isAvailable : false});
 
     return true;
   }
@@ -825,6 +829,14 @@ class UserService {
     HelperFunction.sendFirebasePushNotification('driverVerificationRejected', { ...templateData, ...user }, [user.id]);
 
     return updateResponse;
+  }
+
+  async setAvailableForRide(reqObj) {
+    const driver_id = reqObj.user?.id;
+    const isAvailable = reqObj.body.isAvailable;
+    if (!driver_id) { throw new ApiError(400, 'Missing required data') };
+
+    return await UserRepository.updateById(driver_id, {isAvailable : isAvailable});
   }
 
 

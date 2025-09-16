@@ -48,6 +48,15 @@ class VehicleRepository {
       ...options,
     });
   }
+
+  async getActiveVehicle(ownerId, options = {}){
+    console.log(ownerId);
+    
+    return await Vehicle.findOne({
+      where : {owner_id : ownerId, status : 'active'},
+      ...options,
+    });
+  }
 }
 
 export default new VehicleRepository();

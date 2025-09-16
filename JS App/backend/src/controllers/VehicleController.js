@@ -44,6 +44,15 @@ class VehicleController {
     const vehicles = await VehicleService.getVehiclesByDriver(req.params.driverId);
     res.status(200).json(new ApiResponse(200, vehicles, "Vehicles fetched successfully"));
   });
+
+  getActiveVehicle = asyncHandler(async (req, res) => {
+
+    const result = await VehicleService.getActiveVehicle(req);
+    return res
+      .status(200)
+      .json(new ApiResponse(200, result, "Active Vehicles Data")); 
+  
+  });
 }
 
 export default new VehicleController();

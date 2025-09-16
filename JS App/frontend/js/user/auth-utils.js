@@ -16,6 +16,7 @@ export class AuthUtils {
     verifyPasswordOtp: `${this.BASE_URL}/user/verify-password-otp`,
     resetPassword: `${this.BASE_URL}/user/reset-password`,
     recoverAccount: `${this.BASE_URL}/user/recover-account`,
+    getUserProfile: `${this.BASE_URL}/user/profile`,
 
 
     // driver-dashboard
@@ -23,6 +24,14 @@ export class AuthUtils {
     getDriverWalletDetails : `${this.BASE_URL}/wallet/driver-wallet/:driver_id`,
     getOngoingRidesDriver : `${this.BASE_URL}/ride/ongoing/driver`,
     setDriverAvailableForRide : `${this.BASE_URL}/user/set-available`,
+    
+    // Ride Apis
+    startRide : `${this.BASE_URL}/ride/start/:id`,
+    driverArrived : `${this.BASE_URL}/ride/driver-arrive/:id`,
+    cancelRide : `${this.BASE_URL}/ride/cancel/:id`,
+    completeRide : `${this.BASE_URL}/ride/complete/:id`,
+
+    
 
   }
 

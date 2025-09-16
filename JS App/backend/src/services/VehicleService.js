@@ -141,6 +141,11 @@ class VehicleService {
   async getVehiclesByDriver(driverId) {
     return await VehicleRepository.findByOwner(driverId);
   }
+
+  async getActiveVehicle(reqObj) {
+    const { id } = reqObj.user;
+    return await VehicleRepository.getActiveVehicle(id);
+  }
 }
 
 export default new VehicleService();
