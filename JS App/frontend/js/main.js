@@ -22,7 +22,7 @@ function updateNav() {
   const nav = document.getElementById("nav-links");
   const footer = document.getElementById("footer-links");
 
-  const role="rider";
+  const role="driver";
   // const role = localStorage.getItem("userRole") || localStorage.getItem("role");
   console.log("calling");
   
@@ -31,22 +31,40 @@ function updateNav() {
 
   if (role === "driver") {
     headerLinks = `
-      <a href="index.html">Home</a>
-      <a href="html/profile.html">Profile</a>
-      <a href="#" class="logout">Logout</a>
+      <a href="#">Home</a>
+      <a href="#">Vehicles</a>
+      <a href="#">Rides</a>
+      <a href="#">Ratings</a>
+      <a href="#">Wallet</a>
+      
+      <div class="dropdown">
+      <img src="../assets/images/profile-icon.png" class="profile-icon">
+      <div class="dropdown-content">
+        <a href="#">Profile</a>
+        <a href="html/index.html">Logout</a>
+      </div>
+    </div>
     `;
     footerLinks = `
       <a href="index.html">Home</a> |
       <a href="html/start-driving.html">Start Driving</a> |
       <a href="html/ride-requests.html">Ride Requests</a> |
+      <a href="#">Wallet</a> |
       <a href="html/profile.html">Profile</a> |
       <a href="#" class="logout">Logout</a>
     `;
   } else if (role === "rider") {
     headerLinks = `
       <a href="index.html">Home</a>
-      <a href="html/profile.html">Profile</a>
-      <a href="#" class="logout">Logout</a>
+      <a href=" ">Book</a>
+      <a href=" ">Rides</a>
+      <div class="dropdown">
+      <img src="../assets/images/profile-icon.png" class="profile-icon">
+      <div class="dropdown-content">
+        <a href="#">Profile</a>
+        <a href="../html/index.html">Logout</a>
+      </div>
+    </div>
     `;
     footerLinks = `
       <a href="index.html">Home</a> |
