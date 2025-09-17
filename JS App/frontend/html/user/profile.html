@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User Profile</title>
   <link rel="stylesheet" href="../../css/user/user.css" />
 </head>
+
 <body>
+  <script type="module" src="../../js/main.js"></script>
+
+      <!-- Header  (Navbar) -->
+    <div id="header-container"></div>
+
   <div class="profile-container">
     <div id="alertContainer"></div>
 
     <div class="profile-card">
       <div class="profile-header">
-        <img id="avatarPreview" class="profile-avatar" src="" alt="Profile Image" />
+        <img id="avatarPreview" class="profile-avatar" src="../../images/default-avatar.png" alt="Profile Image" />
+        <!-- Avatar input is initially hidden -->
+        <input type="file" id="avatarInput" name="avatar" accept="image/*" style="display: none; margin-top: 10px;" />
         <h2 class="profile-title">My Profile</h2>
         <p class="profile-subtitle">Manage your account details</p>
       </div>
@@ -20,43 +29,85 @@
       <!-- Profile rows -->
       <form id="profileForm">
         <div id="profileFields">
+          <!-- Basic Info -->
           <div class="profile-row">
             <span class="profile-label">First Name</span>
-            <span class="profile-value" data-field="firstname"></span>
-            <input type="text" class="profile-input" name="firstname" style="display:none;" />
+            <span class="profile-value" data-field="firstname">-</span>
+            <input type="text" class="profile-input" name="firstname" style="display: none;" />
           </div>
           <div class="profile-row">
             <span class="profile-label">Last Name</span>
-            <span class="profile-value" data-field="lastname"></span>
-            <input type="text" class="profile-input" name="lastname" style="display:none;" />
+            <span class="profile-value" data-field="lastname">-</span>
+            <input type="text" class="profile-input" name="lastname" style="display: none;" />
           </div>
           <div class="profile-row">
             <span class="profile-label">Email</span>
-            <span class="profile-value" data-field="email"></span>
-            <input type="email" class="profile-input" name="email" style="display:none;" />
+            <span class="profile-value" data-field="email">-</span>
+            <input type="email" class="profile-input disabled-input" name="email" style="display: none;" disabled />
           </div>
           <div class="profile-row">
             <span class="profile-label">Phone</span>
-            <span class="profile-value" data-field="phone"></span>
-            <input type="text" class="profile-input" name="phone" style="display:none;" />
+            <span class="profile-value" data-field="phone">-</span>
+            <input type="text" class="profile-input disabled-input" name="phone" style="display: none;" disabled />
+          </div>
+
+          <!-- Verification -->
+          <div class="profile-row">
+            <span class="profile-label">Email Verified</span>
+            <span class="profile-value" data-field="email_verified">-</span>
+          </div>
+          <div class="profile-row">
+            <span class="profile-label">Phone Verified</span>
+            <span class="profile-value" data-field="phone_verified">-</span>
+          </div>
+
+          <!-- Account Info -->
+          <div class="profile-row">
+            <span class="profile-label">Account Status</span>
+            <span class="profile-value" data-field="account_status">-</span>
+            <input type="text" class="profile-input" name="account_status" style="display: none;" />
+          </div>
+          <div class="profile-row">
+            <span class="profile-label">Role</span>
+            <span class="profile-value" data-field="role">-</span>
+            <input type="text" class="profile-input disabled-input" name="role" style="display: none;" disabled />
+          </div>
+
+          <!-- Timestamps -->
+          <div class="profile-row">
+            <span class="profile-label">Created At</span>
+            <span class="profile-value" data-field="created_at">-</span>
+          </div>
+          <div class="profile-row">
+            <span class="profile-label">Last Updated</span>
+            <span class="profile-value" data-field="updated_at">-</span>
+          </div>
+          <div class="profile-row">
+            <span class="profile-label">Last Login</span>
+            <span class="profile-value" data-field="last_login_at">-</span>
           </div>
 
           <!-- Driver-only -->
-          <div id="driverFields" style="display:none;">
+          <div id="driverFields" style="display: none;">
             <div class="profile-row">
               <span class="profile-label">License Number</span>
-              <span class="profile-value" data-field="license_number"></span>
-              <input type="text" class="profile-input" name="license_number" style="display:none;" />
+              <span class="profile-value" data-field="license_number">-</span>
+              <input type="text" class="profile-input" name="license_number" style="display: none;" />
             </div>
             <div class="profile-row">
               <span class="profile-label">License Expiry</span>
-              <span class="profile-value" data-field="license_expiry_date"></span>
-              <input type="date" class="profile-input" name="license_expiry_date" style="display:none;" />
+              <span class="profile-value" data-field="license_expiry_date">-</span>
+              <input type="date" class="profile-input" name="license_expiry_date" style="display: none;" />
             </div>
             <div class="profile-row">
               <span class="profile-label">Aadhar Number</span>
-              <span class="profile-value" data-field="aadhar_number"></span>
-              <input type="text" class="profile-input" name="aadhar_number" style="display:none;" />
+              <span class="profile-value" data-field="aadhar_number">-</span>
+              <input type="text" class="profile-input" name="aadhar_number" style="display: none;" />
+            </div>
+            <div class="profile-row">
+              <span class="profile-label">Available</span>
+              <span class="profile-value" data-field="isAvailable">-</span>
+              <input type="checkbox" class="profile-input" name="isAvailable" style="display: none;" />
             </div>
           </div>
         </div>
@@ -64,14 +115,16 @@
         <!-- Actions -->
         <div class="profile-actions">
           <button type="button" class="btn btn-primary" id="editBtn">Update</button>
-          <button type="submit" class="btn btn-success" id="saveBtn" style="display:none;">Save</button>
-          <button type="button" class="btn btn-secondary" id="cancelBtn" style="display:none;">Cancel</button>
+          <button type="submit" class="btn btn-success" id="saveBtn" style="display: none;">Save</button>
+          <button type="button" class="btn btn-secondary" id="cancelBtn" style="display: none;">Cancel</button>
           <button type="button" class="btn btn-secondary" id="logoutBtn">Logout</button>
         </div>
       </form>
     </div>
   </div>
-
+    <!-- Footer -->
+   <div id="footer-container"></div>
   <script type="module" src="../../js/user/profile.js"></script>
 </body>
+
 </html>

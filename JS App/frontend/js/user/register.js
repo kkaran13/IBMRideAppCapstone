@@ -20,62 +20,58 @@ class RegisterForm {
     });
   }
 
-async handleSubmit(e) {
-  e.preventDefault();
+  async handleSubmit(e) {
+    e.preventDefault();
 
-  const formData = new FormData(this.form);
+    const formData = new FormData(this.form);
 
-  // Convert FormData to object for validation and debugging
-  const dataObj = {};
-  formData.forEach((value, key) => (dataObj[key] = value));
-  console.log("Register form data:", dataObj);
+    // Convert FormData to object for debugging (not used for sending)
+    const dataObj = {};
+    formData.forEach((value, key) => (dataObj[key] = value));
+    console.log("Register form data:", dataObj);
 
-  if (!this.validateForm(dataObj)) return;
+    if (!this.validateForm(dataObj)) return;
 
-  AuthUtils.setButtonLoading(this.registerBtn, true, "Signing Up...", "Sign Up");
+    AuthUtils.setButtonLoading(this.registerBtn, true, "Signing Up...", "Sign Up");
 
-  try {
-    //  Use apiRequest
-    const result = await AuthUtils.apiRequest(AuthUtils.API_ENDPOINTS.register, {
-      method: "POST",
-      body: formData, // wrapper handles FormData properly
-    });
+    try {
+      const result = await AuthUtils.apiRequest(AuthUtils.API_ENDPOINTS.register, {
+        method: "POST",
+        body: formData, // FormData will carry text + files
+      });
 
-    console.log("Register response:", result);
-    
-    if (result.success) {
-      if (dataObj.email) {
-        // Store pending email for OTP verification
-        localStorage.setItem(AuthUtils.STORAGE_KEYS.pendingEmail, dataObj.email);
+      console.log("Register response:", result);
+
+      if (result.success) {
+        if (dataObj.email) {
+          // Store pending email for OTP verification
+          localStorage.setItem(AuthUtils.STORAGE_KEYS.pendingEmail, dataObj.email);
+        }
+
+        AuthUtils.showAlert(
+          this.alertContainer,
+          "Registration successful! Check your email for OTP.",
+          "success",
+          3000
+        );
+
+        setTimeout(() => {
+          window.location.href = "verify-otp.html";
+        }, 2000);
+      } else {
+        AuthUtils.showAlert(
+          this.alertContainer,
+          result.error || "Registration failed.",
+          "error"
+        );
       }
-
-      AuthUtils.showAlert(
-        this.alertContainer,
-        "Registration successful! Check your email for OTP.",
-        "success",
-        3000
-      );
-
-      setTimeout(() => {
-        window.location.href = "verify-otp.html";
-      }, 2000);
-    } else {
-      AuthUtils.showAlert(
-        this.alertContainer,
-        result.error || "Registration failed.",
-        "error"
-      );
+    } catch (err) {
+      console.error("Network/Request Error:", err);
+      AuthUtils.showAlert(this.alertContainer, "Network error. Please try again.", "error");
+    } finally {
+      AuthUtils.setButtonLoading(this.registerBtn, false, "Signing Up...", "Sign Up");
     }
-  } catch (err) {
-    console.error("Network/Request Error:", err);
-    AuthUtils.showAlert(this.alertContainer, "Network error. Please try again.", "error");
-  } finally {
-    AuthUtils.setButtonLoading(this.registerBtn, false, "Signing Up...", "Sign Up");
   }
-}
-
-
-
 
   validateForm(data) {
     if (!data.email || !data.password || !data.role) {
@@ -88,10 +84,36 @@ async handleSubmit(e) {
       return false;
     }
 
-    // Optional: add more validations for password strength, phone, or driver-specific fields
+    // Extra validation for drivers
+    if (data.role === "driver") {
+      const avatar = this.form.querySelector('input[name="avatar"]').files[0];
+      const license = this.form.querySelector('input[name="license"]').files[0];
+      const aadhar = this.form.querySelector('input[name="aadhar"]').files[0];
+
+      if (!data.license_number || !data.license_expiry_date || !data.aadhar_number) {
+        AuthUtils.showAlert(
+          this.alertContainer,
+          "Please fill in license number, expiry date, and Aadhaar number.",
+          "danger"
+        );
+        return false;
+      }
+
+      if (!avatar || !license || !aadhar) {
+        AuthUtils.showAlert(
+          this.alertContainer,
+          "Please upload avatar, license, and Aadhaar images.",
+          "danger"
+        );
+        return false;
+      }
+    }
+
     return true;
   }
 }
 
 // Initialize
-const registerForm = new RegisterForm();
+document.addEventListener("DOMContentLoaded", () => {
+  new RegisterForm();
+});

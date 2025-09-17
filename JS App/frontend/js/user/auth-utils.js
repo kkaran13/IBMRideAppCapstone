@@ -180,11 +180,12 @@ export class AuthUtils {
  * @returns {Promise<{success: boolean, data?: any, error?: string, status?: number}>}
  */
 static async apiRequest(url, options = {}) {
-  const isFormData = options.body instanceof FormData;//1
+  const isFormData = options.body instanceof FormData;
+
   const defaultOptions = {
     credentials: "include",
     headers: {
-      ...(isFormData ? {} : {"Content-Type": "application/json"}),
+      ...(isFormData ? {} : { "Content-Type": "application/json" }),
       ...(options.headers || {}),
     },
     ...options,
@@ -192,10 +193,16 @@ static async apiRequest(url, options = {}) {
 
   try {
     const response = await fetch(url, defaultOptions);
-    console.log(response);
-    // Handle empty response (e.g., 204 No Content)
-    const text = await response.text();
-    const data = text ? JSON.parse(text) : null;
+
+    let data = null;
+    const contentType = response.headers.get("content-type");
+
+    if (contentType && contentType.includes("application/json")) {
+      data = await response.json();
+    } else {
+      const text = await response.text();
+      data = text || null;
+    }
 
     if (!response.ok) {
       return {
@@ -214,6 +221,7 @@ static async apiRequest(url, options = {}) {
     };
   }
 }
+
 
 
   /**
