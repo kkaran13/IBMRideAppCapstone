@@ -6,13 +6,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.join(__dirname, "../../.env") });
-class Config{
+class Config {
 
-    constructor(){
+    constructor() {
 
         this.NODE_ENV = process.env.NODE_ENV;
         this.NODE_PORT = process.env.NODE_PORT;
-        this.JWT_SECRET = process.env.JWT_SECRET; 
+        this.JWT_SECRET = process.env.JWT_SECRET;
 
         this.MONGO_URI = process.env.MONGO_URI;
 
@@ -24,7 +24,7 @@ class Config{
         this.CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
         this.CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
         this.CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
-        
+
         this.SMTP_HOST = process.env.SMTP_HOST;
         this.SMTP_PORT = process.env.SMTP_PORT;
         this.SMTP_USER = process.env.SMTP_USER;
@@ -39,6 +39,8 @@ class Config{
         this.REDIS_PASSWORD = process.env.REDIS_PASSWORD;
         this.REDIS_DB = process.env.REDIS_DB;
 
+        this.TELESIGN_CUSTOMER = process.env.TELESIGN_CUSTOMER
+        this.TELESIGN_API = process.env.TELESIGN_API
 
         this.notificationBody = {
             // Rider Notifications

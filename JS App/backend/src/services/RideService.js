@@ -212,7 +212,7 @@ class RideService {
         const ride = await RideRepository.getRideById(ride_id);
         if (!ride) throw new ApiError(404, "Ride not found");
 
-        ride_otp = ride.otp || null;
+        let ride_otp = ride.otp || null;
         if(!ride_otp){
             throw new ApiError(404,"No otp found")
         }

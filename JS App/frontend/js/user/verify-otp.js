@@ -3,7 +3,10 @@ import { AuthUtils } from "./auth-utils.js";
 class OTPVerification {
   constructor() {
     this.form = document.getElementById("otpForm");
-    this.inputs = document.querySelectorAll(".otp-input");
+    this.groups = {
+      email: document.querySelectorAll(".otp-input[data-group='email']"),
+      phone: document.querySelectorAll(".otp-input[data-group='phone']"),
+    };
     this.verifyBtn = document.getElementById("verifyBtn");
     this.resendBtn = document.getElementById("resendBtn");
     this.alertContainer = document.getElementById("alert-container");
@@ -12,53 +15,68 @@ class OTPVerification {
   }
 
   init() {
+    Object.values(this.groups).forEach((inputs) => {
+      inputs.forEach((input, index) => {
+        input.addEventListener("input", (e) => this.handleInput(e, index, inputs));
+        input.addEventListener("keydown", (e) => this.handleKeydown(e, index, inputs));
+        input.addEventListener("paste", (e) => this.handlePaste(e, inputs));
+      });
+    });
+
     this.form.addEventListener("submit", this.handleSubmit.bind(this));
     this.resendBtn.addEventListener("click", this.handleResend.bind(this));
 
-    this.inputs.forEach((input, index) => {
-      input.addEventListener("input", (e) => this.handleInput(e, index));
-      input.addEventListener("keydown", (e) => this.handleKeydown(e, index));
-      input.addEventListener("paste", (e) => this.handlePaste(e));
-    });
-
-    this.inputs[0].focus();
+    // Focus first email input
+    this.groups.email[0]?.focus();
   }
 
-  handleInput(e, index) {
+  handleInput(e, index, inputs) {
     const value = e.target.value;
     if (!/^\d$/.test(value)) { e.target.value = ""; return; }
-    if (value && index < this.inputs.length - 1) this.inputs[index + 1].focus();
+    if (value && index < inputs.length - 1) inputs[index + 1].focus();
     if (this.isComplete()) setTimeout(() => this.handleSubmit(new Event("submit")), 100);
   }
 
-  handleKeydown(e, index) {
-    if (e.key === "Backspace" && !e.target.value && index > 0) this.inputs[index - 1].focus();
-    if (e.key === "ArrowLeft" && index > 0) this.inputs[index - 1].focus();
-    if (e.key === "ArrowRight" && index < this.inputs.length - 1) this.inputs[index + 1].focus();
+  handleKeydown(e, index, inputs) {
+    if (e.key === "Backspace" && !e.target.value && index > 0) inputs[index - 1].focus();
+    if (e.key === "ArrowLeft" && index > 0) inputs[index - 1].focus();
+    if (e.key === "ArrowRight" && index < inputs.length - 1) inputs[index + 1].focus();
   }
 
-  handlePaste(e) {
+  handlePaste(e, inputs) {
     e.preventDefault();
-    const digits = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
-    digits.split("").forEach((d, i) => { if (this.inputs[i]) this.inputs[i].value = d; });
-    this.inputs[Math.min(digits.length, this.inputs.length - 1)].focus();
-    if (digits.length === 6) setTimeout(() => this.handleSubmit(new Event("submit")), 100);
+    const digits = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, inputs.length);
+    digits.split("").forEach((d, i) => { if (inputs[i]) inputs[i].value = d; });
+    inputs[Math.min(digits.length, inputs.length - 1)].focus();
+    if (digits.length === inputs.length && this.isComplete()) {
+      setTimeout(() => this.handleSubmit(new Event("submit")), 100);
+    }
   }
 
-  isComplete() { return Array.from(this.inputs).every(i => i.value.length === 1); }
-  getOTP() { return Array.from(this.inputs).map(i => i.value).join(""); }
+  isComplete() {
+    return (
+      Array.from(this.groups.email).every(i => i.value.length === 1) &&
+      Array.from(this.groups.phone).every(i => i.value.length === 1)
+    );
+  }
+
+  getOTP(groupName) {
+    return Array.from(this.groups[groupName]).map(i => i.value).join("");
+  }
 
   async handleSubmit(e) {
     e.preventDefault();
     if (!this.isComplete()) {
-      AuthUtils.showAlert(this.alertContainer, "Please enter the complete 6-digit code", "error");
+      AuthUtils.showAlert(this.alertContainer, "Please enter both OTP codes completely", "error");
       return;
     }
 
-    const otp = this.getOTP();
+    const otp = this.getOTP("email");      // email otp
+    const phone_otp = this.getOTP("phone"); // phone otp
     const email = localStorage.getItem(AuthUtils.STORAGE_KEYS.pendingEmail);
+
     if (!email) {
-      AuthUtils.showAlert(this.alertContainer, "Email not found. Please start registration or recovery again.", "error");
+      AuthUtils.showAlert(this.alertContainer, "Email not found. Please start registration again.", "error");
       return;
     }
 
@@ -66,7 +84,7 @@ class OTPVerification {
 
     const { success, data, error } = await AuthUtils.apiRequest(AuthUtils.API_ENDPOINTS.verifyOtp, {
       method: "POST",
-      body: JSON.stringify({ otp, email }),
+      body: JSON.stringify({ otp, phone_otp, email }),
     });
 
     if (success) {
@@ -89,9 +107,9 @@ class OTPVerification {
     });
 
     if (success) {
-      AuthUtils.showAlert(this.alertContainer, "Verification code sent successfully!", "success", 2000);
+      AuthUtils.showAlert(this.alertContainer, "Verification codes sent successfully!", "success", 2000);
       this.clearInputs();
-      this.inputs[0].focus();
+      this.groups.email[0]?.focus();
     } else {
       AuthUtils.showAlert(this.alertContainer, error || "Failed to resend code.", "error");
     }
@@ -99,7 +117,9 @@ class OTPVerification {
     AuthUtils.setButtonLoading(this.resendBtn, false, "Sending...", "Resend Code");
   }
 
-  clearInputs() { this.inputs.forEach(i => i.value = ""); }
+  clearInputs() {
+    Object.values(this.groups).forEach(inputs => inputs.forEach(i => i.value = ""));
+  }
 }
 
 const otpVerification = new OTPVerification();
