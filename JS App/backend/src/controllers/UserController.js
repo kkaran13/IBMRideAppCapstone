@@ -143,7 +143,9 @@ getAllUser = asyncHandler(async (req, res) => {
 
 
   getPendingVerifications = asyncHandler(async (req, res) => {
+     
     const result = await UserService.getPendingVerifications();
+    console.log(result)
     return res
       .status(200)
       .json(new ApiResponse(200, result, "Pending verifications fetched"));
