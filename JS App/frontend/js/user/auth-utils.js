@@ -29,6 +29,7 @@ export class AuthUtils {
     getDriverWalletDetails : `${this.BASE_URL}/wallet/driver-wallet/:driver_id`,
     getOngoingRidesDriver : `${this.BASE_URL}/ride/ongoing/driver`,
     setDriverAvailableForRide : `${this.BASE_URL}/user/set-available`,
+    withdrawAmount : `${this.BASE_URL}/wallet/withdraw/:driver_id`,
     
     // Ride Apis
     startRide : `${this.BASE_URL}/ride/start/:id`,
