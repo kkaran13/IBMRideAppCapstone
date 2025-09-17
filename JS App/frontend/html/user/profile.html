@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile</title>
+  <link rel="stylesheet" href="../../css/user/user.css" />
+</head>
+<body>
+  <div class="profile-container">
+    <div id="alertContainer"></div>
+
+    <div class="profile-card">
+      <div class="profile-header">
+        <img id="avatarPreview" class="profile-avatar" src="" alt="Profile Image" />
+        <h2 class="profile-title">My Profile</h2>
+        <p class="profile-subtitle">Manage your account details</p>
+      </div>
+
+      <!-- Profile rows -->
+      <form id="profileForm">
+        <div id="profileFields">
+          <div class="profile-row">
+            <span class="profile-label">First Name</span>
+            <span class="profile-value" data-field="firstname"></span>
+            <input type="text" class="profile-input" name="firstname" style="display:none;" />
+          </div>
+          <div class="profile-row">
+            <span class="profile-label">Last Name</span>
+            <span class="profile-value" data-field="lastname"></span>
+            <input type="text" class="profile-input" name="lastname" style="display:none;" />
+          </div>
+          <div class="profile-row">
+            <span class="profile-label">Email</span>
+            <span class="profile-value" data-field="email"></span>
+            <input type="email" class="profile-input" name="email" style="display:none;" />
+          </div>
+          <div class="profile-row">
+            <span class="profile-label">Phone</span>
+            <span class="profile-value" data-field="phone"></span>
+            <input type="text" class="profile-input" name="phone" style="display:none;" />
+          </div>
+
+          <!-- Driver-only -->
+          <div id="driverFields" style="display:none;">
+            <div class="profile-row">
+              <span class="profile-label">License Number</span>
+              <span class="profile-value" data-field="license_number"></span>
+              <input type="text" class="profile-input" name="license_number" style="display:none;" />
+            </div>
+            <div class="profile-row">
+              <span class="profile-label">License Expiry</span>
+              <span class="profile-value" data-field="license_expiry_date"></span>
+              <input type="date" class="profile-input" name="license_expiry_date" style="display:none;" />
+            </div>
+            <div class="profile-row">
+              <span class="profile-label">Aadhar Number</span>
+              <span class="profile-value" data-field="aadhar_number"></span>
+              <input type="text" class="profile-input" name="aadhar_number" style="display:none;" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="profile-actions">
+          <button type="button" class="btn btn-primary" id="editBtn">Update</button>
+          <button type="submit" class="btn btn-success" id="saveBtn" style="display:none;">Save</button>
+          <button type="button" class="btn btn-secondary" id="cancelBtn" style="display:none;">Cancel</button>
+          <button type="button" class="btn btn-secondary" id="logoutBtn">Logout</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="../../js/user/profile.js"></script>
+</body>
+</html>

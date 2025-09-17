@@ -187,7 +187,7 @@ static async apiRequest(url, options = {}) {
 
   try {
     const response = await fetch(url, defaultOptions);
-    
+    console.log(response);
     // Handle empty response (e.g., 204 No Content)
     const text = await response.text();
     const data = text ? JSON.parse(text) : null;

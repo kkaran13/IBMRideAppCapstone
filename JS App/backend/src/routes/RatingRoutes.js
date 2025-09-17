@@ -43,6 +43,13 @@ ratingRouter.get(
 );
 
 
+ratingRouter.get(
+  "/ride/rating",
+  authenticateJWT,
+  authorizeRole("admin"), // admin only
+  ratingController.getRideAndRating
+);
+
 //get avg rating and all ratings- driver
 ratingRouter.get(
   "/driver/ratings",

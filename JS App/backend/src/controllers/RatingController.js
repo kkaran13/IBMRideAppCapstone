@@ -19,6 +19,28 @@ class RatingController {
         }
     }
 
+
+
+ async getRideAndRating(req, res) {
+    console.log("Hello Buddy I AM Calling ")
+    console.log("Hello Buddy I AM Calling ")
+    console.log("Hello Buddy I AM Calling ")
+    console.log("Hello Buddy I AM Calling ")
+    console.log("Hello Buddy I AM Calling ")
+    console.log("Hello Buddy I AM Calling ")
+    console.log("Hello Buddy I AM Calling ")
+    try {
+      const result = await ratingService.getRideAndRating();
+      return res.status(result.status).json(result);
+    } catch (error) {
+      console.error("❌ Error in RatingController:", error);
+      return res.status(error.status || 500).json({
+        status: error.status || 500,
+        message: error.message || "Internal Server Error",
+      });
+    }
+  }
+
     async getAvgRating(req, res) {
         try {
             const result = await RatingService.getAverageDriverRating(req.params.driverId);
@@ -46,6 +68,16 @@ class RatingController {
             );
             return res.status(result.status).json(result);
         } catch (error) {
+            return res.status(error.status || 500).json({ error: error.message || error });
+        }
+    }
+
+   async getRideAndRating(req, res) {
+        try {
+            const result = await RatingService.getRideAndRating();
+            return res.status(result.status).json(result);
+        } catch (error) {
+            console.error(error);
             return res.status(error.status || 500).json({ error: error.message || error });
         }
     }
