@@ -58,7 +58,7 @@ function updateNav() {
   if (role === "driver") {
     headerLinks = `
       <a href="/html/driver/driver-dashboard.html">Home</a>
-      <a href="#">Vehicles</a>
+      <a href="/html/vehicle/active-vehicle.html">Vehicles</a>
       <a href="#">Rides</a>
       <a href="#">Ratings</a>
       <a href="/html/wallet/wallet.html">Wallet</a>
@@ -131,13 +131,27 @@ function attachLogoutHandler() {
 
       if (typeof AuthUtils !== "undefined") {
 
+        const deviceId = localStorage.getItem('deviceId');
+        const loggedInUser = AuthUtils.getUserInfo();
+        const userId = loggedInUser.id;
+
         AuthUtils.clearAuthData();
         localStorage.removeItem(AuthUtils.STORAGE_KEYS.userRole);
 
         try {
+
           await AuthUtils.apiRequest(AuthUtils.API_ENDPOINTS.logout, {
             method : "POST"
           });
+
+          // Deregister the token from the backend
+          const s = await AuthUtils.apiRequest(AuthUtils.API_ENDPOINTS.deRegisterDeviceToken, {
+            method: "POST",
+            body: JSON.stringify({ userId, deviceId }),
+          });
+          console.log(s);
+          
+          
         } catch (error) {
           console.error(error);
         }
@@ -255,8 +269,8 @@ async function sendLocation(lat, lng) {
 // Service Worker Registration
 async function registerServiceWorker() {
   try {
-    await navigator.serviceWorker.register("/js/firebase-messaging-sw.js");
-    console.log("Service Worker registered.");
+    await navigator.serviceWorker.register("/firebase-messaging-sw.js");
+    console.log("Service Worker registered. ----------- ");
   } catch (err) {
     console.error("Service Worker registration failed:", err);
   }
@@ -265,6 +279,7 @@ async function registerServiceWorker() {
 // Get and register the FCM token
 async function registerToken(loggedInUser) {
   try {
+    await registerServiceWorker();
     if (!loggedInUser) return;
 
     // Request permission for notifications
@@ -290,7 +305,7 @@ async function registerToken(loggedInUser) {
       body: JSON.stringify({ fcmToken: token, userId, deviceId, deviceType }),
     });
 
-    alert("Token registered!");
+    // alert("Token registered!");
   } catch (err) {
     console.error("Error registering token:", err);
   }
@@ -353,5 +368,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   await registerServiceWorker(); // Register service worker once
   await registerToken(loggedInUser);
   handleFirebaseForegroundMessage(); // Handle the Firebase messages foreground
-  handleTokenRefresh(loggedInUser); // Listen for token refreshes
+  // handleTokenRefresh(loggedInUser); // Listen for token refreshes
 });

@@ -20,8 +20,9 @@ export class AuthUtils {
     getUserProfile: `${this.BASE_URL}/user/profile`,
     updateUserLocation: `${this.BASE_URL}/user/update-location`,
 
-
+    // Device token
     registerDeviceToken: `${this.BASE_URL}/device/registerDevice`,
+    deRegisterDeviceToken: `${this.BASE_URL}/device/deRegisterDevice`,
 
 
     // driver-dashboard
@@ -35,6 +36,14 @@ export class AuthUtils {
     driverArrived : `${this.BASE_URL}/ride/driver-arrive/:id`,
     cancelRide : `${this.BASE_URL}/ride/cancel/:id`,
     completeRide : `${this.BASE_URL}/ride/complete/:id`,
+
+    //vehicle Apis
+    viewMyVehicles : `${this.BASE_URL}/vehicle/my`,
+    updateVehicle: `${this.BASE_URL}/vehicle/update/:id`,
+    registerVehicle: `${this.BASE_URL}/vehicle/register`,
+    deleteVehicle:`${this.BASE_URL}/vehicle/delete/:id`,
+    viewVehicleDetails:`${this.BASE_URL}/vehicle/:id`,
+
 
     
 
@@ -180,11 +189,12 @@ export class AuthUtils {
  * @returns {Promise<{success: boolean, data?: any, error?: string, status?: number}>}
  */
 static async apiRequest(url, options = {}) {
-  const isFormData = options.body instanceof FormData;//1
+  const isFormData = options.body instanceof FormData;
+
   const defaultOptions = {
     credentials: "include",
     headers: {
-      ...(isFormData ? {} : {"Content-Type": "application/json"}),
+      ...(isFormData ? {} : { "Content-Type": "application/json" }),
       ...(options.headers || {}),
     },
     ...options,
@@ -192,10 +202,16 @@ static async apiRequest(url, options = {}) {
 
   try {
     const response = await fetch(url, defaultOptions);
-    console.log(response);
-    // Handle empty response (e.g., 204 No Content)
+
+    let data = null;
+    const contentType = response.headers.get("content-type");
+
+    if (contentType && contentType.includes("application/json")) {
+      data = await response.json();
+    } else {
     const text = await response.text();
-    const data = text ? JSON.parse(text) : null;
+      data = text || null;
+    }
 
     if (!response.ok) {
       return {
@@ -214,6 +230,7 @@ static async apiRequest(url, options = {}) {
     };
   }
 }
+
 
 
   /**

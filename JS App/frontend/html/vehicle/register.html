@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register Vehicle</title>
+  <link rel="stylesheet" href="../../css/vehicle/vehicle.css">
+  <link rel="stylesheet" href="../../css/vehicle/popup.css"> <!-- include popup styles -->
+</head>
+<body>
+  <nav>
+    <a href="../../html/vehicle/active-vehicle.html">Active Vehicle</a>
+    <a href="../../html/vehicle/my-vehicle.html">My Vehicles</a>
+    <a href="../../html/vehicle/register.html" class="active">Register Vehicle</a>
+  </nav>
+
+  <!-- ✅ Alert container for success/error popups -->
+  <div id="alert-container"></div>
+
+  <form id="registerForm" class="form-box">
+    <input type="text" name="make" placeholder="Brand" required>
+    <input type="text" name="model" placeholder="Model" required>
+    <input type="number" min="1900" max="2099" step="1" name="year" placeholder="Year" required>
+    <input type="text" name="color" placeholder="Color" required>
+    <input type="text" name="registration_number" placeholder="Registration Number" required>
+    <select name="vehicle_type" required>
+      <option value="">Select Type</option>
+      <option value="hatchback">Hatchback</option>
+      <option value="sedan">Sedan</option>
+      <option value="suv">SUV</option>
+      <option value="auto">Auto</option>
+      <option value="bike">Bike</option>
+    </select>
+    <div class="actions">
+      <button type="submit">Register</button>
+      <button type="reset">Clear</button>
+    </div>
+  </form>
+  <script type="module" src="../../js/user/auth-utils.js"></script>
+<script type="module" src="../../js/vehicle/vehicleregister.js"></script>
+</body>
+</html>

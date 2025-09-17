@@ -3,61 +3,7 @@
   --black: #000000;
 }
 
-/* Header / Navbar */
-header {
-  background: var(--brand);
-  width: 100%;
-  height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-
-header .logo {
-  color: #fff;
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-}
-
-header nav {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  margin-left: auto;
-}
-
-header nav a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 0.95rem;
-  opacity: 0.95;
-}
-
-header nav a:hover {
-  text-decoration: underline;
-  opacity: 1;
-}
-
-/* Signup button */
-.signup-btn {
-  background: var(--black);
-  color: #fff;
-  padding: 0.5rem 1.2rem;
-  border-radius: 20px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
-}
-
-/* Profile dropdown */
+/* Profile icon , dropdown */
 .profile-icon {
   width: 32px;
   height: 32px;
@@ -105,25 +51,83 @@ header nav a:hover {
   display: block;
 }
 
+/* Header/Navbar */
+header {
+  background: var(--brand);
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 1rem 2rem;
+  justify-content: space-between;
+}
+
+header .centered {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+header .logo {
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: auto;
+}
+
+header nav a {
+  color: #f7f7f7;
+  text-decoration: none;
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+/* Signup button */
+.signup-btn {
+  background: var(--black);
+  color: #fff;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+}
+
+.signup-btn:hover {
+  filter: brightness(.95);
+}
+
 /* Responsive */
-@media (max-width: 980px) {
+@media (max-width:980px) {
   header {
     height: 64px;
-    padding: 0 1rem;
   }
+
   header nav {
     gap: 14px;
   }
-  .signup-btn {
-    padding: 6px 12px;
-  }
 }
 
-@media (max-width: 480px) {
-  header nav a {
-    font-size: 0.85rem;
-  }
+@media (max-width:480px) {
   .signup-btn {
-    font-size: 0.85rem;
+    padding: 6px 12px;
   }
 }
