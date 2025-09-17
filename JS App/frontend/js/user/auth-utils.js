@@ -37,6 +37,14 @@ export class AuthUtils {
     cancelRide : `${this.BASE_URL}/ride/cancel/:id`,
     completeRide : `${this.BASE_URL}/ride/complete/:id`,
 
+    //vehicle Apis
+    viewMyVehicles : `${this.BASE_URL}/vehicle/my`,
+    updateVehicle: `${this.BASE_URL}/vehicle/update/:id`,
+    registerVehicle: `${this.BASE_URL}/vehicle/register`,
+    deleteVehicle:`${this.BASE_URL}/vehicle/delete/:id`,
+    viewVehicleDetails:`${this.BASE_URL}/vehicle/:id`,
+
+
     
 
   }
@@ -201,7 +209,7 @@ static async apiRequest(url, options = {}) {
     if (contentType && contentType.includes("application/json")) {
       data = await response.json();
     } else {
-      const text = await response.text();
+    const text = await response.text();
       data = text || null;
     }
 
