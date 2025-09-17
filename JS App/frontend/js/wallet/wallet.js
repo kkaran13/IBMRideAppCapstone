@@ -2,6 +2,9 @@ import { AuthUtils } from "../user/auth-utils.js";
 
 const userInfo = AuthUtils.getUserInfo();
 console.log(AuthUtils.getUserInfo());
+const balanceEl = document.getElementById("walletBalance");
+const totalEarningsEl = document.getElementById("totalEarnings");
+const withdrawBtn = document.querySelector(".withdraw-btn");
 
 document.addEventListener("DOMContentLoaded", async function () {
 
@@ -14,7 +17,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // Build the API URL using the endpoint template
         const apiUrl = AuthUtils.API_ENDPOINTS.getDriverWalletDetails.replace(":driver_id", driverId);
-
+        const withdrawUrl = AuthUtils.API_ENDPOINTS.withdrawAmount.replace(":driver_id", driverId);
+        
         // Select the balance element
         const balanceEl = document.getElementById("walletBalance");
         const totalEarningsEl = document.getElementById("totalEarnings");
