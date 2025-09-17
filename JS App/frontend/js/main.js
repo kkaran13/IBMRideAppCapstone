@@ -61,7 +61,7 @@ console.log(profile);
     headerLinks = `
       <a href="/html/driver/driver-dashboard.html">Home</a>
       <a href="/html/vehicle/active-vehicle.html">Vehicles</a>
-      <a href="#">Rides</a>
+      <a href="/html/driver/ride-history.html">Rides</a>
       <a href="#">Ratings</a>
       <a href="/html/wallet/wallet.html">Wallet</a>
       
@@ -96,21 +96,21 @@ console.log(profile);
     footerLinks = `
       <a href="/html/ride/ride.html">Book a Ride</a> |
       <a href="/html/ride/ride-history.html">Ride History</a> |
-      <a href="/html/profile.html">Profile</a> |
+      <a href="/html/user/profile.html">Profile</a> |
       <a href="#" class="logout">Logout</a>
     `;
   } else {
     headerLinks = `
-      <a href="index.html">Home</a>
-      <a href="html/login.html" id = "login" >Login</a>
+      <a href="../index.html">Home</a>
+      <a href="html/user/login.html" id = "login" >Login</a>
       <div class="dropdown">
         <button class="signup-btn" id = "sign-up" >Sign Up</button>
       </div>
     `;
     footerLinks = `
       <a href="index.html">Home</a> |
-      <a href="#" id = "login" >Login</a> |
-      <a href="#" id = "sign-up" >Sign Up</a> |
+      <a href="html/user/login.html" id = "login" >Login</a> |
+      <a href="html/user/register.html" id = "sign-up" >Sign Up</a> |
       <a href="html/contact.html">Contact</a>
     `;
   }
