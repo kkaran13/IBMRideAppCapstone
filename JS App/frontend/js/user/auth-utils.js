@@ -9,6 +9,7 @@ export class AuthUtils {
   static API_ENDPOINTS = {
     register: `${this.BASE_URL}/user/register`,
     login: `${this.BASE_URL}/user/login`,
+    logout: `${this.BASE_URL}/user/logout`,
     verifyOtp: `${this.BASE_URL}/user/verify-otp`,
     resendOtp: `${this.BASE_URL}/user/resend-otp`,
     adminLogin: `${this.BASE_URL}/user/admin/login`,
@@ -17,6 +18,10 @@ export class AuthUtils {
     resetPassword: `${this.BASE_URL}/user/reset-password`,
     recoverAccount: `${this.BASE_URL}/user/recover-account`,
     getUserProfile: `${this.BASE_URL}/user/profile`,
+    updateUserLocation: `${this.BASE_URL}/user/update-location`,
+
+
+    registerDeviceToken: `${this.BASE_URL}/device/registerDevice`,
 
 
     // driver-dashboard
