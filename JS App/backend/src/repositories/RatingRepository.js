@@ -1,4 +1,8 @@
 import Rating from "../models/Rating.js";
+// src/repositories/ride.repository.js
+import Ride from "../models/Ride.js";
+import User from "../models/User.js";
+import Vehicle from "../models/Vehicle.js";
 
 class RatingRepository {
   async insertRating(ratingData) {
@@ -18,6 +22,30 @@ class RatingRepository {
   // Get rating for a specific ride
   async getRatingByRide(ride_id) {
     return await Rating.findOne({ ride_id }).lean();
+  }
+
+
+ async getCompletedRides() {
+    return await Ride.findAll({
+      where: { ride_status: "completed" },
+      include: [
+        {
+          model: User,
+          as: "Rider",
+          attributes: ["user_id", "firstname", "lastname", "email"],
+        },
+        {
+          model: User,
+          as: "Driver",
+          attributes: ["user_id", "firstname", "lastname", "email"],
+        },
+        {
+          model: Vehicle,
+          // ✅ Only request columns that exist in DB
+          attributes: ["vehicle_id"], 
+        },
+      ],
+    });
   }
 
   async findByDriverId(driverId) {

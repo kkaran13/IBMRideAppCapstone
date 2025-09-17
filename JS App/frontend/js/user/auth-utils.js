@@ -16,6 +16,7 @@ export class AuthUtils {
     verifyPasswordOtp: `${this.BASE_URL}/user/verify-password-otp`,
     resetPassword: `${this.BASE_URL}/user/reset-password`,
     recoverAccount: `${this.BASE_URL}/user/recover-account`,
+    getUserProfile: `${this.BASE_URL}/user/profile`,
 
 
     // driver-dashboard
@@ -23,6 +24,14 @@ export class AuthUtils {
     getDriverWalletDetails : `${this.BASE_URL}/wallet/driver-wallet/:driver_id`,
     getOngoingRidesDriver : `${this.BASE_URL}/ride/ongoing/driver`,
     setDriverAvailableForRide : `${this.BASE_URL}/user/set-available`,
+    
+    // Ride Apis
+    startRide : `${this.BASE_URL}/ride/start/:id`,
+    driverArrived : `${this.BASE_URL}/ride/driver-arrive/:id`,
+    cancelRide : `${this.BASE_URL}/ride/cancel/:id`,
+    completeRide : `${this.BASE_URL}/ride/complete/:id`,
+
+    
 
   }
 
@@ -166,7 +175,7 @@ export class AuthUtils {
  * @returns {Promise<{success: boolean, data?: any, error?: string, status?: number}>}
  */
 static async apiRequest(url, options = {}) {
-  const isFormData = options.body instanceof FormData;
+  const isFormData = options.body instanceof FormData;//1
   const defaultOptions = {
     credentials: "include",
     headers: {
@@ -178,7 +187,7 @@ static async apiRequest(url, options = {}) {
 
   try {
     const response = await fetch(url, defaultOptions);
-    
+    console.log(response);
     // Handle empty response (e.g., 204 No Content)
     const text = await response.text();
     const data = text ? JSON.parse(text) : null;

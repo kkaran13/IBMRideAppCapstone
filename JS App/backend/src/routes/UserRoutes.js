@@ -36,4 +36,6 @@ router.get("/pending-verifications",authenticateJWT,authorizeRole(["admin"]), us
 router.post("/:id/approve", authenticateJWT,authorizeRole(["admin"]),userController.approveUserVerification);
 router.post("/:id/reject", authenticateJWT,authorizeRole(["admin"]),userController.rejectUserVerification);
 
+router.post("/set-available", authenticateJWT, authorizeRole(["driver"]), userController.setAvailableForRide);
+
 export default router;

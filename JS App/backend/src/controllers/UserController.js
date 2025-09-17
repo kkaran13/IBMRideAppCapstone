@@ -83,7 +83,7 @@ class UserController {
   });
 
   logout = asyncHandler(async (req, res) => {
-    await UserService.logoutUser(res); // service handles cookie clearing
+    await UserService.logoutUser(req, res); // service handles cookie clearing
     return res
       .status(200)
       .json(new ApiResponse(200, null, "Logged out successfully"));
@@ -181,5 +181,11 @@ class UserController {
       )
     );
   })
+
+  // Make the driver available for the ride
+  setAvailableForRide = asyncHandler(async (req, res) => {
+      await UserService.setAvailableForRide(req);
+      res.status(200).json(new ApiResponse(200, null, "Driver available for ride"));
+  });
 }
 export default new UserController();
