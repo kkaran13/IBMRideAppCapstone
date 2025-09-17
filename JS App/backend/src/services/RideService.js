@@ -55,6 +55,9 @@ class RideService {
         const existingRide = await RideRepository.getActiveRideByRider(rider_id);
         if (existingRide) throw new ApiError(409, "You already have an ongoing ride");
 
+        const pendingPaymentRide = await RideRepository.getCompletedRideWithPendingPayment(rider_id);
+        if (pendingPaymentRide) throw new ApiError(409, "You have a completed ride with pending payment. Please pay before booking another ride.");
+        
         // Create ride
         return await RideRepository.createRide({
             rider_id,
@@ -208,16 +211,16 @@ class RideService {
         }
     }
 
-    async startRide(driver_id, ride_id , body) {
+    async startRide(driver_id, ride_id, body) {
         const ride = await RideRepository.getRideById(ride_id);
         if (!ride) throw new ApiError(404, "Ride not found");
 
         let ride_otp = ride.otp || null;
-        if(!ride_otp){
-            throw new ApiError(404,"No otp found")
+        if (!ride_otp) {
+            throw new ApiError(404, "No otp found")
         }
 
-        if (ride_otp !== body.otp){
+        if (ride_otp !== body.otp) {
             throw new ApiError(400, "OTP didn't match")
         }
 
