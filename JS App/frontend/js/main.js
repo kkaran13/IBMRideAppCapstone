@@ -330,7 +330,13 @@ function generateDeviceId() {
 function handleFirebaseForegroundMessage() {
   onMessage(messaging, (payload) => {
     console.log("Foreground message:", payload);
-    alert(`${payload.notification.title}: ${payload.notification.body}`);
+
+    // Extract ride data from payload.data
+    const rideData = payload.data || {};
+
+    // Fire a custom event with the ride info payload
+    const rideEvent = new CustomEvent("newRideRequest", { detail: rideData });
+    window.dispatchEvent(rideEvent);
   });
 }
 
@@ -371,4 +377,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   await registerToken(loggedInUser);
   handleFirebaseForegroundMessage(); // Handle the Firebase messages foreground
   // handleTokenRefresh(loggedInUser); // Listen for token refreshes
+});
+
+window.addEventListener("newRideRequest", (event) => {
+  if (window.location.pathname !== "/html/driver/dashboard.html") {
+    // Show simple notification fallback
+    const rideInfo = event.detail;
+
+    if (Notification.permission === "granted") {
+      new Notification("New Ride Request", {
+        body: `Pickup: ${rideInfo.pickup_address || "Unknown location"} \nDrop: ${rideInfo.dropoff_address} \nFare: ${rideInfo.fare}`,
+        icon: "/img/default_icon.png",
+      });
+    }
+  }
 });

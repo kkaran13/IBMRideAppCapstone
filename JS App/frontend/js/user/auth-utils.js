@@ -36,6 +36,8 @@ export class AuthUtils {
     driverArrived : `${this.BASE_URL}/ride/driver-arrive/:id`,
     cancelRide : `${this.BASE_URL}/ride/cancel/:id`,
     completeRide : `${this.BASE_URL}/ride/complete/:id`,
+    acceptRide : `${this.BASE_URL}/ride/accept/:id`,
+    ignoreRide : `${this.BASE_URL}/ridematch/ignore/:id`,
 
     //vehicle Apis
     viewMyVehicles : `${this.BASE_URL}/vehicle/my`,

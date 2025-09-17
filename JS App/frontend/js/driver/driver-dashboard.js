@@ -327,3 +327,45 @@ mapLinkBtn?.addEventListener("click", (e) => {
     // Open in new tab
     window.open(mapsUrl, "_blank");
 });
+
+
+window.addEventListener("newRideRequest", (event) => {
+  const rideInfo = event.detail;
+  const accept = confirm(`A new Ride request has arrived. \nPickup: ${rideInfo.pickup_address || "Unknown location"} \nDrop: ${rideInfo.dropoff_address} \nFare: ${rideInfo.fare}\nAccept ?`);
+  if (accept) {
+    acceptRide(rideInfo.ride_id);
+  } else {
+    ignoreRide(rideInfo.ride_id);
+  }
+});
+
+// Helper functions
+async function acceptRide(rideId) {
+  try {
+    const res = await fetch(`http://localhost:3000/ride/accept/${encodeURIComponent(rideId)}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (res.ok) {
+      alert("Ride accepted!");
+      await refreshRideCard();
+    }
+  } catch (err) {
+    console.error("Accept ride error:", err);
+  }
+}
+
+async function ignoreRide(rideId) {
+  try {
+    const res = await fetch(`http://localhost:3000/ridematch/ignore`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body : JSON.stringify({rideId : rideId})
+    });
+    if (res.ok) {
+      alert("Ride ignored.");
+    }
+  } catch (err) {
+    console.error("Ignore ride error:", err);
+  }
+}

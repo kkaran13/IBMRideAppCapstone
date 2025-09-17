@@ -91,7 +91,7 @@ class RideRepository {
     }
 
     // Rider: cancel a ride (only if not completed)
-    async cancelRide(rideId, reason) {
+    async cancelRide(rideId, reason, role) {
         const ride = await Ride.findByPk(rideId);
         if (!ride) return null;
 
@@ -102,6 +102,7 @@ class RideRepository {
         ride.ride_status = "cancelled";
         ride.cancellation_reason = reason;
         ride.cancelled_at = new Date();
+        ride.cancelled_by = role
         await ride.save();
 
         return ride;

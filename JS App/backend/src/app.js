@@ -40,13 +40,15 @@ import anaylticsRouter from "./routes/AnalyticsRoute.js";
 import walletRoter from "./routes/WalletRoute.js";
 import paymentRouter from "./routes/PaymentRoute.js";
 import ratingRouter from "./routes/RatingRoutes.js";
-// import paymentRouter from "./routes/PaymentRoute.js";
+import rideMatchingRouter from "./routes/RideMatchingRoute.js";
 
 app.use("/user", userRoute); //User Routes
 app.use("/vehicle", vehicleRoute); //Vehicle Routes
 app.use("/device", deviceRouter); //Device Routes
 app.use("/rating",ratingRouter);
 app.use("/ride", rideRoute);
+app.use("/ridematch", rideMatchingRouter);
+
 
 // Python App APIs
 app.use('/analysis', anaylticsRouter);

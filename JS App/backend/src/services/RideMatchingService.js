@@ -2,7 +2,9 @@ import { execFile } from 'child_process';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import redisClient from '../config/redisClient.js';
-// import amqp from "amqplib/callback_api.js"; 
+import HelperFunction from '../utils/HelperFunction.js';
+import UserRepository from '../repositories/UserRepository.js';
+import RideRepository from '../repositories/RideRepository.js';
 
 const RADIUS_STEP = 5000; // 5 km increment
 const MAX_RADIUS = 15000; // Max 15 km radius
@@ -12,7 +14,9 @@ const PREFIX = "ride:ignored:";
 class RideMatchingService {
 
     // stores the data of the igonred drivers with reference to thr rideid
-    async addIgonredDriver(rideId, driverId){
+    async addIgonredDriver(reqObj){
+        const {rideId} = reqObj.body;
+        const driverId = reqObj.user.id;
         const key = `${PREFIX}${rideId}`;
         await redisClient.redis.sadd(key, driverId);
         await redisClient.redis.expire(key, 1800); // 30 min TTL
@@ -31,29 +35,34 @@ class RideMatchingService {
     }
 
     // search for the drivers in the area
-    async searchForDrivers(lat, lon, rideId, radius = 3000, timeout = 5 * 60 * 1000) {
+    async searchForDrivers(lat, lon, rideId, rideData, radius = 3000, timeout = 5 * 60 * 1000) {
 
-        const ignoredDrivers = new Set(await this.getIgnoredDrivers(rideId));
+        const ignoredDriversSet = new Set(await this.getIgnoredDrivers(rideId)); // Initialize ignored drivers set
+
         const startTime = Date.now();
 
         while (Date.now() - startTime < timeout) {
             // 1. Fetch drivers from C++ executable
             const drivers = await this.searchDriversInRadius(lat, lon, radius);
 
+            let unAvailableDrivers = await UserRepository.findAllUsers();
+            unAvailableDrivers = unAvailableDrivers?.rows?.filter(d => d.role == "driver" && d.isAvailable != true)?.map(d => d.user_id) || [];
+
+            const unAvdriver = new Set(unAvailableDrivers);
+
             // refresh ignored list ---------------
             const newIgnored = await this.getIgnoredDrivers(rideId);
-            newIgnored.forEach(d => ignoredDrivers.add(d.toString()));
+            newIgnored?.forEach(d => ignoredDriversSet?.add(d.toString()));
 
             // 2. Filter ignored
             const filteredDrivers = drivers?.filter(
-                d => !ignoredDrivers.includes(d.toString())
+                d => !ignoredDriversSet?.has(d.toString()) && !unAvdriver.has(d.toString())
             ) || [];
 
             if (filteredDrivers.length > 0) {
                 console.log("Drivers found:", filteredDrivers);
 
-                // Push to queue so they get notifications
-                await this.pushToNotificationQueue(filteredDrivers, rideId);
+                await HelperFunction.sendFirebasePushNotification('newRideRequestToDriver', rideData, filteredDrivers);
 
                 // Wait for accept within 30s
                 const accepted = await this.waitForAcceptance(rideId, ACCEPT_WAIT);
@@ -156,31 +165,13 @@ class RideMatchingService {
         });
     }
 
-    // Push driver notifications to RabbitMQ queue
-    // async pushToNotificationQueue(drivers, rideId) {
-
-    //     amqp.connect('amqp://localhost', function(error0, connection) {
-    //         if (error0) {
-    //             throw error0;
-    //         }
-    //         connection.createChannel(function(error1, channel) {
-    //             if (error1) {
-    //                 throw error1;
-    //             }
-    //             const queue = 'ride_notifications';
-
-    //             // Send each driver info to the queue
-    //             drivers.forEach((driverId) => {
-    //                 const msg = JSON.stringify({ rideId, driverId });
-    //                 channel.sendToQueue(queue, Buffer.from(msg));
-    //                 console.log(`Queued notification → driver ${driverId} for ride ${rideId}`);
-    //             });
-    //         });
-    //     });
-    // }
-
-    // Notify rider if no drivers were found in time ---- (Dhaval)
+    // Notify rider if no drivers were found in time
     async notifyRiderAboutTimeout(rideId) {
+        
+        await RideRepository.updateRideStatus(rideId, 'timeout');
+
+        // socket emit
+        
         console.log(`Rider ${rideId} notified: No drivers available in time.`);
     }
 
