@@ -1,0 +1,147 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f7f9ff;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+nav a {
+  text-decoration: none;
+  color: #2c347d;
+  font-weight: bold;
+}
+
+nav a.active {
+  border-bottom: 2px solid #2c347d;
+}
+
+.vehicle-card {
+  display: inline-block;
+  padding: 20px;
+  border-radius: 12px;
+  width: 200px;
+  margin: 20px;
+  text-align: center;
+  background: #eef1ff;
+}
+
+.vehicle-card.green { background: #d9f7d9; }
+.vehicle-card.orange { background: #ffe0cc; }
+
+.status.active { color: green; }
+.status.inactive { color: orangered; }
+
+.actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.actions button {
+  background: #7689d9;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.form-box {
+  max-width: 400px;
+  margin: 50px auto;
+  background: #f0f3ff;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.form-box input, .form-box select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.details {
+  margin: 20px;
+  padding: 20px;
+  background: #f0f3ff;
+  border-radius: 12px;
+}
+
+
+.card-top {
+  background-color: #6ca96c; /* green */
+  padding: 10px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vehicle-img {
+  max-width: 100%;
+  height: 80px;
+  object-fit: contain;
+}
+
+.vehicle-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.vehicle-type {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.status {
+  font-weight: bold;
+}
+
+.status.ACTIVE {
+  color: green;
+}
+.status.INACTIVE {
+  color: red;
+}
+
+.card-bottom {
+  padding: 10px;
+  font-size: 0.9rem; /* smaller text */
+}
+
+.vehicle-details {
+  margin: 5px 0;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.vehicle-reg {
+  margin: 5px 0;
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  color: #1d3b70;
+  font-weight: bold;
+  cursor: pointer;
+}

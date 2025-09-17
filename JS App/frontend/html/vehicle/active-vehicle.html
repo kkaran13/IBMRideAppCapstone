@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Active Vehicle</title>
+  <link rel="stylesheet" href="../../css/vehicle/vehicle.css">
+</head>
+
+<body>
+    <div id="header-container"></div>
+  <nav>
+    <a href="active-vehicle.html" class="active">Active Vehicle</a>
+    <a href="../../html/vehicle/my-vehicle.html">My Vehicles</a>
+    <a href="../../html/vehicle/register.html">Register Vehicle</a>
+  </nav>
+
+  <div style="display: flex; gap: 40px; align-items: flex-start; margin: 20px;">
+    <!-- Left: Vehicle card -->
+    <section id="activeVehicleCard" class="vehicle-card green">
+      <!-- JS will inject vehicle details here -->
+    </section>
+
+    <!-- Right: Vehicle details -->
+    <section class="details" style="flex: 1;">
+      <h3>Vehicle Details</h3>
+      <div id="vehicleDetails"></div>
+    </section>
+  </div>
+
+  <script type="module" src="../../js/vehicle/vehicle.js"></script>
+
+  <div id="footer-container"></div>
+
+  <script type="module" src="../../js/main.js"></script>
+</body>
+</html>

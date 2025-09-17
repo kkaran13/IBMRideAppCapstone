@@ -9,7 +9,7 @@ const router = express.Router();
 router.use(authenticateJWT, authorizeRole("driver"));
 
 // Vehicle management
-router.get("/active-vehicle", authenticateJWT, authorizeRole(['driver']), VehicleController.getActiveVehicle);
+router.get("/active-vehicle", authenticateJWT, authorizeRole('driver'), VehicleController.getActiveVehicle);
 router.post("/register", VehicleController.registerVehicle);
 router.patch("/update/:id", VehicleController.updateVehicle);
 router.delete("/delete/:id", VehicleController.deleteVehicle);
