@@ -1,6 +1,7 @@
 import { AuthUtils } from "../../js/user/auth-utils.js";
 
 const userInfo = AuthUtils.getUserInfo();
+console.log(userInfo);
 
 if (userInfo && userInfo.id) {
     const driverId = userInfo.id;

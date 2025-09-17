@@ -75,7 +75,7 @@ function updateNav() {
       <a href="index.html">Home</a> |
       <a href="/html/start-driving.html">Start Driving</a> |
       <a href="/html/ride-requests.html">Ride Requests</a> |
-      <a href="#">Wallet</a> |
+      <a href="html/wallet/wallet.html">Wallet</a> |
       <a href="html/profile.html">Profile</a> |
       <a href="#" class="logout">Logout</a>
     `;
