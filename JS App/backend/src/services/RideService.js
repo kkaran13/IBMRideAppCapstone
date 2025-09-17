@@ -109,7 +109,7 @@ class RideService {
             }
         }
 
-        return await RideRepository.cancelRide(ride_id, reason);
+        return await RideRepository.cancelRide(ride_id, reason, role);
     }
 
     // Reject Ride
@@ -139,7 +139,8 @@ class RideService {
         return await RideRepository.getAvailableRides();
     }
 
-    async acceptRide(driver_id, ride_id, vehicle_id) {
+    async acceptRide(driver_id, ride_id) {
+
         const ride = await RideRepository.getRideById(ride_id);
         if (!ride) throw new ApiError(404, "Ride not found");
 
@@ -152,7 +153,7 @@ class RideService {
         const driverBusy = await RideRepository.getActiveRideByDriver(driver_id);
         if (driverBusy) throw new ApiError(409, "Driver already has an ongoing ride");
 
-        const vehicle = await VehicleRepository.findById(vehicle_id);
+        const vehicle = await VehicleRepository.getActiveVehicle(driver_id);
         if (!vehicle || vehicle.owner_id !== driver_id) {
             throw new ApiError(400, "Invalid vehicle for this driver");
         }
@@ -160,10 +161,10 @@ class RideService {
         // Generate a 6 digit OTP
         const otp = "" + Math.floor(100000 + Math.random() * 900000);
         // Assign driver + save OTP in DB
-        const rideData = await RideRepository.assignDriverWithOtp(
+        const rideData = await RideRepository.assignDriver(
             ride_id,
             driver_id,
-            vehicle_id,
+            vehicle.vehicle_id,
             otp
         );
 
@@ -180,11 +181,18 @@ class RideService {
             ...rideData
         };
 
-        HelperFunction.sendFirebasePushNotification(
-            "rideAcceptedToRider",   // template key
-            notificationData,        // placeholders
-            riderId                  // single user or array of ids
-        );
+        // await HelperFunction.sendFirebasePushNotification(
+        //     "rideAcceptedToRider",   // template key
+        //     notificationData,        // placeholders
+        //     riderId                  // single user or array of ids
+        // );
+
+
+        // udpate the redis store to add the ride accepted status
+        const key = `ride:accepted:${ride_id}`;
+        await redisClient.redis.sadd(key, driver_id);
+        await redisClient.redis.expire(key, 1800); // 30 min TTL
+
         return rideData;
     }
 

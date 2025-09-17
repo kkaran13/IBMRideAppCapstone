@@ -25,28 +25,34 @@ class DeviceTokenRepository {
      * Get all devices for multiple users
      */
     async getDevicesByUserIds(userIds = []) {
-        return DeviceToken.find({ userId: { $in: userIds } });
+        try {
+            const devices = await DeviceToken.find({ userId: { $in: userIds } });
+            return devices;
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
 
     /**
      * Delete device by userId + deviceId
      */
     async deleteDevice(userId, deviceId) {
-        return DeviceToken.deleteOne({ userId, deviceId });
+        return await DeviceToken.deleteOne({ userId, deviceId });
     }
 
      /**
      * Delete all devices for a user (e.g. logout from all devices)
      */
     async deleteDevicesByUserId(userId) {
-        return DeviceToken.deleteMany({ userId });
+        return await DeviceToken.deleteMany({ userId });
     }
 
     /**
      * Remove devices by a list of FCM tokens (useful for cleaning invalid tokens)
      */
     async deleteDevicesByTokens(tokens = []) {
-        return DeviceToken.deleteMany({ fcmToken: { $in: tokens } });
+        return await DeviceToken.deleteMany({ fcmToken: { $in: tokens } });
     }
 
 }

@@ -109,15 +109,6 @@ const Ride = sequelize.define(
             type: DataTypes.DATE,
             allowNull: true,
         },
-        rejected_by: {
-            type: DataTypes.UUID,
-            allowNull: true,
-            references: {
-                model: "users",
-                key: "user_id",
-            },
-            onDelete: "SET NULL",
-        },
         cancelled_by: {
             type: DataTypes.ENUM("rider", "driver", "admin"),
             allowNull: true,
@@ -132,10 +123,6 @@ const Ride = sequelize.define(
             defaultValue: DataTypes.NOW,
         },
         accepted_at: {
-            type: DataTypes.DATE,
-            allowNull: true,
-        },
-        rejected_at: {
             type: DataTypes.DATE,
             allowNull: true,
         },
