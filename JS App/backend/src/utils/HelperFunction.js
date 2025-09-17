@@ -95,7 +95,7 @@ class HelperFunction {
             requestConfig.url = (config.DJANGO_API_URL || "") + requestConfig.url;
 
             // based on the request method filtering is done for the data as only post, put and patch can have body
-            if (["post", "put", "patch"].includes(method.toLowerCase())) {
+            if (["get", "post", "put", "patch"].includes(method.toLowerCase())) {
                 requestConfig.data = data;
             }
             // if not above methods then send data in the params 

@@ -542,6 +542,32 @@ header .logo {
   background-color: darkblue;
 }
 
+.pay-now-btn {
+    background-color: #28a745;   
+    color: #fff;                 
+    padding: 10px 18px;          
+    border: none;                
+    border-radius: 6px;      
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    margin-top: 8px;
+}
+
+/* Hover effect */
+.pay-now-btn:hover {
+    background-color: #218838;   
+    transform: translateY(-2px); 
+}
+
+/* Active (when clicked) */
+.pay-now-btn:active {
+    background-color: #1e7e34;
+    transform: translateY(0);
+}
+
 /* Responsive: stack on very narrow screens */
 @media (max-width: 420px) {
     .button-row {
