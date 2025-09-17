@@ -1,6 +1,7 @@
 import { AuthUtils } from "../js/user/auth-utils.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-import { getMessaging, getToken, onMessage, onTokenRefresh } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-messaging.js";
+// import { getMessaging, getToken, onMessage, onTokenRefresh } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-messaging.js";
+import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-messaging.js";
 
 console.log("mani");
 
@@ -23,14 +24,15 @@ async function loadComponent(containerId, file) {
       const res = await fetch(`/components/${file}`);
       if (res.ok) {
         container.innerHTML = await res.text();
-        // Only add stylesheet if not already present
-        // const cssPath = "../../css/index.css";
-        // if (!document.querySelector(`link[href="${cssPath}"]`)) {
-        //   const link = document.createElement("link");
-        //   link.rel = "stylesheet";
-        //   link.href = cssPath;
-        //   document.head.appendChild(link);
-        // }
+
+        const cssPath = `/components/${file.replace('.html', '.css')}`;
+
+        if (!document.querySelector(`link[href="${cssPath}"]`)) {
+          const link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = cssPath;
+          document.head.appendChild(link);
+        }
 
       } else {
         console.error(`Failed to load ${file}`);
