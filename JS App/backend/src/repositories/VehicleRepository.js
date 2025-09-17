@@ -48,6 +48,40 @@ class VehicleRepository {
       ...options,
     });
   }
+  
+  async findByOwnerWithFilters(ownerId, { page, limit, status, type, make, model, year, q }) {
+    const where = { owner_id: ownerId };
+
+    if (status) where.status = status;
+    if (type) where.vehicle_type = type;
+    if (make) where.make = { [Op.iLike]: `%${make}%` }; 
+    if (model) where.model = { [Op.iLike]: `%${model}%` };
+    if (year) where.year = year;
+    if (q) {
+      where[Op.or] = [
+        { registration_number: { [Op.iLike]: `%${q}%` } },
+        { make: { [Op.iLike]: `%${q}%` } },
+        { model: { [Op.iLike]: `%${q}%` } },
+      ];
+    }
+
+    const offset = (page - 1) * limit;
+
+    const { rows, count } = await Vehicle.findAndCountAll({
+      where,
+      limit,
+      offset,
+      order: [["created_at", "DESC"]],
+    });
+
+    return {
+      vehicles: rows,
+      total: count,
+      page,
+      totalPages: Math.ceil(count / limit),
+    };
+  }
+
 
   async getActiveVehicle(ownerId, options = {}){
     console.log(ownerId);
