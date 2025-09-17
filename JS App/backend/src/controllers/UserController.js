@@ -49,6 +49,7 @@ class UserController {
     res.cookie("user_info", JSON.stringify({
         id: result.user.user_id,
         firstname: result.user.firstname,
+        profile : result.user.profile_image_url,
         lastname: result.user.lastname,
         email: result.user.email,
         role : result.user.role

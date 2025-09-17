@@ -49,6 +49,8 @@ function updateNav() {
 
   const loggedInUser = AuthUtils.getUserInfo();
   const role = loggedInUser?.role;
+  const profile = loggedInUser?.profile;
+console.log(profile);
 
   console.log("calling");
   
@@ -58,15 +60,15 @@ function updateNav() {
   if (role === "driver") {
     headerLinks = `
       <a href="/html/driver/driver-dashboard.html">Home</a>
-      <a href="/html/vehicle/active-vehicle.html">Vehicles</a>
+      <a href="#">Vehicles</a>
       <a href="#">Rides</a>
       <a href="#">Ratings</a>
       <a href="/html/wallet/wallet.html">Wallet</a>
       
       <div class="dropdown">
-      <img src="../assets/images/profile-icon.png" class="profile-icon">
+      <img src=${profile} class="profile-icon">
       <div class="dropdown-content">
-        <a href="#">Profile</a>
+        <a href="/html/user/profile.html">Profile</a>
         <a href="#" class="logout">Logout</a>
       </div>
     </div>
@@ -76,7 +78,7 @@ function updateNav() {
       <a href="/html/start-driving.html">Start Driving</a> |
       <a href="/html/ride-requests.html">Ride Requests</a> |
       <a href="#">Wallet</a> |
-      <a href="html/profile.html">Profile</a> |
+      <a href="/html/user/profile.html">Profile</a> |
       <a href="#" class="logout">Logout</a>
     `;
   } else if (role === "rider") {
@@ -84,7 +86,7 @@ function updateNav() {
       <a href="/html/ride/ride.html">Book Ride</a>
       <a href="">Rides</a>
       <div class="dropdown">
-      <img src="../assets/images/profile-icon.png" class="profile-icon">
+      <img src=${profile} class="profile-icon">
       <div class="dropdown-content">
         <a href="#">Profile</a>
         <a href="#" class="logout">Logout</a>
