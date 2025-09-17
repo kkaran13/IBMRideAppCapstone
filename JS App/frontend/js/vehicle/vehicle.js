@@ -1,17 +1,8 @@
+import { AuthUtils } from "../user/auth-utils.js";
+
 const API_BASE = "http://localhost:3000";
 
-// Register Vehicle
-document.getElementById("registerForm")?.addEventListener("submit", async e => {
-  e.preventDefault();
-  const formData = Object.fromEntries(new FormData(e.target).entries());
-  const res = await fetch(`${API_BASE}/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formData)
-  });
-  const data = await res.json();
-  alert(data.message);
-});
+
 
 // Update Vehicle (only color)
 document.getElementById("updateForm")?.addEventListener("submit", async e => {
@@ -31,7 +22,7 @@ document.getElementById("updateForm")?.addEventListener("submit", async e => {
 async function loadMyVehicles() {
   const list = document.getElementById("myVehiclesList");
   if (!list) return;
-  const res = await fetch(`${API_BASE}/vehicle/driver/my`);
+  const res = await fetch(`${API_BASE}/vehicle/my`);
   const data = await res.json();
   list.innerHTML = data.data.vehicles.map(v => `
     <div class="vehicle-card">
@@ -55,11 +46,7 @@ async function loadActiveVehicle() {
   if (!card || !detailsDiv) return;
 
   try {
-    const res = await fetch(`${API_BASE}/vehicle/active-vehicle`, {
-      headers: {
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
-      }
-    });
+    const res = await fetch(`${API_BASE}/vehicle/active-vehicle`);
     const data = await res.json();
     const v = data.data;
 
