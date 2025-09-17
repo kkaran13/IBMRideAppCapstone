@@ -96,6 +96,11 @@ document.addEventListener('DOMContentLoaded', () => {
 export async function loadRequestedRides() {
     const ridesList = document.getElementById("ridesList");
     const rideHistoryList = document.getElementById("rideHistoryList");
+    const modal = document.getElementById("rateRideModal");
+    const closeModal = document.getElementById("closeRateModal");
+    const submitBtn = document.getElementById("submitRating");
+    const ratingInput = document.getElementById("rideRating");
+    const reviewInput = document.getElementById("rideReview");
 
     ridesList.innerHTML = '<p class="no-rides">Loading rides...</p>';
     rideHistoryList.innerHTML = '<p class="no-rides">Loading ride history...</p>';
@@ -136,7 +141,8 @@ export async function loadRequestedRides() {
                     : "<p><strong>Driver:</strong> Not Assigned</p>";
 
                 const vehicleInfo = ride.Vehicle
-                    ? `<p><strong>Vehicle:</strong> ${ride.Vehicle.model} (${ride.Vehicle.color || "N/A"})</p>
+                    ? `<p><strong>Vehicle:</strong> ${ride.Vehicle.model}</p>
+                    <p><strong>Color:</strong> ${ride.Vehicle.color}</p>
                <p><strong>Reg. No:</strong> ${ride.Vehicle.registration_number}</p>`
                     : "<p><strong>Vehicle:</strong> Not Assigned</p>";
 
@@ -213,15 +219,17 @@ export async function loadRequestedRides() {
 
                 const driverInfo = ride.Driver
                     ? `<p><strong>Driver:</strong> ${ride.Driver.firstname} ${ride.Driver.lastname}</p>
-                       <p><strong>Phone:</strong> ${ride.Driver.phone}</p>`
+                   <p><strong>Phone:</strong> ${ride.Driver.phone}</p>`
                     : "<p><strong>Driver:</strong> Not Assigned</p>";
 
                 const vehicleInfo = ride.Vehicle
-                    ? `<p><strong>Vehicle:</strong> ${ride.Vehicle.model} (${ride.Vehicle.color || "N/A"})</p>
-                       <p><strong>Reg. No:</strong> ${ride.Vehicle.registration_number}</p>`
+                    ? `<p><strong>Vehicle:</strong> ${ride.Vehicle.model} (${ride.Vehicle.color})</p>
+                   <p><strong>Reg. No:</strong> ${ride.Vehicle.registration_number}</p>`
                     : "<p><strong>Vehicle:</strong> Not Assigned</p>";
 
+                // Fetch rating
                 let ratingHtml = "<p><strong>Rating:</strong> Not given</p>";
+                let hasRated = false;
                 try {
                     const ratingRes = await fetch(`http://localhost:3000/rating/ratings/${ride.ride_id}`, {
                         method: "GET",
@@ -229,26 +237,70 @@ export async function loadRequestedRides() {
                     });
                     const ratingData = await ratingRes.json();
                     if (ratingRes.ok && ratingData.data) {
+                        hasRated = true;
                         ratingHtml = `
-                    <p><strong>Rating:</strong> ⭐ ${ratingData.data.score}/5</p>
-                    ${ratingData.data.comment ? `<p><em>${ratingData.data.comment}</em></p>` : ""}
-                `;
+                        <p><strong>Rating:</strong> ⭐ ${ratingData.data.score}/5</p>
+                        ${ratingData.data.comment ? `<p><strong>Comment:</strong><em>${ratingData.data.comment}</em></p>` : ""}
+                    `;
                     }
                 } catch (err) {
                     console.error(`Failed to fetch rating for ride ${ride.ride_id}:`, err);
                 }
 
                 rideEl.innerHTML = `
-                    <p><strong>Pickup:</strong> ${ride.pickup_address}</p>
-                    <p><strong>Drop:</strong> ${ride.dropoff_address}</p>
-                    <p><strong>Status:</strong> ${ride.ride_status}</p>
-                    ${driverInfo}
-                    ${vehicleInfo}
-                    ${ratingHtml}
-                `;
+                <p><strong>Pickup:</strong> ${ride.pickup_address}</p>
+                <p><strong>Drop:</strong> ${ride.dropoff_address}</p>
+                <p><strong>Status:</strong> ${ride.ride_status}</p>
+                ${driverInfo}
+                ${vehicleInfo}
+                ${ratingHtml}
+                ${ride.ride_status === "completed" && !hasRated
+                        ? `<button class="rate-ride-btn" data-ride-id="${ride.ride_id}">Rate Ride</button>`
+                        : ""}
+            `;
                 rideHistoryList.appendChild(rideEl);
-            };
-        } else {
+            }
+            document.querySelectorAll(".rate-ride-btn").forEach(btn => {
+                btn.addEventListener("click", e => {
+                    const rideId = e.target.dataset.rideId;
+                    modal.style.display = "block";
+
+                    submitBtn.onclick = async () => {
+                        const score = parseInt(ratingInput.value);
+                        const comment = reviewInput.value;
+
+                        if (!score || score < 1 || score > 5) {
+                            alert("Rating must be between 1 and 5");
+                            return;
+                        }
+
+                        try {
+                            const res = await fetch("http://localhost:3000/rating/ratings", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                credentials: "include",
+                                body: JSON.stringify({ rideid: rideId, score, comment })
+                            });
+                            const resData = await res.json();
+                            console.log(resData);
+                            if (resData.message) {
+                                alert("Rating submitted ✅");
+                                modal.style.display = "none";
+                                loadRequestedRides(); // refresh ride history
+                            } else {
+                                alert("Failed to submit rating: " + (resData.message || ""));
+                            }
+                        } catch (err) {
+                            console.error(err);
+                            alert("Error submitting rating. Check console.");
+                        }
+                    };
+                });
+            });
+            closeModal.onclick = () => { modal.style.display = "none"; };
+            window.onclick = (event) => { if (event.target === modal) modal.style.display = "none"; };
+        }
+        else {
             rideHistoryList.innerHTML = '<p class="no-rides">No ride history.</p>';
         }
     } catch (err) {

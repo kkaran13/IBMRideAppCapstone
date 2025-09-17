@@ -35,18 +35,6 @@
             <div class="form-group">
                 <input type="text" id="dropoff" placeholder="Dropoff location" />
             </div>
-            <div class="form-group">
-                <select>
-                    <option>Pickup now</option>
-                    <option>Schedule for later</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <select>
-                    <option>For me</option>
-                    <option>For someone else</option>
-                </select>
-            </div>
             <div class="button-row">
                 <button id="searchBtn" class="search-btn">Search</button>
                 <button id="requestRide" class="request-ride">Book Ride</button>
@@ -72,6 +60,17 @@
                 <p><strong>Fare:</strong> ₹<span id="fareText"></span></p>
             </div>
         </div>
+
+        <div id="rateRideModal" class="modal hidden">
+            <div class="modal-content">
+                <span id="closeRateModal" class="close">&times;</span>
+                <h3>Rate Ride</h3>
+                <label>Rating (1-5): <input type="number" id="rideRating" min="1" max="5"></label><br><br>
+                <label>Review: <textarea id="rideReview" rows="3"></textarea></label><br><br>
+                <button id="submitRating">Submit</button>
+            </div>
+        </div>
+
 
     </section>
 

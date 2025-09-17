@@ -34,11 +34,10 @@ class UserService {
 
     if (existingUser) {
       if (existingUser.account_status === "inactive") {
-        // Instead of blocking, guide to recover
         return {
           alreadyRegistered: true,
           message: "Account exists but inactive. Please recover your account.",
-          recover: true, // frontend can redirect to recover flow
+          recover: true,
         };
       }
       throw new ApiError(409, "Email already registered and active");
@@ -64,37 +63,46 @@ class UserService {
           "Driver must provide license number, expiry date, and Aadhaar"
         );
       }
-      //  Require photo for driver
-      if (!files?.avatar?.[0]) {
-        throw new ApiError(422, "Driver must upload profile photo.");
+      
+      // File validations with better error messages
+      if (!files?.avatar?.[0]?.buffer) {
+        throw new ApiError(422, "Driver must upload a valid profile photo");
       }
-      //  Require license photo for driver
-      if (!files?.license?.[0]) {
-        throw new ApiError(422, "Driver must upload license photo.");
+      if (!files?.license?.[0]?.buffer) {
+        throw new ApiError(422, "Driver must upload a valid license photo");
       }
-      //  Require photo for driver
-      if (!files?.aadhar?.[0]) {
-        throw new ApiError(422, "Driver must upload aadhar photo.");
-
+      if (!files?.aadhar?.[0]?.buffer) {
+        throw new ApiError(422, "Driver must upload a valid aadhar photo");
       }
     }
+
     // ----------------- PASSWORD -----------------
     const password_hash = await bcrypt.hash(password, 10);
 
-    // ----------------- CLOUDINARY UPLOADS -----------------
-    const avatar_url = files?.avatar?.[0]
-      ? await HelperFunction.uploadToCloudinary(files.avatar[0], "avatars")
-      : null;
+    // ----------------- CLOUDINARY UPLOADS WITH ERROR HANDLING -----------------
+    let avatar_url = null;
+    let license_url = null;
+    let aadhar_url = null;
 
-    const license_url =
-      role === "driver" && files?.license?.[0]
-        ? await HelperFunction.uploadToCloudinary(files.license[0], "licenses")
-        : null;
+    try {
+      // Avatar upload
+      if (files?.avatar?.[0]?.buffer) {
+        avatar_url = await HelperFunction.uploadToCloudinary(files.avatar[0], "avatars");
+      }
 
-    const aadhar_url =
-      role === "driver" && files?.aadhar?.[0]
-        ? await HelperFunction.uploadToCloudinary(files.aadhar[0], "aadhars")
-        : null;
+      // License upload (only for drivers)
+      if (role === "driver" && files?.license?.[0]?.buffer) {
+        license_url = await HelperFunction.uploadToCloudinary(files.license[0], "licenses");
+      }
+
+      // Aadhar upload (only for drivers)
+      if (role === "driver" && files?.aadhar?.[0]?.buffer) {
+        aadhar_url = await HelperFunction.uploadToCloudinary(files.aadhar[0], "aadhars");
+      }
+    } catch (uploadError) {
+      console.error('File upload error:', uploadError);
+      throw new ApiError(500, "File upload failed. Please try again.");
+    }
 
     // ----------------- PREPARE PAYLOAD -----------------
     const userPayload = {
@@ -113,34 +121,38 @@ class UserService {
     };
 
     // ----------------- OTP -----------------
-    const otp = "" + Math.floor(100000 + Math.random() * 900000); // 6 digit
-    const phone_otp = "" + Math.floor(100000 + Math.random() * 900000); // phone otp 
+    const otp = "" + Math.floor(100000 + Math.random() * 900000);
+    const phone_otp = "" + Math.floor(100000 + Math.random() * 900000);
     req.session.pendingUser = {
       userPayload,
       otp,
       phone_otp,
-      expiresAt: Date.now() + 10 * 60 * 1000, // 10 min
+      expiresAt: Date.now() + 10 * 60 * 1000,
     };
 
-    // ----------------- SEND MAIL -----------------
-    let mailObj = {
-      to: email, // directly use email from payload
-      subject: "Welcome to Ride App!",
-      htmlTemplate: "welcome.html", // your template file
-      templateData: {
-        username: firstname, // or firstname + lastname
-        email: email,
-        appname: "rideapp",
-        otpcode: otp, // add OTP to template data
-      },
-    };
+    // ----------------- SEND MAIL WITH ERROR HANDLING -----------------
+    try {
+      let mailObj = {
+        to: email,
+        subject: "Welcome to Ride App!",
+        htmlTemplate: "welcome.html",
+        templateData: {
+          username: firstname,
+          email: email,
+          appname: "rideapp",
+          otpcode: otp,
+        },
+      };
 
-    await HelperFunction.sendOtp(phone, phone_otp);
-    await HelperFunction.sendMail(mailObj);
+      await HelperFunction.sendOtp(phone, phone_otp);
+      await HelperFunction.sendMail(mailObj);
+    } catch (notificationError) {
+      console.error('Notification error:', notificationError);
+      // Don't throw error here, just log it - user can still proceed
+    }
 
     return { otpSent: true };
   }
-
   async verifyEmailOtp(req) {
     // Check if OTP exists in session
 

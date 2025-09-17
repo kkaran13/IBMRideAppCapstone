@@ -26,7 +26,7 @@ class RideRepository {
                 },
                 {
                     model: Vehicle,
-                    attributes: ['vehicle_id', 'make', 'model', 'registration_number']
+                    attributes: ['vehicle_id', 'make', 'model', 'color', 'registration_number']
                 }
             ]
         });
@@ -67,7 +67,7 @@ class RideRepository {
                 },
                 {
                     model: Vehicle,
-                    attributes: ['vehicle_id', 'make', 'model', 'registration_number']
+                    attributes: ['vehicle_id', 'make', 'model', 'color', 'registration_number']
                 }
             ]
         });
