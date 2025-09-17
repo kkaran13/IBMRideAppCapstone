@@ -12,9 +12,22 @@ withdrawWalletRouter.get(
   authorizeRole(["admin"]),
   WithdrawWalletController.getWithDrawReqDetails
 );
+
+
+
  withdrawWalletRouter.patch(
   "/status/:withdraw_id",
   WithdrawWalletController.changeReqStatus
+);
+
+ withdrawWalletRouter.get(
+  "/:driver_id",
+  WithdrawWalletController.getWithDrawByidReqDetails
+);
+
+ withdrawWalletRouter.post(
+  "/:driver_id",
+  WithdrawWalletController.postWithDrawByidReqDetails
 );
 
 export default withdrawWalletRouter;

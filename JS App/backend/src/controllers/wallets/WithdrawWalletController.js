@@ -11,6 +11,22 @@ class WithdrawWalletController {
       .json(new ApiResponse(200, result, "Withdraw requests fetched successfully"));
   });
 
+  getWithDrawByidReqDetails = asyncHandler(async (req, res) => {
+    const result = await WithdrawWalletService.getAllWithdrawReqByidDetails(req);
+
+    return res
+      .status(200) // ✅ GET -> 200
+      .json(new ApiResponse(200, result, "Withdraw requests fetched successfully"));
+  });
+
+  postWithDrawByidReqDetails = asyncHandler(async (req, res) => {
+    const result = await WithdrawWalletService.postAllWithdrawReqByidDetails(req);
+
+    return res
+      .status(200) // ✅ GET -> 200
+      .json(new ApiResponse(200, result, "Withdraw requests fetched successfully"));
+  });
+
 changeReqStatus = asyncHandler(async (req, res) => {
     
   const result = await WithdrawWalletService.changeReqStatus(req);

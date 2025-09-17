@@ -18,6 +18,20 @@ class DeviceController{
         res.status(201).json(new ApiResponse(201, device, "Device registered successfully for the notification"));
     });
 
+
+    // De - Register the device
+    deRegisterDevice = asyncHandler(async (req, res) => {
+        
+        const { userId, deviceId } = req.body;
+
+        if( !userId || !deviceId ){
+            throw new ApiError(404, "Missing required fields for de-registering the device");
+        }
+        const device = await deviceTokenService.logoutDevice(userId, deviceId);
+
+        res.status(201).json(new ApiResponse(201, device, "Device de registered successfully for the notification"));
+    });
+
     // Get the user devices tokens
     getUserDevices = asyncHandler(async (req, res) => {
         const { userId } = req.body;

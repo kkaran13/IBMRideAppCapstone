@@ -12,147 +12,145 @@ import DriverWalletService from "./wallets/DriverWalletService.js";
 
 class UserService {
   // ----------------- REGISTER -----------------
-  // userService.js
+async startRegistration(data, files, req) {
+  if (!data) throw new ApiError(400, "Missing data");
 
- async startRegistration(data, files, req) {
-    if (!data) throw new ApiError(400, "Missing data");
+  const {
+    firstname,
+    lastname,
+    email,
+    phone,
+    password,
+    role = "rider",
+    license_number,
+    license_expiry_date,
+    aadhar_number,
+  } = data;
 
-    const {
-      firstname,
-      lastname,
-      email,
-      phone,
-      password,
-      role = "rider",
-      license_number,
-      license_expiry_date,
-      aadhar_number,
-    } = data;
+  // ----------------- CHECK EXISTING USER -----------------
+  const existingUser = await UserRepository.findByEmail(email);
 
-    // ----------------- CHECK EXISTING USER -----------------
-    const existingUser = await UserRepository.findByEmail(email);
-
-    if (existingUser) {
-      if (existingUser.account_status === "inactive") {
-        return {
-          alreadyRegistered: true,
-          message: "Account exists but inactive. Please recover your account.",
-          recover: true,
-        };
-      }
-      throw new ApiError(409, "Email already registered and active");
-    }
-
-    // ----------------- VALIDATIONS -----------------
-    if (!firstname || !lastname || !email || !phone || !password) {
-      throw new ApiError(400, "Missing required fields");
-    }
-
-    if (await UserRepository.findByPhone(phone)) {
-      throw new ApiError(409, "Phone already registered");
-    }
-
-    if (password.length < 6) {
-      throw new ApiError(400, "Password length must be > 6");
-    }
-
-    if (role === "driver") {
-      if (!license_number || !license_expiry_date || !aadhar_number) {
-        throw new ApiError(
-          422,
-          "Driver must provide license number, expiry date, and Aadhaar"
-        );
-      }
-      
-      // File validations with better error messages
-      if (!files?.avatar?.[0]?.buffer) {
-        throw new ApiError(422, "Driver must upload a valid profile photo");
-      }
-      if (!files?.license?.[0]?.buffer) {
-        throw new ApiError(422, "Driver must upload a valid license photo");
-      }
-      if (!files?.aadhar?.[0]?.buffer) {
-        throw new ApiError(422, "Driver must upload a valid aadhar photo");
-      }
-    }
-
-    // ----------------- PASSWORD -----------------
-    const password_hash = await bcrypt.hash(password, 10);
-
-    // ----------------- CLOUDINARY UPLOADS WITH ERROR HANDLING -----------------
-    let avatar_url = null;
-    let license_url = null;
-    let aadhar_url = null;
-
-    try {
-      // Avatar upload
-      if (files?.avatar?.[0]?.buffer) {
-        avatar_url = await HelperFunction.uploadToCloudinary(files.avatar[0], "avatars");
-      }
-
-      // License upload (only for drivers)
-      if (role === "driver" && files?.license?.[0]?.buffer) {
-        license_url = await HelperFunction.uploadToCloudinary(files.license[0], "licenses");
-      }
-
-      // Aadhar upload (only for drivers)
-      if (role === "driver" && files?.aadhar?.[0]?.buffer) {
-        aadhar_url = await HelperFunction.uploadToCloudinary(files.aadhar[0], "aadhars");
-      }
-    } catch (uploadError) {
-      console.error('File upload error:', uploadError);
-      throw new ApiError(500, "File upload failed. Please try again.");
-    }
-
-    // ----------------- PREPARE PAYLOAD -----------------
-    const userPayload = {
-      firstname,
-      lastname,
-      email,
-      phone,
-      password_hash,
-      role,
-      avatar_url,
-      license_number: role === "driver" ? license_number : null,
-      license_url,
-      license_expiry_date: role === "driver" ? license_expiry_date : null,
-      aadhar_number: role === "driver" ? aadhar_number : null,
-      aadhar_url,
-    };
-
-    // ----------------- OTP -----------------
-    const otp = "" + Math.floor(100000 + Math.random() * 900000);
-    const phone_otp = "" + Math.floor(100000 + Math.random() * 900000);
-    req.session.pendingUser = {
-      userPayload,
-      otp,
-      phone_otp,
-      expiresAt: Date.now() + 10 * 60 * 1000,
-    };
-
-    // ----------------- SEND MAIL WITH ERROR HANDLING -----------------
-    try {
-      let mailObj = {
-        to: email,
-        subject: "Welcome to Ride App!",
-        htmlTemplate: "welcome.html",
-        templateData: {
-          username: firstname,
-          email: email,
-          appname: "rideapp",
-          otpcode: otp,
-        },
+  if (existingUser) {
+    if (existingUser.account_status === "inactive") {
+      return {
+        alreadyRegistered: true,
+        message: "Account exists but inactive. Please recover your account.",
+        recover: true,
       };
+    }
+    throw new ApiError(409, "Email already registered and active");
+  }
 
-      await HelperFunction.sendOtp(phone, phone_otp);
-      await HelperFunction.sendMail(mailObj);
-    } catch (notificationError) {
-      console.error('Notification error:', notificationError);
-      // Don't throw error here, just log it - user can still proceed
+  // ----------------- REQUIRED FIELDS VALIDATION -----------------
+  if (!firstname || !lastname || !email || !phone || !password) {
+    throw new ApiError(400, "Missing required fields");
+  }
+
+  if (await UserRepository.findByPhone(phone)) {
+    throw new ApiError(409, "Phone already registered");
+  }
+
+  if (password.length < 6) {
+    throw new ApiError(400, "Password length must be > 6");
+  }
+
+  // ----------------- FILE VALIDATION -----------------
+  // Avatar is required for all users
+  if (!files?.avatar?.length || !files.avatar[0].buffer) {
+    throw new ApiError(422, "User must upload a valid profile photo");
+  }
+
+  if (role === "driver") {
+    if (!license_number || !license_expiry_date || !aadhar_number) {
+      throw new ApiError(
+        422,
+        "Driver must provide license number, expiry date, and Aadhaar"
+      );
     }
 
-    return { otpSent: true };
+    if (!files?.license?.length || !files.license[0].buffer) {
+      throw new ApiError(422, "Driver must upload a valid license photo");
+    }
+
+    if (!files?.aadhar?.length || !files.aadhar[0].buffer) {
+      throw new ApiError(422, "Driver must upload a valid Aadhaar photo");
+    }
   }
+
+  // ----------------- PASSWORD HASH -----------------
+  const password_hash = await bcrypt.hash(password, 10);
+
+  // ----------------- CLOUDINARY UPLOADS -----------------
+  let avatar_url = null;
+  let license_url = null;
+  let aadhar_url = null;
+
+  try {
+    // Avatar (all users)
+    avatar_url = await HelperFunction.uploadToCloudinary(files.avatar[0], "avatars");
+
+    // License & Aadhaar (drivers only)
+    if (role === "driver") {
+      license_url = await HelperFunction.uploadToCloudinary(files.license[0], "licenses");
+      aadhar_url = await HelperFunction.uploadToCloudinary(files.aadhar[0], "aadhars");
+    }
+  } catch (uploadError) {
+    console.error("File upload error:", uploadError);
+    throw new ApiError(500, "File upload failed. Please try again.");
+  }
+
+  // ----------------- PREPARE USER PAYLOAD -----------------
+  const userPayload = {
+    firstname,
+    lastname,
+    email,
+    phone,
+    password_hash,
+    role,
+    profile_image_url : avatar_url,
+    license_number: role === "driver" ? license_number : null,
+    license_url,
+    license_expiry_date: role === "driver" ? license_expiry_date : null,
+    aadhar_number: role === "driver" ? aadhar_number : null,
+    aadhar_url,
+  };
+
+  // ----------------- OTP GENERATION -----------------
+  const otp = "" + Math.floor(100000 + Math.random() * 900000);
+  const phone_otp = "" + Math.floor(100000 + Math.random() * 900000);
+
+  req.session.pendingUser = {
+    userPayload,
+    otp,
+    phone_otp,
+    expiresAt: Date.now() + 10 * 60 * 1000, // 10 mins
+  };
+
+  // ----------------- SEND OTP & WELCOME MAIL -----------------
+  try {
+    const mailObj = {
+      to: email,
+      subject: "Welcome to Ride App!",
+      htmlTemplate: "welcome.html",
+      templateData: {
+        username: firstname,
+        email,
+        appname: "rideapp",
+        otpcode: otp,
+      },
+    };
+
+    await HelperFunction.sendOtp(phone, phone_otp);
+    await HelperFunction.sendMail(mailObj);
+  } catch (notificationError) {
+    console.error("Notification error:", notificationError);
+    // Don't throw, allow registration to proceed
+  }
+
+  return { otpSent: true };
+}
+
+
   async verifyEmailOtp(req) {
     // Check if OTP exists in session
 

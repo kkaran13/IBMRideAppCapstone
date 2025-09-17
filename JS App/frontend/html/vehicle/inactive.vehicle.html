@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Inactive Vehicle</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="active-vehicle.html">Active Vehicle</a>
+    <a href="my-vehicles.html">My Vehicles</a>
+    <a href="register.html">Register Vehicle</a>
+  </nav>
+
+  <section class="vehicle-card orange">
+    <img src="hatchback.png" alt="Hatchback">
+    <h2>Hatchback <span class="status inactive">INACTIVE</span></h2>
+    <p>Make Model Year</p>
+    <div class="actions">
+      <button onclick="loadUpdate()">Update</button>
+      <button onclick="deleteVehicle()">Delete</button>
+    </div>
+  </section>
+
+  <section class="details">
+    <h3>Vehicle Details</h3>
+    <div id="vehicleDetails"></div>
+  </section>
+  <div class="footer-btn">
+    <button onclick="window.close()">Close</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

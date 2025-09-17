@@ -17,6 +17,13 @@ class AnalyticsController {
         return res.status(200).json(new ApiResponse(200, result, ""))
     
     });
+    getAllCompletedPaymentsbyid= asyncHandler(async (req, res) => {
+     
+        const result = await AnalyticsService.getAllCompletedPaymentsbyid(req.body);
+   
+        return res.status(200).json(new ApiResponse(200, result, ""))
+    
+    });
 
 
 
