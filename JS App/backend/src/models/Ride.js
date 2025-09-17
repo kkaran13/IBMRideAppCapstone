@@ -93,7 +93,6 @@ const Ride = sequelize.define(
                 "accepted",
                 "driver_arrived",
                 "ongoing",
-                "started",
                 "completed",
                 "cancelled",
                 "timeout",

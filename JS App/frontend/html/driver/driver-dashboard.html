@@ -9,6 +9,8 @@
 </head>
 
 <body>
+    <!-- Global Alert Container -->
+    <div id="alert-container"></div>
 
     <script type="module" src="../../js/driver/driver-dashboard.js"></script>
 
@@ -60,12 +62,8 @@
             <div class="card ongoing-ride" id="ongoing-ride-card">
                 <h3>Current Ride</h3>
     
-                <!-- Ride details -->
-                <p><strong>Rider:</strong> <span id="rider-name">John Doe</span></p>
-                <p><strong>Pickup:</strong> <span id="pickup-location">MG Road, Ahmedabad</span></p>
-                <p><strong>Drop:</strong> <span id="drop-location">Airport, Ahmedabad</span></p>
-                <p><strong>Fare:</strong> ₹ <span id="ride-fare">350</span></p>
-                <p><strong>Status:</strong> ₹ <span id="ride-status">350</span></p>
+                <!-- Ride details container (filled dynamically) -->
+                <div id="ride-details"></div>
                 
                 <!-- Action buttons -->
                 <div class="ride-actions">
