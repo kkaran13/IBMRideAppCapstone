@@ -9,6 +9,16 @@ class RideRepository {
         return await Ride.create(data);
     }
 
+    async getCompletedRideWithPendingPayment(rider_id) {
+        return await Ride.findOne({
+            where: {
+                rider_id: rider_id,
+                ride_status: "completed",
+                payment_status: "pending"
+            }
+        });
+    }
+
     // Rider/Driver/Admin: get ride details by ID
     async getRideById(rideId) {
         return await Ride.findByPk(rideId);
@@ -184,6 +194,17 @@ class RideRepository {
                 driver_id: driverId,
                 ride_status: { [Op.in]: ["accepted", "ongoing", "driver_arrived"] },
             },
+            include: [
+                {
+                    model: User,
+                    as: 'Rider',
+                    attributes: ['user_id', 'firstname', 'lastname', 'phone', 'email']
+                },
+                {
+                    model: Vehicle,
+                    attributes: ['vehicle_id', 'make', 'model', 'color', 'registration_number']
+                }
+            ]
         });
     }
 

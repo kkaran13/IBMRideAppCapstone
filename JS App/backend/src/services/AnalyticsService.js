@@ -40,5 +40,13 @@ class AnalyticsService {
 
         return apiResponseData;
     }
+    
+    async getAllCompletedPaymentsbyid(){
+        
+        const { wallet_id } = req.params;
+        const apiResponseData = await HelperFunction.axiosSendRequest("get", `payments/completed-payments/${wallet_id}`);
+
+        return apiResponseData;
+    }
 }
 export default new AnalyticsService();

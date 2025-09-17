@@ -1,12 +1,13 @@
 document.getElementById("payBtn").onclick = async function () {
+const params = new URLSearchParams(window.location.search);
     console.log("Clicked Now");
 
     const payload = {
         wallet_id: "b6260927-a693-4e96-8c74-9fb7ba67c16d",
-        ride_id: "r3333333-3333-3333-3333-333333333333",
-        rider_id: "1a111111-1111-1111-1111-111111111111",
-        driver_id: "4d444444-4444-4444-4444-444444444444",
-        amount: 100.00,
+        ride_id: params.get("rideId"),
+        rider_id: params.get("riderId"),
+        driver_id: params.get("driverId"),
+        amount: params.get("fare"),
         payment_method: "CARD"
     };
 

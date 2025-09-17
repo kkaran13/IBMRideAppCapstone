@@ -172,7 +172,7 @@ class HelperFunction {
             const deviceTokens = await DeviceTokenService.getMultipleUsersTokens(userids);
 
             // Build notification payload (title/message placeholders replaced with `data`)
-            const payload = getNotificationTemplate(templateName, data);
+            const payload = this.getNotificationTemplate(templateName, data);
 
             const message = {
                 notification: payload.notification,
