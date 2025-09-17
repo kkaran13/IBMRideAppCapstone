@@ -132,17 +132,15 @@ class UserController {
       .json(new ApiResponse(200, { zipPath }, "User rides exported successfully"));
   })
 
-  // controllers/userController.js
-  getAllUser = asyncHandler(async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+  
+getAllUser = asyncHandler(async (req, res) => {
+  const users = await UserService.getAllUsers();
+ 
+  return res
+    .status(200)
+    .json(new ApiResponse(200, users, "Users fetched successfully"));
+});
 
-    const users = await UserService.getAllUsers(page, limit);
-
-    return res
-      .status(200)
-      .json(new ApiResponse(200, users, "Users fetched successfully"));
-  });
 
   getPendingVerifications = asyncHandler(async (req, res) => {
     const result = await UserService.getPendingVerifications();

@@ -13,6 +13,88 @@ body {
   flex-direction: column;
 }
 
+/* Alert container */
+#alert-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 9999; /* Always above UI */
+  pointer-events: none; /* clicks pass through */
+}
+
+/* Individual alert */
+.alert {
+  pointer-events: auto; /* enable interaction with alert */
+  min-width: 250px;
+  max-width: 320px;
+  padding: 0.875rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  animation: slideIn 0.35s ease, fadeOut 0.5s ease 4.5s forwards; /* auto dismiss */
+  opacity: 0.95;
+}
+
+/* Success */
+.alert-success {
+  background: #dcfce7;
+  color: #166534;
+  border-left: 4px solid #22c55e;
+}
+
+/* Error */
+.alert-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border-left: 4px solid #ef4444;
+}
+
+/* Warning */
+.alert-warning {
+  background: #fef9c3;
+  color: #854d0e;
+  border-left: 4px solid #facc15;
+}
+
+/* Info */
+.alert-info {
+  background: #dbeafe;
+  color: #1e40af;
+  border-left: 4px solid #3b82f6;
+}
+
+/* Icons */
+.alert::before {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 0.95;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
 /* Hero Section */
 .hero {
   background: #f9fafb;
@@ -91,7 +173,6 @@ body {
 }
 
 .right-column .card {
-  flex: 1;
   max-width: 100%;
 }
 
@@ -133,6 +214,18 @@ body {
   display: none;
 }
 
+#maps-link {
+  margin-top: 10px;
+  text-decoration: none;
+  align-self: center;
+  text-align: center;
+  width: fit-content;
+}
+
+#maps-link:hover {
+  transform: translateY(-2px);
+}
+
 /* Wallet Card Text Styling */
 .wallet-text {
   margin-bottom: 1rem;
@@ -156,6 +249,9 @@ body {
   border: none;
   cursor: pointer;
   font-size: 0.95rem;
+}
+.btn:hover {
+  transform: translateY(-2px);
 }
 .btn.primary {
   background: #4a5899;

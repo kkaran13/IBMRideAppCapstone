@@ -3,50 +3,49 @@ import { AuthUtils } from "../user/auth-utils.js";
 let currentRide = null; // global ride object
 
 document.addEventListener("DOMContentLoaded", async function () {
-    // const authToken = AuthUtils.getAuthToken();
-    // if (!authToken) {
-    //     window.location.href = "../user/login.html";
-    // }
 
     const loggedInUser = AuthUtils.getUserInfo();
     if (!loggedInUser) {
-        window.location.href = "../user/login.html";
+        window.location.href = "/html/user/login.html";
         return;
     }
 
+    // Global alert container
+    const alertContainer = document.getElementById("alert-container");
+
     // navbar placeholder
-    const navbarContainer = document.getElementById("navbar-placeholder");
-    fetch("driver-navbar.html")
-        .then((response) => {
-            if (!response.ok) throw new Error("Network response was not OK");
-            return response.text();
-        })
-        .then((html) => {
-            navbarContainer.innerHTML = html;
+    // const navbarContainer = document.getElementById("navbar-placeholder");
+    // fetch("driver-navbar.html")
+    //     .then((response) => {
+    //         if (!response.ok) throw new Error("Network response was not OK");
+    //         return response.text();
+    //     })
+    //     .then((html) => {
+    //         navbarContainer.innerHTML = html;
 
-            const link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = "../../css/driver/driver-navbar.css";
-            document.head.appendChild(link);
-        })
-        .catch((error) => console.error("Error loading the navbar:", error));
+    //         const link = document.createElement("link");
+    //         link.rel = "stylesheet";
+    //         link.href = "../../css/driver/driver-navbar.css";
+    //         document.head.appendChild(link);
+    //     })
+    //     .catch((error) => console.error("Error loading the navbar:", error));
 
-    // footer placeholder
-    const footerContainer = document.getElementById("footer-placeholder");
-    fetch("driver-footer.html")
-        .then((response) => {
-            if (!response.ok) throw new Error("Network response was not OK");
-            return response.text();
-        })
-        .then((html) => {
-            footerContainer.innerHTML = html;
+    // // footer placeholder
+    // const footerContainer = document.getElementById("footer-placeholder");
+    // fetch("driver-footer.html")
+    //     .then((response) => {
+    //         if (!response.ok) throw new Error("Network response was not OK");
+    //         return response.text();
+    //     })
+    //     .then((html) => {
+    //         footerContainer.innerHTML = html;
 
-            const link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = "../../css/driver/driver-footer.css";
-            document.head.appendChild(link);
-        })
-        .catch((error) => console.error("Error loading the footer:", error));
+    //         const link = document.createElement("link");
+    //         link.rel = "stylesheet";
+    //         link.href = "../../css/driver/driver-footer.css";
+    //         document.head.appendChild(link);
+    //     })
+    //     .catch((error) => console.error("Error loading the footer:", error));
 
     // Extract user details
     const userId = loggedInUser?.id || null;
@@ -100,6 +99,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         await refreshRideCard();
     } catch (err) {
         console.error("Failed to load dashboard data:", err);
+        AuthUtils.showAlert(alertContainer, "Failed to load dashboard data.", "error", 3000);
     }
 
     // Start Driving button
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         startDrivingBtn.addEventListener("click", async () => {
             const driverId = loggedInUser?.id;
             if (!driverId) {
-                alert("User not authenticated");
+                AuthUtils.showAlert(alertContainer, "User not authenticated.", "error", 3000);
                 return;
             }
 
@@ -145,19 +145,19 @@ document.addEventListener("DOMContentLoaded", async function () {
                         startDrivingBtn.textContent = "Stop Driving";
                         startDrivingBtn.classList.remove("primary");
                         startDrivingBtn.classList.add("danger");
-                        alert("Driving session started!");
+                        AuthUtils.showAlert(alertContainer, "Driving session started!", "success", 3000);
                     } else {
                         startDrivingBtn.textContent = "Start Driving";
                         startDrivingBtn.classList.remove("danger");
                         startDrivingBtn.classList.add("primary");
-                        alert("Driving session stopped!");
+                        AuthUtils.showAlert(alertContainer, "Driving session stopped!", "info", 3000);
                     }
                 } else {
-                    alert("Something went wrong.");
+                    AuthUtils.showAlert(alertContainer, "Something went wrong.", "error", 3000);
                 }
             } catch (error) {
                 console.error("Failed to toggle driving state:", error);
-                alert("Failed to update driving state. Please try again.");
+                AuthUtils.showAlert(alertContainer, "Failed to update driving state. Please try again.", "error", 3000);
             }
         });
     }
@@ -174,30 +174,32 @@ async function refreshRideCard() {
             { method: "GET" }
         );
         console.log(ridesRes);
-        
+        const rideDetailsContainer = document.getElementById("ride-details");
 
         if (ridesRes.success && ridesRes.data?.data) {
             const ride = ridesRes.data.data;
             currentRide = ride;
 
             // Update ride info
-            document.getElementById("rider-name").textContent = ride.riderName || "Unknown";
-            document.getElementById("pickup-location").textContent = ride.pickup_address || "-";
-            document.getElementById("drop-location").textContent = ride.dropoff_address || "-";
-            document.getElementById("ride-fare").textContent = ride.fare || "0";
-
-            function toSentenceCase(str) {
-                return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-            }
-            document.getElementById("ride-status").textContent = ride.ride_status ? toSentenceCase(ride.ride_status) : "-";
+            rideDetailsContainer.innerHTML = `
+                <p><strong>Rider:</strong> <span id="rider-name">${ride.riderName || "Unknown"}</span></p>
+                <p><strong>Pickup:</strong> <span id="pickup-location">${ride.pickup_address || "-"}</span></p>
+                <p><strong>Drop:</strong> <span id="drop-location">${ride.dropoff_address || "-"}</span></p>
+                <p><strong>Fare:</strong> ₹ <span id="ride-fare">${ride.fare || "0"}</span></p>
+                <p><strong>Status:</strong> <span id="ride-status">${ride.ride_status
+                    ? ride.ride_status.charAt(0).toUpperCase() + ride.ride_status.slice(1).toLowerCase()
+                    : "-"}</span></p>
+            `;
 
             toggleRideUI(ride.ride_status);
         } else {
-            ongoingRideCard.querySelector(".ride-actions").innerHTML = "<p>No rides currently.</p>";
+            rideDetailsContainer.innerHTML = "<p>No rides currently.</p>";
+            ongoingRideCard.querySelector(".ride-actions").classList.add("hidden");
             currentRide = null;
         }
     } catch (err) {
         console.error("Failed to refresh ride:", err);
+        AuthUtils.showAlert(document.getElementById("alert-container"), "Failed to refresh rides.", "error", 3000);
     }
 }
 
@@ -242,9 +244,10 @@ const cancelBtn = document.getElementById("cancel-ride-btn");
 const cancelReasonInput = document.getElementById("cancel-reason");
 const completeBtn = document.getElementById("complete-ride-btn");
 const enteredOtp = document.getElementById("entered-otp");
+const mapLinkBtn = document.getElementById("maps-link");
 
 arrivedBtn?.addEventListener("click", async () => {
-    if (!currentRide) return alert("No active ride found.");
+    if (!currentRide) return AuthUtils.showAlert(alertContainer, "No active ride found.", "error", 3000);
 
     try {
         const url = AuthUtils.API_ENDPOINTS.driverArrived.replace(
@@ -254,20 +257,21 @@ arrivedBtn?.addEventListener("click", async () => {
         const res = await AuthUtils.apiRequest(url, { method: "POST" });
 
         if (res.success) {
-            alert("Marked as arrived!");
+            AuthUtils.showAlert(alertContainer, "Marked as arrived!", "success", 3000);
             await refreshRideCard();
         } else {
-            alert(res.error || "Failed to mark arrived.");
+            AuthUtils.showAlert(alertContainer, res.error || "Failed to mark arrived.", "error", 3000);
         }
     } catch (err) {
         console.error(err);
+        AuthUtils.showAlert(alertContainer, "Unexpected error while marking arrived.", "error", 3000);
     }
 });
 
 startBtn?.addEventListener("click", async () => {
-    if (!currentRide) return alert("No active ride found.");
+    if (!currentRide) return AuthUtils.showAlert(alertContainer, "No active ride found.", "error", 3000);
 
-    if (!enteredOtp.value) return alert("Please enter the OTP!");
+    if (!enteredOtp.value) return AuthUtils.showAlert(alertContainer, "Please enter the OTP!", "warning", 3000);
 
     try {
         const url = AuthUtils.API_ENDPOINTS.startRide.replace(
@@ -280,22 +284,23 @@ startBtn?.addEventListener("click", async () => {
         });
 
         if (res.success) {
-            alert("Ride started!");
+            AuthUtils.showAlert(alertContainer, "Ride started!", "success", 3000);
             await refreshRideCard();
         } else {
-            alert(res.error || "Failed to start ride.");
+            AuthUtils.showAlert(alertContainer, res.error || "Failed to start ride.", "error", 3000);
         }
     } catch (err) {
         console.error(err);
+        AuthUtils.showAlert(alertContainer, "Unexpected error while starting ride.", "error", 3000);
     }
 });
 
 cancelBtn?.addEventListener("click", async () => {
-    if (!currentRide) return alert("No active ride found.");
+    if (!currentRide) return AuthUtils.showAlert(alertContainer, "No active ride found.", "error", 3000);
 
     const reason = cancelReasonInput.value.trim();
     if (!reason) {
-        alert("Please provide a reason for cancellation.");
+        AuthUtils.showAlert(alertContainer, "Please provide a reason for cancellation.", "warning", 3000);
         return;
     }
 
@@ -310,33 +315,49 @@ cancelBtn?.addEventListener("click", async () => {
         });
 
         if (cancelRideRes.success) {
-            alert("Ride cancelled.");
+            AuthUtils.showAlert(alertContainer, "Ride cancelled.", "success", 3000);
             await refreshRideCard();
         } else {
-            alert(cancelRideRes.error || "Failed to cancel ride.");
+            AuthUtils.showAlert(alertContainer, cancelRideRes.error || "Failed to cancel ride.", "error", 3000);
         }
     } catch (err) {
         console.error(err);
+        AuthUtils.showAlert(alertContainer, "Unexpected error while cancelling ride.", "error", 3000);
     }
 });
 
 completeBtn?.addEventListener("click", async () => {
-    if (!currentRide) return alert("No active ride found.");
+    if (!currentRide) return AuthUtils.showAlert(alertContainer, "No active ride found.", "error", 3000);
 
     try {
         const url = AuthUtils.API_ENDPOINTS.completeRide.replace(
             ":id",
             encodeURIComponent(currentRide.ride_id)
         );
-        const res = await AuthUtils.apiRequest(url, { method: "POST", body : {...currentRide} });
+        const res = await AuthUtils.apiRequest(url, { method: "POST", body : JSON.stringify({...currentRide}) });
 
         if (res.success) {
-            alert("Ride completed!");
+            AuthUtils.showAlert(alertContainer, "Ride completed!", "success", 3000);
             await refreshRideCard();
         } else {
-            alert(res.error || "Failed to complete ride.");
+            AuthUtils.showAlert(alertContainer, res.error || "Failed to complete ride.", "error", 3000);
         }
     } catch (err) {
         console.error(err);
+        AuthUtils.showAlert(alertContainer, "Unexpected error while completing ride.", "error", 3000);
     }
+});
+
+mapLinkBtn?.addEventListener("click", (e) => {
+    if (!currentRide) return AuthUtils.showAlert(alertContainer, "No active ride found.", "error", 3000);
+
+    e.preventDefault();
+
+    const { pickup_latitude, pickup_longitude, dropoff_latitude, dropoff_longitude } = currentRide;
+
+    // Google Maps Directions URL
+    const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${pickup_latitude},${pickup_longitude}&destination=${dropoff_latitude},${dropoff_longitude}&travelmode=driving`;
+
+    // Open in new tab
+    window.open(mapsUrl, "_blank");
 });

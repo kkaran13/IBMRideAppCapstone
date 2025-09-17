@@ -60,16 +60,15 @@ class UserRepository {
     );
   }
 
-  async findAllUsers(page = 1, limit = 10, status = "active") {
-    const offset = (page - 1) * limit;
 
-    return await User.findAndCountAll({
-      where: { account_status: status, role: { [Op.ne]: 'admin' } },
-      limit,
-      offset,
-      order: [["created_at", "DESC"]],
-    });
-  }
+// repository/userRepository.js
+async findAllUsers() {
+  return await User.findAndCountAll({
+    order: [["created_at", "DESC"]],
+       raw: true,  
+  });
+}
+
 
   async findUsersByVerificationStatus(status, driver_role, acc_status) {
     return await User.findAll({

@@ -743,14 +743,17 @@ class UserService {
     // 0 -> existing element updated
     return redisStoreRes;
   }
-
-  async getAllUsers(page, limit) {
-    const result = await UserRepository.findAllUsers(page, limit, "active");
-    if (!result) {
-      throw new ApiError(400, "Currently they are no users")
-    }
-    return result;
+// services/userService.js
+async getAllUsers() {
+  const result = await UserRepository.findAllUsers();
+   
+  
+  if (!result || result.count === 0) {
+    throw new ApiError(400, "Currently there are no users");
   }
+  return result; // Will contain count + rows
+}
+
 
   async getPendingVerifications() {
     const users = await UserRepository.findUsersByVerificationStatus("pending", "driver");
