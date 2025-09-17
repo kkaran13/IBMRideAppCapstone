@@ -21,8 +21,13 @@ withdrawWalletRouter.get(
 );
 
  withdrawWalletRouter.get(
-  "/:withdraw_id",
-  WithdrawWalletController.changeReqStatus
+  "/:driver_id",
+  WithdrawWalletController.getWithDrawByidReqDetails
+);
+
+ withdrawWalletRouter.post(
+  "/:driver_id",
+  WithdrawWalletController.postWithDrawByidReqDetails
 );
 
 export default withdrawWalletRouter;
