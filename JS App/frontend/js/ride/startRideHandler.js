@@ -103,7 +103,8 @@ export async function loadRequestedRides() {
         }
 
         const activeRides = data.data.filter(r =>
-            ["requested", "accepted", "ongoing", "completed"].includes(r.ride_status)
+            ["requested", "accepted", "ongoing"].includes(r.ride_status) ||
+            (r.ride_status === "completed" && r.payment_status !== "completed")
         );
 
         if (activeRides.length) {
@@ -118,37 +119,39 @@ export async function loadRequestedRides() {
                     rideEl.innerHTML = `
                         <p><strong>Pickup:</strong> ${ride.pickup_address}</p>
                         <p><strong>Drop:</strong> ${ride.dropoff_address}</p>
-                        <p><strong>Status:</strong> ${ride.ride_status}</p>
+                        <p><strong>Ride Status:</strong> ${ride.ride_status}</p>
                         <p><strong>Fare:</strong> ₹ ${fareToShow}</p>
                         <button class="cancel-btn" data-ride-id="${ride.ride_id}">Cancel Ride</button>
                     `;
                 }
-                else if (ride.ride_status === "completed") {
+                else if (ride.ride_status === "completed" && ride.payment_status !== "completed") {
                     rideEl.innerHTML = `
                         <p><strong>Pickup:</strong> ${ride.pickup_address}</p>
                         <p><strong>Drop:</strong> ${ride.dropoff_address}</p>
-                        <p><strong>Status:</strong> ${ride.ride_status}</p>
+                        <p><strong>Ride Status:</strong> ${ride.ride_status}</p>
                         <p><strong>Fare:</strong> ₹ ${fareToShow}</p>
                         ${ride.Driver ? `<p><strong>Driver:</strong> ${ride.Driver.firstname} ${ride.Driver.lastname}</p>` : ""}
                         ${ride.Driver ? `<p><strong>Phone:</strong> ${ride.Driver.phone}</p>` : ""}
                         ${ride.Vehicle ? `<p><strong>Vehicle Model:</strong> ${ride.Vehicle.model} </p>` : ""}
                         ${ride.Vehicle ? `<p><strong>Vehicle Color:</strong> ${ride.Vehicle.color}</p>` : ""}
                         ${ride.Vehicle ? `<p><strong>Registration Number:</strong> ${ride.Vehicle.registration_number}</p>` : ""}
-                        ${["accepted"].includes(ride.ride_status) ? `<button class="cancel-btn" data-ride-id="${ride.ride_id}">Cancel Ride</button>` : ""} 
-                       <button  class="pay-now-btn" data-ride-id="${ride.ride_id}" data-driver-id="${ride.Driver?.user_id || ''}" data-rider-id="${ride.rider_id || ''}" data-fare="${fareToShow}" >Pay Now</button>          
+                        <p><strong>Payment Status:</strong> ${ride.payment_status}</p>
+                        <button  class="pay-now-btn" data-ride-id="${ride.ride_id}" data-driver-id="${ride.Driver?.user_id || ''}" data-rider-id="${ride.rider_id || ''}" data-fare="${fareToShow}" >Pay Now</button>          
                     `;
                 }
                 else {
+                    // accepted / ongoing
                     rideEl.innerHTML = `
                         <p><strong>Pickup:</strong> ${ride.pickup_address}</p>
                         <p><strong>Drop:</strong> ${ride.dropoff_address}</p>
-                        <p><strong>Status:</strong> ${ride.ride_status}</p>
+                        <p><strong>Ride Status:</strong> ${ride.ride_status}</p>
                         <p><strong>Fare:</strong> ₹ ${fareToShow}</p>
                         ${ride.Driver ? `<p><strong>Driver:</strong> ${ride.Driver.firstname} ${ride.Driver.lastname}</p>` : ""}
                         ${ride.Driver ? `<p><strong>Phone:</strong> ${ride.Driver.phone}</p>` : ""}
                         ${ride.Vehicle ? `<p><strong>Vehicle Model:</strong> ${ride.Vehicle.model} </p>` : ""}
                         ${ride.Vehicle ? `<p><strong>Vehicle Color:</strong> ${ride.Vehicle.color}</p>` : ""}
                         ${ride.Vehicle ? `<p><strong>Registration Number:</strong> ${ride.Vehicle.registration_number}</p>` : ""}
+                        <p><strong>Payment Status:</strong> ${ride.payment_status}</p>
                         ${["accepted"].includes(ride.ride_status) ? `<button class="cancel-btn" data-ride-id="${ride.ride_id}">Cancel Ride</button>` : ""}
                     `;
                 }
@@ -204,4 +207,10 @@ export async function loadRequestedRides() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', loadRequestedRides);
+document.addEventListener('DOMContentLoaded', () => {
+    loadRequestedRides(); // initial load
+
+    setInterval(() => {
+        loadRequestedRides();
+    }, 5000);
+});
