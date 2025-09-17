@@ -7,7 +7,7 @@ class WithdrawWalletController {
     const result = await WithdrawWalletService.getAllWithdrawReqDetails(req);
 
     return res
-      .status(200) // ✅ GET -> 200
+      .status(200)  
       .json(new ApiResponse(200, result, "Withdraw requests fetched successfully"));
   });
 
@@ -15,7 +15,7 @@ class WithdrawWalletController {
     const result = await WithdrawWalletService.getAllWithdrawReqByidDetails(req);
 
     return res
-      .status(200) // ✅ GET -> 200
+      .status(200)  
       .json(new ApiResponse(200, result, "Withdraw requests fetched successfully"));
   });
 
@@ -23,7 +23,7 @@ class WithdrawWalletController {
     const result = await WithdrawWalletService.postAllWithdrawReqByidDetails(req);
 
     return res
-      .status(200) // ✅ GET -> 200
+      .status(200) 
       .json(new ApiResponse(200, result, "Withdraw requests fetched successfully"));
   });
 

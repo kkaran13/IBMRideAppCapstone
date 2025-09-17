@@ -22,18 +22,12 @@ class RatingController {
 
 
  async getRideAndRating(req, res) {
-    console.log("Hello Buddy I AM Calling ")
-    console.log("Hello Buddy I AM Calling ")
-    console.log("Hello Buddy I AM Calling ")
-    console.log("Hello Buddy I AM Calling ")
-    console.log("Hello Buddy I AM Calling ")
-    console.log("Hello Buddy I AM Calling ")
-    console.log("Hello Buddy I AM Calling ")
+    
     try {
       const result = await ratingService.getRideAndRating();
       return res.status(result.status).json(result);
     } catch (error) {
-      console.error("❌ Error in RatingController:", error);
+      console.error(" Error in RatingController:", error);
       return res.status(error.status || 500).json({
         status: error.status || 500,
         message: error.message || "Internal Server Error",

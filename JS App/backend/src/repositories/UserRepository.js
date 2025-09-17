@@ -77,10 +77,10 @@ async findUsersByVerificationStatus(status, driver_role, acc_status = "active") 
     },
     attributes: [
       "user_id",
-      "firstname",       // ✅ added
-      "lastname",        // ✅ added
-      "email",           // ✅ added
-      "phone",           // ✅ added
+      "firstname",        
+      "lastname",        
+      "email",            
+      "phone",            
       "license_number",
       "license_url",
       "license_expiry_date",

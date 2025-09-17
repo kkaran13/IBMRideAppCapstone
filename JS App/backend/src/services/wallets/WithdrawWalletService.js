@@ -44,7 +44,7 @@ async changeReqStatus(req) {
         throw new Error("Withdraw ID and status are required");
       }
  
-      // ✅ Send PATCH request to Django API
+      // Send PATCH request to Django API
       const apiResponseData = await HelperFunction.axiosSendRequest(
         "patch",
         `wallet/withdraw/status/${withdraw_id}/`,
