@@ -5,6 +5,7 @@ import redisClient from '../config/redisClient.js';
 import HelperFunction from '../utils/HelperFunction.js';
 import UserRepository from '../repositories/UserRepository.js';
 import RideRepository from '../repositories/RideRepository.js';
+import { getIO } from '../sockets/index.js';
 
 const RADIUS_STEP = 5000; // 5 km increment
 const MAX_RADIUS = 15000; // Max 15 km radius
@@ -35,7 +36,7 @@ class RideMatchingService {
     }
 
     // search for the drivers in the area
-    async searchForDrivers(lat, lon, rideId, rideData, radius = 3000, timeout = 5 * 60 * 1000) {
+    async searchForDrivers(lat, lon, rideId, rideData, radius = 5000, timeout = 5 * 60 * 1000) {
 
         const ignoredDriversSet = new Set(await this.getIgnoredDrivers(rideId)); // Initialize ignored drivers set
 
@@ -171,6 +172,8 @@ class RideMatchingService {
         await RideRepository.updateRideStatus(rideId, 'timeout');
 
         // socket emit
+        const io = getIO();
+        io.to(`ride_${rideId}`).emit("noDriverAvailable", { rideId });
         
         console.log(`Rider ${rideId} notified: No drivers available in time.`);
     }

@@ -5,6 +5,7 @@ import UserRepository from "../repositories/UserRepository.js";
 import VehicleRepository from "../repositories/VehicleRepository.js";
 import ApiError from "../utils/ApiError.js";
 import HelperFunction from "../utils/HelperFunction.js";
+import { getIO } from "../sockets/index.js";
 
 class RideService {
 
@@ -17,6 +18,7 @@ class RideService {
             dropoff_address,
             dropoff_latitude,
             dropoff_longitude,
+            fare
         } = data;
 
         // Pickup validation
@@ -70,6 +72,7 @@ class RideService {
             dropoff_latitude,
             dropoff_longitude,
             ride_status: "requested",
+            fare
         });
     }
 
@@ -104,12 +107,17 @@ class RideService {
         // Driver rules
         if (role === "driver") {
             if (ride.driver_id !== user_id) throw new ApiError(403, "Not your ride");
-            if (ride.ride_status !== "accepted") {
+            if (!["driver_arrived", "accepted"].includes(ride.ride_status)) {
                 throw new ApiError(409, "Driver can only cancel ride before it is accepted");
             }
         }
+        
+        const updatedRide = await RideRepository.cancelRide(ride_id, reason, role);
+        // Emit to the ride room
+        const io = getIO();
+        io.to(`ride_${ride_id}`).emit("rideUpdate", updatedRide);
 
-        return await RideRepository.cancelRide(ride_id, reason, role);
+        return updatedRide;
     }
 
     // Reject Ride
@@ -190,8 +198,12 @@ class RideService {
 
         // udpate the redis store to add the ride accepted status
         const key = `ride:accepted:${ride_id}`;
-        await redisClient.redis.sadd(key, driver_id);
-        await redisClient.redis.expire(key, 1800); // 30 min TTL
+        // Now, you can safely add to the set
+        await redisClient.redis.set(key, true, 'EX', 3600);
+
+        // Emit to the ride room
+        const io = getIO();
+        io.to(`ride_${ride_id}`).emit("rideUpdate", notificationData);
 
         return rideData;
     }
@@ -208,14 +220,20 @@ class RideService {
         switch (ride.ride_status) {
             case "accepted":
                 // first hit → move to driver_arrived
-                return await RideRepository.updateRideStatus(ride_id, "driver_arrived");
+
+                const updatedRide = await RideRepository.updateRideStatus(ride_id, "driver_arrived");
+                // Emit to the ride room
+                const io = getIO();
+                io.to(`ride_${ride_id}`).emit("rideUpdate", updatedRide);
+                
+                return updatedRide;
 
             case "driver_arrived":
                 // second hit → move to started
-                throw new ApiError(409, `Ride cannot be started from current status: ${ride.ride_status}`);
+                throw new ApiError(409, `Ride status cannot be changed from current status: ${ride.ride_status}`);
 
             default:
-                throw new ApiError(409, `Ride cannot be started from current status: ${ride.ride_status}`);
+                throw new ApiError(409, `Ride status cannot be changed from current status: ${ride.ride_status}`);
         }
     }
 
@@ -240,7 +258,13 @@ class RideService {
         switch (ride.ride_status) {
             case "driver_arrived":
                 // first hit → move to driver_arrived
-                return await RideRepository.updateRideStatus(ride_id, "ongoing");
+
+                const updatedRide = await RideRepository.updateRideStatus(ride_id, "ongoing");
+                // Emit to the ride room
+                const io = getIO();
+                io.to(`ride_${ride_id}`).emit("rideUpdate", updatedRide);
+
+                return updatedRide;
 
             case "ongoing":
                 // second hit → move to started
@@ -260,7 +284,12 @@ class RideService {
         }
         if (ride.driver_id !== driver_id) throw new ApiError(403, "Not your ride");
 
-        return await RideRepository.completeRide(ride_id, fare, distance, duration);
+        const updatedRide = await RideRepository.completeRide(ride_id, fare, distance, duration);
+        // Emit to the ride room
+        const io = getIO();
+        io.to(`ride_${ride_id}`).emit("rideUpdate", updatedRide);
+
+        return updatedRide;
     }
 
     async getOngoingRides(driver_id) {

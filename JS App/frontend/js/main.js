@@ -75,9 +75,8 @@ console.log(profile);
     `;
     footerLinks = `
       <a href="index.html">Home</a> |
-      <a href="/html/start-driving.html">Start Driving</a> |
       <a href="/html/ride-requests.html">Ride Requests</a> |
-      <a href="#">Wallet</a> |
+      <a href="/html/wallet/wallet.html">Wallet</a> |
       <a href="/html/user/profile.html">Profile</a> |
       <a href="#" class="logout">Logout</a>
     `;
@@ -88,7 +87,7 @@ console.log(profile);
       <div class="dropdown">
       <img src=${profile} class="profile-icon">
       <div class="dropdown-content">
-        <a href="#">Profile</a>
+        <a href="/html/user/profile.html">Profile</a>
         <a href="#" class="logout">Logout</a>
       </div>
     </div>
@@ -101,14 +100,14 @@ console.log(profile);
     `;
   } else {
     headerLinks = `
-      <a href="../index.html">Home</a>
+      <a href="/html/index.html">Home</a>
       <a href="html/user/login.html" id = "login" >Login</a>
       <div class="dropdown">
         <button class="signup-btn" id = "sign-up" >Sign Up</button>
       </div>
     `;
     footerLinks = `
-      <a href="index.html">Home</a> |
+      <a href="/html/index.html">Home</a> |
       <a href="html/user/login.html" id = "login" >Login</a> |
       <a href="html/user/register.html" id = "sign-up" >Sign Up</a> |
       <a href="html/contact.html">Contact</a>

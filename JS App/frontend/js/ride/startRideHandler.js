@@ -1,5 +1,17 @@
 import { handleFareRide, handleRequestRide } from "./backendCoordinates.js";
 
+import socket from "../socket.js";
+
+socket.on('rideUpdate', async (data) => {
+    try {
+        console.log("in the soket rider");
+        
+        await loadRequestedRides();
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 const fareRideBtn = document.getElementById('searchBtn');
 const requestRideBtn = document.getElementById('requestRide');
 
@@ -64,6 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (data.success) {
+
+                socket.emit("joinRideRoom", data.data.ride_id);
+
                 document.getElementById("rideStatus").textContent = "Your ride is booked successfully ✅";
                 document.getElementById("pickupText").textContent = requestData.pickup_address;
                 document.getElementById("dropText").textContent = requestData.dropoff_address;
