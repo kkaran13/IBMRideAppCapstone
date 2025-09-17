@@ -116,7 +116,7 @@ export async function loadRequestedRides() {
 
         const rides = data.data;
 
-        // --- Active Rides (requested, accepted, ongoing) ---
+        // Active Rides (requested, accepted, ongoing)
         const activeRides = rides.filter(r =>
             ["requested", "accepted", "ongoing"].includes(r.ride_status)
         );
@@ -200,14 +200,14 @@ export async function loadRequestedRides() {
             });
         });
 
-        // --- Ride History (completed, cancelled) ---
+        // Ride History (completed, cancelled)
         const historyRides = rides.filter(r =>
             ["completed", "cancelled"].includes(r.ride_status)
         );
 
         if (historyRides.length) {
             rideHistoryList.innerHTML = "";
-            historyRides.forEach(ride => {
+            for (const ride of historyRides) {
                 const rideEl = document.createElement("div");
                 rideEl.classList.add("ride-history-item");
 
@@ -221,15 +221,33 @@ export async function loadRequestedRides() {
                        <p><strong>Reg. No:</strong> ${ride.Vehicle.registration_number}</p>`
                     : "<p><strong>Vehicle:</strong> Not Assigned</p>";
 
+                let ratingHtml = "<p><strong>Rating:</strong> Not given</p>";
+                try {
+                    const ratingRes = await fetch(`http://localhost:3000/rating/ratings/${ride.ride_id}`, {
+                        method: "GET",
+                        credentials: "include"
+                    });
+                    const ratingData = await ratingRes.json();
+                    if (ratingRes.ok && ratingData.data) {
+                        ratingHtml = `
+                    <p><strong>Rating:</strong> ⭐ ${ratingData.data.score}/5</p>
+                    ${ratingData.data.comment ? `<p><em>${ratingData.data.comment}</em></p>` : ""}
+                `;
+                    }
+                } catch (err) {
+                    console.error(`Failed to fetch rating for ride ${ride.ride_id}:`, err);
+                }
+
                 rideEl.innerHTML = `
                     <p><strong>Pickup:</strong> ${ride.pickup_address}</p>
                     <p><strong>Drop:</strong> ${ride.dropoff_address}</p>
                     <p><strong>Status:</strong> ${ride.ride_status}</p>
                     ${driverInfo}
                     ${vehicleInfo}
+                    ${ratingHtml}
                 `;
                 rideHistoryList.appendChild(rideEl);
-            });
+            };
         } else {
             rideHistoryList.innerHTML = '<p class="no-rides">No ride history.</p>';
         }
