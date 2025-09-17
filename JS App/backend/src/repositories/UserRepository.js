@@ -68,23 +68,33 @@ async findAllUsers() {
        raw: true,  
   });
 }
+async findUsersByVerificationStatus(status, driver_role, acc_status = "active") {
+  const users = await User.findAll({
+    where: {
+      verification_status: status,
+      role: driver_role,
+      account_status: acc_status,
+    },
+    attributes: [
+      "user_id",
+      "firstname",       // ✅ added
+      "lastname",        // ✅ added
+      "email",           // ✅ added
+      "phone",           // ✅ added
+      "license_number",
+      "license_url",
+      "license_expiry_date",
+      "aadhar_number",
+      "aadhar_url",
+      "verification_status",
+      "verification_notes",
+    ],
+  });
+
+  return users.map(user => user.toJSON());
+}
 
 
-  async findUsersByVerificationStatus(status, driver_role, acc_status) {
-    return await User.findAll({
-      where: { verification_status: status, role: driver_role, account_status: acc_status },
-      attributes: [
-        "user_id",
-        "license_number",
-        "license_url",
-        "license_expiry_date",
-        "aadhar_number",
-        "aadhar_url",
-        "verification_status",
-        "verification_notes",
-      ],
-    });
-  }
 
   async updateVerificationStatus(userId, { status, notes, adminId }) {
     await User.update(

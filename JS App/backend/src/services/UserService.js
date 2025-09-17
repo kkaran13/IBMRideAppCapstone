@@ -153,7 +153,6 @@ class UserService {
 
     return { otpSent: true };
   }
-
   async verifyEmailOtp(req) {
     // Check if OTP exists in session
 
@@ -757,7 +756,9 @@ async getAllUsers() {
 
 
   async getPendingVerifications() {
+     
     const users = await UserRepository.findUsersByVerificationStatus("pending", "driver");
+    console.log(users)
     if (!users || users.length === 0) {
       throw new ApiError(404, "No pending verifications found");
     }
@@ -790,7 +791,7 @@ async getAllUsers() {
     let mailObj = {
       to: user.email,
       subject: `Ride App Verification Approved – Welcome on Board, ${user.firstname ? user.firstname : ''} ${user.lastname ? user.lastname : ''}!`,
-      htmlTemplate: "driveraccountapproval",
+      htmlTemplate: "driveraccountapproval.html",
       templateData: {
         driverName: user.firstname + user.lastname,
         appName: "Ride App",
@@ -801,7 +802,7 @@ async getAllUsers() {
     };
     HelperFunction.sendMail(mailObj);
 
-    HelperFunction.sendFirebasePushNotification('driverVerificationApproved', { ...templateData, ...user }, [user.id]);
+    HelperFunction.sendFirebasePushNotification('driverVerificationApproved', { ...(mailObj.templateData), ...user }, [user.id]);
 
     return updateResponse;
   }
@@ -830,7 +831,7 @@ async getAllUsers() {
     let mailObj = {
       to: user.email,
       subject: `Ride App Verification Approved – Welcome on Board, ${user.firstname ? user.firstname : ''} ${user.lastname ? user.lastname : ''}!`,
-      htmlTemplate: "driveraccountreject",
+      htmlTemplate: "driveraccountreject.html",
       templateData: {
         username: user.firstname + user.lastname,
         driverName: user.firstname + user.lastname,
@@ -843,7 +844,7 @@ async getAllUsers() {
     };
     HelperFunction.sendMail(mailObj);
 
-    HelperFunction.sendFirebasePushNotification('driverVerificationRejected', { ...templateData, ...user }, [user.id]);
+    HelperFunction.sendFirebasePushNotification('driverVerificationRejected', { ...(mailObj.templateData), ...user }, [user.id]);
 
     return updateResponse;
   }
