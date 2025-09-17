@@ -84,7 +84,7 @@ console.log(profile);
   } else if (role === "rider") {
     headerLinks = `
       <a href="/html/ride/ride.html">Book Ride</a>
-      <a href="">Rides</a>
+      <a href="/html/ride/ride-history.html">Rides</a>
       <div class="dropdown">
       <img src=${profile} class="profile-icon">
       <div class="dropdown-content">
@@ -95,7 +95,7 @@ console.log(profile);
     `;
     footerLinks = `
       <a href="/html/ride/ride.html">Book a Ride</a> |
-      <a href="/html/ride-history.html">Ride History</a> |
+      <a href="/html/ride/ride-history.html">Ride History</a> |
       <a href="/html/profile.html">Profile</a> |
       <a href="#" class="logout">Logout</a>
     `;
