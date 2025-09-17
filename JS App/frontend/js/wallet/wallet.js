@@ -1,21 +1,30 @@
 import { AuthUtils } from "../user/auth-utils.js";
 
 const userInfo = AuthUtils.getUserInfo();
-const balanceEl = document.getElementById("walletBalance");
-const totalEarningsEl = document.getElementById("totalEarnings");
-const withdrawBtn = document.querySelector(".withdraw-btn");
+console.log(AuthUtils.getUserInfo());
 
-if (userInfo && userInfo.id) {
-    const driverId = userInfo.id;
+document.addEventListener("DOMContentLoaded", async function () {
 
-    // Build the API URL using the endpoint template
-    const apiUrl = AuthUtils.API_ENDPOINTS.getDriverWalletDetails.replace(":driver_id", driverId);
-    const withdrawUrl = AuthUtils.API_ENDPOINTS.withdrawAmount.replace(":driver_id", driverId);
+    if (!userInfo) {
+        window.location.href = "/html/user/login.html";
+        return;
+    }
+    if (userInfo && userInfo.id) {
+        const driverId = userInfo.id;
 
-    // Fetch the wallet details
-    AuthUtils.apiRequest(apiUrl)
+        // Build the API URL using the endpoint template
+        const apiUrl = AuthUtils.API_ENDPOINTS.getDriverWalletDetails.replace(":driver_id", driverId);
+
+        // Select the balance element
+        const balanceEl = document.getElementById("walletBalance");
+        const totalEarningsEl = document.getElementById("totalEarnings");
+        console.log("Balance Element:", document.getElementById("walletBalance"));
+        console.log("Total Earnings Element:", document.getElementById("totalEarnings"));
+
+        // Fetch the wallet details
+        AuthUtils.apiRequest(apiUrl)
             .then(response => {
-               if (response.success && response.data && response.data.data) {
+                if (response.success && response.data && response.data.data) {
                     const data = response.data.data;
                     console.log("Actual Balance Raw:", data.actual_balance);
                     console.log("Total Balance Raw:", data.total_balance);
@@ -32,7 +41,7 @@ if (userInfo && userInfo.id) {
                 }
             })
             .catch(error => {
-               if (response.success && response.data) {
+                if (response.success && response.data) {
                     const data = response.data;
 
                     // Update the actual balance
@@ -107,8 +116,9 @@ if (userInfo && userInfo.id) {
         });
     });
 
-} else {
+    } else {
         console.error("Unexpected error:", error);
         balanceEl.textContent = "Error loading balance";
         totalEarningsEl.textContent = "Error loading total earnings";
-}
+    }
+});

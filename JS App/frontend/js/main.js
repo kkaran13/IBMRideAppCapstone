@@ -49,6 +49,8 @@ function updateNav() {
 
   const loggedInUser = AuthUtils.getUserInfo();
   const role = loggedInUser?.role;
+  const profile = loggedInUser?.profile;
+console.log(profile);
 
   console.log("calling");
   
@@ -59,24 +61,23 @@ function updateNav() {
     headerLinks = `
       <a href="/html/driver/driver-dashboard.html">Home</a>
       <a href="/html/vehicle/active-vehicle.html">Vehicles</a>
-      <a href="#">Rides</a>
+      <a href="/html/driver/ride-history.html">Rides</a>
       <a href="#">Ratings</a>
       <a href="/html/wallet/wallet.html">Wallet</a>
       
       <div class="dropdown">
-      <img src="../assets/images/profile-icon.png" class="profile-icon">
+      <img src=${profile} class="profile-icon">
       <div class="dropdown-content">
-        <a href="#">Profile</a>
+        <a href="/html/user/profile.html">Profile</a>
         <a href="#" class="logout">Logout</a>
       </div>
     </div>
     `;
     footerLinks = `
       <a href="index.html">Home</a> |
-      <a href="/html/start-driving.html">Start Driving</a> |
       <a href="/html/ride-requests.html">Ride Requests</a> |
-      <a href="html/wallet/wallet.html">Wallet</a> |
-      <a href="html/profile.html">Profile</a> |
+      <a href="/html/wallet/wallet.html">Wallet</a> |
+      <a href="/html/user/profile.html">Profile</a> |
       <a href="#" class="logout">Logout</a>
     `;
   } else if (role === "rider") {
@@ -84,9 +85,9 @@ function updateNav() {
       <a href="/html/ride/ride.html">Book Ride</a>
       <a href="/html/ride/ride-history.html">Rides</a>
       <div class="dropdown">
-      <img src="../assets/images/profile-icon.png" class="profile-icon">
+      <img src=${profile} class="profile-icon">
       <div class="dropdown-content">
-        <a href="#">Profile</a>
+        <a href="/html/user/profile.html">Profile</a>
         <a href="#" class="logout">Logout</a>
       </div>
     </div>
@@ -94,21 +95,21 @@ function updateNav() {
     footerLinks = `
       <a href="/html/ride/ride.html">Book a Ride</a> |
       <a href="/html/ride/ride-history.html">Ride History</a> |
-      <a href="/html/profile.html">Profile</a> |
+      <a href="/html/user/profile.html">Profile</a> |
       <a href="#" class="logout">Logout</a>
     `;
   } else {
     headerLinks = `
-      <a href="index.html">Home</a>
-      <a href="html/login.html" id = "login" >Login</a>
+      <a href="/html/index.html">Home</a>
+      <a href="html/user/login.html" id = "login" >Login</a>
       <div class="dropdown">
         <button class="signup-btn" id = "sign-up" >Sign Up</button>
       </div>
     `;
     footerLinks = `
-      <a href="index.html">Home</a> |
-      <a href="#" id = "login" >Login</a> |
-      <a href="#" id = "sign-up" >Sign Up</a> |
+      <a href="/html/index.html">Home</a> |
+      <a href="html/user/login.html" id = "login" >Login</a> |
+      <a href="html/user/register.html" id = "sign-up" >Sign Up</a> |
       <a href="html/contact.html">Contact</a>
     `;
   }
@@ -328,7 +329,13 @@ function generateDeviceId() {
 function handleFirebaseForegroundMessage() {
   onMessage(messaging, (payload) => {
     console.log("Foreground message:", payload);
-    alert(`${payload.notification.title}: ${payload.notification.body}`);
+
+    // Extract ride data from payload.data
+    const rideData = payload.data || {};
+
+    // Fire a custom event with the ride info payload
+    const rideEvent = new CustomEvent("newRideRequest", { detail: rideData });
+    window.dispatchEvent(rideEvent);
   });
 }
 
@@ -369,4 +376,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   await registerToken(loggedInUser);
   handleFirebaseForegroundMessage(); // Handle the Firebase messages foreground
   // handleTokenRefresh(loggedInUser); // Listen for token refreshes
+});
+
+window.addEventListener("newRideRequest", (event) => {
+  if (window.location.pathname !== "/html/driver/dashboard.html") {
+    // Show simple notification fallback
+    const rideInfo = event.detail;
+
+    if (Notification.permission === "granted") {
+      new Notification("New Ride Request", {
+        body: `Pickup: ${rideInfo.pickup_address || "Unknown location"} \nDrop: ${rideInfo.dropoff_address} \nFare: ${rideInfo.fare}`,
+        icon: "/img/default_icon.png",
+      });
+    }
+  }
 });

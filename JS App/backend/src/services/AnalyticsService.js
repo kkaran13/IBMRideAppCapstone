@@ -32,6 +32,8 @@ class AnalyticsService {
 
         return apiResponseData;
     }
+
+    
     // calculated the fare for the ride
     async getAllCompletedPayments(){
           
@@ -41,6 +43,7 @@ class AnalyticsService {
         return apiResponseData;
     }
     
+    // get wall The completed rides by wallet id 
     async getAllCompletedPaymentsbyid(){
         
         const { wallet_id } = req.params;

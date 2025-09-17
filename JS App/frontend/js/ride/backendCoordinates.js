@@ -32,6 +32,7 @@ export async function handleFareRide() {
 }
 
 export async function handleRequestRide() {
+    const rideFare = document.getElementById("fare").textContent.trim();
     const pickupInput = document.getElementById('pickup');
     const dropoffInput = document.getElementById('dropoff');
 
@@ -63,6 +64,7 @@ export async function handleRequestRide() {
         pickup_longitude: pickupData.coords[0],
         dropoff_address: dropoffQuery,
         dropoff_latitude: dropoffData.coords[1],
-        dropoff_longitude: dropoffData.coords[0]
+        dropoff_longitude: dropoffData.coords[0],
+        fare : rideFare
     };
 }

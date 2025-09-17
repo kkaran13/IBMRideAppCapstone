@@ -95,7 +95,7 @@ class HelperFunction {
             requestConfig.url = (config.DJANGO_API_URL || "") + requestConfig.url;
 
             // based on the request method filtering is done for the data as only post, put and patch can have body
-            if (["post", "put", "patch"].includes(method.toLowerCase())) {
+            if (["get", "post", "put", "patch"].includes(method.toLowerCase())) {
                 requestConfig.data = data;
             }
             // if not above methods then send data in the params 
@@ -152,13 +152,6 @@ class HelperFunction {
      */
     async sendFirebasePushNotification(templateName, data, userids) {
         try {
-            // if (!Array.isArray(userids) || userids.length === 0) {
-            //     throw new Error("No users provided for push notification");
-            // }
-
-            // if (!Array.isArray(userids) || userids.length === 0) {
-            //     throw new Error("No device tokens provided for push notification");
-            // }
 
             if (!userids) {
                 return {}
@@ -168,15 +161,18 @@ class HelperFunction {
                 userids = [userids]
             }
 
+            if(!userids.length){return}
+
             // get the device tokens for these users
             const deviceTokens = await DeviceTokenService.getMultipleUsersTokens(userids);
+            if(!deviceTokens?.length) {return}
+            
 
             // Build notification payload (title/message placeholders replaced with `data`)
             const payload = this.getNotificationTemplate(templateName, data);
 
             const message = {
-                notification: payload.notification,
-                data: Object.entries(data).reduce((acc, [k, v]) => {
+                data: Object.entries(payload.data).reduce((acc, [k, v]) => {
                     acc[k] = String(v); // FCM `data` must be stringified
                     return acc;
                 }, {}),
@@ -199,7 +195,7 @@ class HelperFunction {
             }
 
             // remove the invalid tokens from the db
-            DeviceTokenService.removeInvalidTokens(failedTokens);
+            // DeviceTokenService.removeInvalidTokens(failedTokens);
 
             return { ...response, failedTokens };
         } catch (error) {
@@ -232,6 +228,28 @@ class HelperFunction {
      *   icon: "ride_icon.png"
      * }
      */
+    // getNotificationTemplate(templateName, data = {}) {
+    //     const template = config.notificationBody[templateName];
+
+    //     if (!template) {
+    //         throw new Error(`Notification template "${templateName}" not found`);
+    //     }
+
+    //     // Replace placeholders in title/message
+    //     const replacePlaceholders = (text = "", values = {}) => {
+    //         return text.replace(/\{\{(\w+)\}\}/g, (_, key) => values[key] ?? "");
+    //     };
+
+    //     return {
+    //         notification: {
+    //             title: replacePlaceholders(template.title, data),
+    //             body: replacePlaceholders(template.message, data),
+    //         },
+    //         app: template.app || "RideApp",
+    //         icon: template.icon || "default_icon.png",
+    //     };
+    // }
+
     getNotificationTemplate(templateName, data = {}) {
         const template = config.notificationBody[templateName];
 
@@ -244,13 +262,28 @@ class HelperFunction {
             return text.replace(/\{\{(\w+)\}\}/g, (_, key) => values[key] ?? "");
         };
 
+        const title = replacePlaceholders(template.title, data);
+        const body = replacePlaceholders(template.message, data);
+
+        const actions = template.buttons ? template.buttons.map((button) => ({
+            action: button.action,
+            title: button.title,
+            icon: button.icon || "default_icon.png",
+        })) : [];
+
         return {
-            notification: {
-                title: replacePlaceholders(template.title, data),
-                body: replacePlaceholders(template.message, data),
-            },
-            app: template.app || "RideApp",
-            icon: template.icon || "default_icon.png",
+            // title,
+            // body,
+            // icon: template.icon || "default_icon.png",
+            // app: template.app || "RideApp",
+            // actions,
+            data: {
+                ...data, // Include original ride-related data
+                title,
+                body,
+                icon: template.icon || "default_icon.png",
+                actions: JSON.stringify(actions), // stringified for transmission
+            }
         };
     }
 

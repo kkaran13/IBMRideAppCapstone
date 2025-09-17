@@ -1,64 +1,44 @@
-
 import { AuthUtils } from "../user/auth-utils.js";
+document.addEventListener("DOMContentLoaded", async function () {
 
-const API_BASE = "http://localhost:3000";
+  const loggedInUser = AuthUtils.getUserInfo();
+  if (!loggedInUser) {
+    window.location.href = "/html/user/login.html";
+    return;
+  }
 
-document.getElementById("registerForm")?.addEventListener("submit", async (e) => {
-  e.preventDefault();
+  document.getElementById("registerForm")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  const formData = Object.fromEntries(new FormData(e.target).entries());
+    const formData = Object.fromEntries(new FormData(e.target).entries());
+    console.log(formData);
+    const user = AuthUtils.getUserInfo();
+    formData.user_id = user.id;
+    console.log(formData);
 
-  try {
-    const res = await fetch(`${API_BASE}/vehicle/register`, {
+    // Send request using AuthUtils.apiRequest
+    const res = await AuthUtils.apiRequest(AuthUtils.API_ENDPOINTS.registerVehicle, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${AuthUtils.getAuthToken()}`
-      },
       body: JSON.stringify(formData)
     });
 
-    const data = await res.json();
+    if (res.success) {
+      AuthUtils.showAlert(
+        document.getElementById("alert-container"),
+        "Vehicle registered successfully!",
+        "success",
+        3000
+      );
 
-    if (res.ok) {
-      showSuccessPopup("Vehicle registered successfully!");
+      // Redirect after success
+      AuthUtils.redirectTo("../../html/vehicle/my-vehicle.html", 1500);
     } else {
-      showErrorPopup(data.message || "Registration failed");
+      AuthUtils.showAlert(
+        document.getElementById("alert-container"),
+        res.error || "Vehicle registration failed",
+        "error",
+        3000
+      );
     }
-  } catch (err) {
-    console.error("Error:", err);
-    showErrorPopup("Something went wrong. Please try again.");
-  }
+  });
 });
-
-// Utility: popup success
-function showSuccessPopup(message) {
-  const alertContainer = document.getElementById("alert-container");
-  alertContainer.innerHTML = `
-    <div class="popup success">
-      <div class="popup-box">
-        <p>${message}</p>
-        <button id="popupClose">OK</button>
-      </div>
-    </div>
-  `;
-  document.getElementById("popupClose").onclick = () => {
-
-    window.location.href = "../../html/vehicle/my-vehicle.html"; 
-  };
-}
-
-function showErrorPopup(message) {
-  const alertContainer = document.getElementById("alert-container");
-  alertContainer.innerHTML = `
-    <div class="popup error">
-      <div class="popup-box">
-        <p>${message}</p>
-        <button id="popupClose">Close</button>
-      </div>
-    </div>
-  `;
-  document.getElementById("popupClose").onclick = () => {
-    alertContainer.innerHTML = "";
-  };
-}

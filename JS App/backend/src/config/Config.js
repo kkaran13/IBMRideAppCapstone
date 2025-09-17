@@ -76,12 +76,24 @@ class Config {
             },
 
             // Driver Notifications
-            // newRideRequestToDriver: {
-            //     title: "New Ride Request",
-            //     message: "A rider {{riderName}} near you is requesting a ride.",
-            //     appName: "RideApp",
-            //     icon: "new_request_icon"
-            // },
+            newRideRequestToDriver: {
+                title: "New Ride Request",
+                message: "A rider near you is requesting a ride.\nPickup: {{pickup_address}} to Drop: {{dropoff_address}} \nFare : {{fare}} ",
+                appName: "RideApp",
+                icon: "new_request_icon",
+                "buttons": [
+                    {
+                        "action": "acceptRide",
+                        "title": "Accept",
+                        "icon": "accept_icon.png"
+                    },
+                    {
+                        "action": "ignoreRide",
+                        "title": "Ignore",
+                        "icon": "ignore_icon.png"
+                    }
+                ]
+            },
             rideAcceptedToDriver: {
                 title: "Ride Accepted",
                 message: "You have accepted the ride request.",

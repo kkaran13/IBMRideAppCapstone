@@ -1,6 +1,20 @@
 import { AuthUtils } from "../user/auth-utils.js";
+import socket from "../socket.js";
+
+socket.on('rideUpdate', async (data) => {
+    try {
+        console.log("in here th eovker");
+        
+        await refreshRideCard();
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 let currentRide = null; // global ride object
+
+// Global alert container
+const alertContainer = document.getElementById("alert-container");
 
 document.addEventListener("DOMContentLoaded", async function () {
 
@@ -10,8 +24,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
     }
 
-    // Global alert container
-    const alertContainer = document.getElementById("alert-container");
 
     // Extract user details
     const userId = loggedInUser?.id || null;
@@ -146,6 +158,8 @@ async function refreshRideCard() {
             const ride = ridesRes.data.data;
             currentRide = ride;
 
+            socket.emit('joinRideRoom', ride.ride_id);
+
             // Update ride info
             rideDetailsContainer.innerHTML = `
                 <p><strong>Rider:</strong> <span id="rider-name">${(ride.Rider?.firstname + " " + ride.Rider?.lastname) || "Unknown"}</span></p>
@@ -181,7 +195,6 @@ function toggleRideUI(status) {
     [otpField, arrivedBtn, startBtn, cancelReasonInput, cancelBtn, completeBtn, mapLinkBtn].forEach(
         (el) => el?.classList.add("hidden")
     );
-    console.log(status , "wadfasdfas");
     
 
     switch (status) {
@@ -327,3 +340,46 @@ mapLinkBtn?.addEventListener("click", (e) => {
     // Open in new tab
     window.open(mapsUrl, "_blank");
 });
+
+
+window.addEventListener("newRideRequest", (event) => {
+  const rideInfo = event.detail;
+  const accept = confirm(`A new Ride request has arrived. \nPickup: ${rideInfo.pickup_address || "Unknown location"} \nDrop: ${rideInfo.dropoff_address} \nFare: ${rideInfo.fare}\nAccept ?`);
+  if (accept) {
+    acceptRide(rideInfo.ride_id);
+  } else {
+    ignoreRide(rideInfo.ride_id);
+  }
+});
+
+// Helper functions
+async function acceptRide(rideId) {
+    try {
+        const res = await fetch(`http://localhost:3000/ride/accept/${encodeURIComponent(rideId)}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+        });
+        if (res.ok) {
+            socket.emit("joinRideRoom", rideId);
+            alert("Ride accepted!");
+            await refreshRideCard();
+        }
+    } catch (err) {
+        console.error("Accept ride error:", err);
+    }
+}
+
+async function ignoreRide(rideId) {
+    try {
+        const res = await fetch(`http://localhost:3000/ridematch/ignore`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ rideId: rideId })
+        });
+        if (res.ok) {
+            alert("Ride ignored.");
+        }
+    } catch (err) {
+        console.error("Ignore ride error:", err);
+    }
+}

@@ -21,7 +21,7 @@ export async function loadRideHistory() {
         }
 
         const historyRides = data.data.filter(r =>
-            r.ride_status === "cancelled" ||
+            r.ride_status === "cancelled" || r.ride_status === "rejected" ||
             (r.ride_status === "completed" && r.payment_status === "completed")
         );
 
@@ -48,6 +48,29 @@ export async function loadRideHistory() {
                    <p><strong>Reg. No:</strong> ${ride.Vehicle.registration_number}</p>`
                 : "<p><strong>Vehicle:</strong> Not Assigned</p>";
 
+            let paymentHtml = "<p><strong>Payment:</strong> Not available</p>";
+            try {
+                const payRes = await fetch(`http://localhost:3000/payment/paymentDetails/${ride.ride_id}`, {
+                    method: "GET",
+                    credentials: "include"
+                });
+                const payData = await payRes.json();
+                console.log(payData);
+
+                if (payRes.ok && payData.success && payData.data) {
+                    const p = payData.data; // Assuming { amount, method, status, txn_id, createdAt }
+                    paymentHtml = `
+                <p><strong>Payment Status:</strong> ${p.status}</p>
+                <p><strong>Amount:</strong> ₹ ${p.amount}</p>
+                <p><strong>Method:</strong> ${p.method}</p>
+                ${p.txn_id ? `<p><strong>Txn ID:</strong> ${p.txn_id}</p>` : ""}
+                <p><strong>Date:</strong> ${new Date(p.createdAt).toLocaleString()}</p>
+            `;
+                }
+            } catch (err) {
+                console.error(`❌ Failed to fetch payment details for ride ${ride.ride_id}:`, err);
+            }
+
             // Fetch rating
             let ratingHtml = "<p><strong>Rating:</strong> Not given</p>";
             let hasRated = false;
@@ -71,7 +94,8 @@ export async function loadRideHistory() {
             rideEl.innerHTML = `
                 <p><strong>Pickup:</strong> ${ride.pickup_address}</p>
                 <p><strong>Drop:</strong> ${ride.dropoff_address}</p>
-                <p><strong>Status:</strong> ${ride.ride_status}</p>
+                <p><strong>Ride Status:</strong> ${ride.ride_status}</p>
+                <p><strong>Payment Status:</strong> ${ride.payment_status}</p>
                 ${driverInfo}
                 ${vehicleInfo}
                 ${ratingHtml}
@@ -143,6 +167,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const historyList = document.getElementById("rideHistoryList");
     if (historyList) {
         loadRideHistory();
+
+        setInterval(() => {
+            loadRideHistory();
+        }, 5000);
     } else {
         console.error("❌ rideHistoryList element not found in DOM");
     }

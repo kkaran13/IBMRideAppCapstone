@@ -10,15 +10,19 @@ class VehicleController {
     if (req.user.role !== "driver") {
       throw new ApiError(403, "Only drivers can register vehicles");
     }
+
     // Force owner_id to be the logged-in driver
-    req.body.owner_id = req.user.id; 
+    req.body.owner_id = req.user.id;
 
     const vehicle = await VehicleService.registerVehicle(req.body);
+    res.cookie("vehicle_info", JSON.stringify({
+      id: vehicle.vehicle_id
+    }))
     res.status(201).json(new ApiResponse(201, vehicle, "Vehicle registered successfully"));
   });
 
   updateVehicle = asyncHandler(async (req, res) => {
-  
+
     const updatedVehicle = await VehicleService.updateVehicle(req.params.id, req.body, req.user);
     res.status(200).json(new ApiResponse(200, updatedVehicle, "Vehicle updated successfully"));
   });
@@ -31,14 +35,14 @@ class VehicleController {
   });
 
   getVehiclesByDriver = asyncHandler(async (req, res) => {
-  const { driverId } = req.params;
-  const vehicles = await VehicleService.getVehiclesByDriver(driverId, req.user);
+    const { driverId } = req.params;
+    const vehicles = await VehicleService.getVehiclesByDriver(driverId, req.user);
 
-  res.status(200).json(new ApiResponse(200, vehicles, "Vehicles fetched successfully"));
-});
+    res.status(200).json(new ApiResponse(200, vehicles, "Vehicles fetched successfully"));
+  });
 
   getVehicleById = asyncHandler(async (req, res) => {
-    const driverId = req.user.id; 
+    const driverId = req.user.id;
     const vehicleId = req.params.id;
 
     const vehicle = await VehicleService.getVehicleById(vehicleId, driverId);
@@ -55,30 +59,30 @@ class VehicleController {
     const result = await VehicleService.getActiveVehicle(req);
     return res
       .status(200)
-      .json(new ApiResponse(200, result, "Active Vehicles Data")); 
-  
+      .json(new ApiResponse(200, result, "Active Vehicles Data"));
+
   });
 
 
   getMyVehicles = asyncHandler(async (req, res) => {
-      const driverId = req.user.id; 
-      const { page = 1, limit = 10, status, type, make, model, year, q } = req.query;
+    const driverId = req.user.id;
+    const { page = 1, limit = 10, status, type, make, model, year, q } = req.query;
 
-      const result = await VehicleService.getMyVehicles(driverId, {
-        page: parseInt(page, 10),
-        limit: parseInt(limit, 10),
-        status,
-        type,
-        make,
-        model,
-        year,
-        q,
-      });
-
-      res.status(200).json(
-        new ApiResponse(200, result, "Vehicles fetched successfully")
-      );
+    const result = await VehicleService.getMyVehicles(driverId, {
+      page: parseInt(page, 10),
+      limit: parseInt(limit, 10),
+      status,
+      type,
+      make,
+      model,
+      year,
+      q,
     });
+
+    res.status(200).json(
+      new ApiResponse(200, result, "Vehicles fetched successfully")
+    );
+  });
 
 }
 

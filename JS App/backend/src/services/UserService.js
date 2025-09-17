@@ -800,7 +800,7 @@ async getAllUsers() {
     };
     HelperFunction.sendMail(mailObj);
 
-    HelperFunction.sendFirebasePushNotification('driverVerificationApproved', { ...(mailObj.templateData), ...user }, [user.id]);
+    // HelperFunction.sendFirebasePushNotification('driverVerificationApproved', { ...(mailObj.templateData), ...user }, [user.id]);
 
     return updateResponse;
   }
@@ -842,7 +842,7 @@ async getAllUsers() {
     };
     HelperFunction.sendMail(mailObj);
 
-    HelperFunction.sendFirebasePushNotification('driverVerificationRejected', { ...(mailObj.templateData), ...user }, [user.id]);
+    // HelperFunction.sendFirebasePushNotification('driverVerificationRejected', { ...(mailObj.templateData), ...user }, [user.id]);
 
     return updateResponse;
   }

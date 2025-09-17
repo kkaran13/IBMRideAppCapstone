@@ -62,11 +62,10 @@ class RideController {
 
 
     acceptRide = asyncHandler(async (req, res) => {
-        const { vehicle_id } = req.body;
+
         const ride = await RideService.acceptRide(
             req.user.id,
-            req.params.id,
-            vehicle_id
+            req.params.id
         );
         res.status(200).json(new ApiResponse(200, ride, "Ride accepted"));
     });

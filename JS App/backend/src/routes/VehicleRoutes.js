@@ -10,7 +10,7 @@ router.use(authenticateJWT, authorizeRole("driver"));
 
 // Vehicle management
 router.get("/active-vehicle", authenticateJWT, authorizeRole('driver'), VehicleController.getActiveVehicle);
-router.post("/register", VehicleController.registerVehicle);
+router.post("/register", authenticateJWT , VehicleController.registerVehicle);
 router.patch("/update/:id", VehicleController.updateVehicle);
 router.delete("/delete/:id", VehicleController.deleteVehicle);
 router.get("/my",authenticateJWT,authorizeRole("driver"),VehicleController.getMyVehicles);

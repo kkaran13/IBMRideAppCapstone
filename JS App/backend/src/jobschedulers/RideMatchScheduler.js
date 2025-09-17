@@ -13,9 +13,10 @@ class RideMatchScheduler {
 
             const ridePromises = allAvailableRides.map(async (ride) => {
                 const { ride_id, pickup_latitude, pickup_longitude } = ride;
-
+                
                 // 2. Skip if ride already in progress
-                const inProgress = await redisClient.get(`ride:inprogress:${ride_id}`);
+                const inProgress = await redisClient.redis.get(`ride:inprogress:${ride_id}`);
+                
                 if (inProgress) {
                     console.log(`Skipping ride ${ride_id}, already in progress`);
                     return;
@@ -24,20 +25,22 @@ class RideMatchScheduler {
                 console.log(`Starting match for ride ${ride_id}...`);
 
                 // 3. Mark ride as in-progress with TTL (1 hour)
-                await redisClient.set(`ride:inprogress:${ride_id}`, 'true', 'EX', 3600);
+                await redisClient.redis.set(`ride:inprogress:${ride_id}`, 'true', 'EX', 3600);
+                
 
                 try {
                     // 4. Call the matching service
                     await RideMatchingService.searchForDrivers(
                         pickup_latitude,
                         pickup_longitude,
-                        ride_id
+                        ride_id,
+                        ride?.dataValues
                     );
                 } catch (err) {
                     console.error(`Error processing ride ${ride_id}:`, err);
                 } finally {
                     // cleanup in-progress flag after done
-                    await redisClient.del(`ride:inprogress:${ride_id}`);
+                    await redisClient.redis.del(`ride:inprogress:${ride_id}`);
                 }
             });
 
