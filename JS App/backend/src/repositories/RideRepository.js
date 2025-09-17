@@ -1,5 +1,7 @@
 import { Op } from "sequelize";
 import Ride from "../models/Ride.js";
+import Vehicle from "../models/Vehicle.js";
+import User from "../models/User.js";
 
 class RideRepository {
     // Rider: request a new ride
@@ -14,7 +16,20 @@ class RideRepository {
 
     // Rider: get all rides for a rider
     async getRidesByRider(riderId) {
-        return await Ride.findAll({ where: { rider_id: riderId } });
+        return await Ride.findAll({
+            where: { rider_id: riderId }, order: [['requested_at', 'DESC']],
+            include: [
+                {
+                    model: User,
+                    as: 'Driver',
+                    attributes: ['user_id', 'firstname', 'lastname', 'phone', 'email']
+                },
+                {
+                    model: Vehicle,
+                    attributes: ['vehicle_id', 'make', 'model', 'registration_number']
+                }
+            ]
+        });
     }
 
     // Driver: get all rides for a driver
@@ -44,6 +59,17 @@ class RideRepository {
             limit,
             offset,
             order: [["created_at", "DESC"]],
+            include: [
+                {
+                    model: User,
+                    as: 'Rider',
+                    attributes: ['user_id', 'firstname', 'lastname', 'phone', 'email']
+                },
+                {
+                    model: Vehicle,
+                    attributes: ['vehicle_id', 'make', 'model', 'registration_number']
+                }
+            ]
         });
 
         return {
@@ -100,7 +126,7 @@ class RideRepository {
     }
 
     // Driver: accept a ride request (assign driver + vehicle)
-    async assignDriver(rideId, driverId, vehicleId,otp) {
+    async assignDriver(rideId, driverId, vehicleId, otp) {
         const ride = await Ride.findByPk(rideId);
         if (!ride) return null;
 
@@ -166,7 +192,7 @@ class RideRepository {
         return await Ride.findOne({
             where: {
                 rider_id: riderId,
-                ride_status: { [Op.in]: ["requested","accepted", "ongoing"] },
+                ride_status: { [Op.in]: ["requested", "accepted", "ongoing"] },
             },
         });
     }
@@ -227,8 +253,8 @@ class RideRepository {
     }
 
     async deleteRating(ratingId) {
-            return await Ride.findOneAndUpdate( { rating_id: ratingId },{ $set: { rating_id: null } },);
-        }
+        return await Ride.findOneAndUpdate({ rating_id: ratingId }, { $set: { rating_id: null } },);
+    }
 
     //get active ride assigned to a particular vehicle
     async getActiveRideByVehicle(vehicleId) {

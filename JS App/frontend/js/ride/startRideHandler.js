@@ -1,7 +1,8 @@
 import { handleFareRide as originalHandleFareRide } from "./backendCoordinates.js";
 import { handleRequestRide as originalHandleRequestRide } from "./backendCoordinates.js";
 
-const fareRideBtn = document.getElementById('fareBtn');
+const fareRideBtn = document.getElementById('searchBtn');
+const requestRideBtn = document.getElementById('requestRide');
 
 fareRideBtn.addEventListener('click', async () => {
     const coords = await originalHandleFareRide();
@@ -32,7 +33,9 @@ fareRideBtn.addEventListener('click', async () => {
 
             document.getElementById("fareResult").classList.remove("hidden");
 
-            latestFare = data.data.fare_estimate.toFixed(2);
+            let latestFare = data.data.fare_estimate.toFixed(2);
+            localStorage.setItem("latestFare", latestFare);
+            requestRideBtn.disabled = false;
         } else {
             alert("Could not calculate fare: " + data.message);
         }
@@ -42,15 +45,18 @@ fareRideBtn.addEventListener('click', async () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const requestRideBtn = document.getElementById('requestRide');
+
     const modal = document.getElementById("rideModal");
     const closeModal = document.getElementById("closeModal");
 
     console.log(requestRideBtn, modal, closeModal); // Debug: should not be null
+    requestRideBtn.disabled = true; // disable initially
 
     requestRideBtn.addEventListener('click', async () => {
         const requestData = await originalHandleRequestRide();
         if (!requestData) return;
+
+        const latestFare = localStorage.getItem("latestFare") || "0";
 
         try {
             const response = await fetch('http://localhost:3000/ride/', {
@@ -66,14 +72,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById("rideStatus").textContent = "Your ride is booked successfully ✅";
                 document.getElementById("pickupText").textContent = requestData.pickup_address;
                 document.getElementById("dropText").textContent = requestData.dropoff_address;
-                document.getElementById("fareText").textContent = data.data?.fare_estimate || "Estimated after ride";
+                document.getElementById("fareText").textContent = latestFare;
 
+                requestRideBtn.disabled = true;
                 // Show modal
                 modal.style.display = "block";
 
                 loadRequestedRides();
             }
-            else{
+            else {
                 alert(data.message || "Something went wrong!");
             }
 
@@ -86,46 +93,153 @@ document.addEventListener('DOMContentLoaded', () => {
     window.onclick = (event) => { if (event.target === modal) modal.style.display = "none"; };
 });
 
-// List rides
-// Fetch and display requested rides
 export async function loadRequestedRides() {
-    const ridesList = document.getElementById('ridesList');
+    const ridesList = document.getElementById("ridesList");
+    const rideHistoryList = document.getElementById("rideHistoryList");
+
     ridesList.innerHTML = '<p class="no-rides">Loading rides...</p>';
+    rideHistoryList.innerHTML = '<p class="no-rides">Loading ride history...</p>';
 
     try {
-        const response = await fetch('http://localhost:3000/ride/'); // adjust endpoint if needed
+        const response = await fetch("http://localhost:3000/ride/", {
+            method: "GET",
+            credentials: "include"
+        });
         const data = await response.json();
+        console.log("API response:", data);
 
         if (!data.success || !data.data || data.data.length === 0) {
-            ridesList.innerHTML = '<p class="no-rides">No rides requested yet.</p>';
+            ridesList.innerHTML = '<p class="no-rides">No active rides.</p>';
+            rideHistoryList.innerHTML = '<p class="no-rides">No ride history available.</p>';
             return;
         }
 
-        // Clear existing
-        ridesList.innerHTML = '';
+        const rides = data.data;
 
-        data.data.forEach(ride => {
-            const rideEl = document.createElement('div');
-            rideEl.classList.add('ride-item');
+        // --- Active Rides (requested, accepted, ongoing) ---
+        const activeRides = rides.filter(r =>
+            ["requested", "accepted", "ongoing"].includes(r.ride_status)
+        );
 
+        if (activeRides.length) {
+            ridesList.innerHTML = "";
+            activeRides.forEach(ride => {
+                const rideEl = document.createElement("div");
+                rideEl.classList.add("ride-item");
+                const storedFare = localStorage.getItem("latestFare") || "0";
+                const fareToShow = `₹ ${parseFloat(storedFare).toLocaleString("en-IN")}`;
 
-            if (ride.ride_status == "requested") {
-                rideEl.innerHTML = `
+                // Safely check Driver & Vehicle
+                const driverInfo = ride.Driver
+                    ? `<p><strong>Driver:</strong> ${ride.Driver.firstname} ${ride.Driver.lastname}</p>
+               <p><strong>Phone:</strong> ${ride.Driver.phone}</p>`
+                    : "<p><strong>Driver:</strong> Not Assigned</p>";
+
+                const vehicleInfo = ride.Vehicle
+                    ? `<p><strong>Vehicle:</strong> ${ride.Vehicle.model} (${ride.Vehicle.color || "N/A"})</p>
+               <p><strong>Reg. No:</strong> ${ride.Vehicle.registration_number}</p>`
+                    : "<p><strong>Vehicle:</strong> Not Assigned</p>";
+
+                if (ride.ride_status === "requested") {
+                    // Only pickup, drop, status, cancel
+                    rideEl.innerHTML = `
                 <p><strong>Pickup:</strong> ${ride.pickup_address}</p>
                 <p><strong>Drop:</strong> ${ride.dropoff_address}</p>
-                <p><strong>Status:</strong> ${ride.ride_status || 'Pending'}</p>
+                <p><strong>Status:</strong> ${ride.ride_status}</p>
+                <p><strong>Fare:</strong> ${fareToShow}</p>
+                <button class="cancel-btn" data-ride-id="${ride.ride_id}">Cancel Ride</button>
             `;
+                } else {
+                    // Full details
+                    rideEl.innerHTML = `
+                <p><strong>Pickup:</strong> ${ride.pickup_address}</p>
+                <p><strong>Drop:</strong> ${ride.dropoff_address}</p>
+                <p><strong>Status:</strong> ${ride.ride_status}</p>
+                ${driverInfo}
+                ${vehicleInfo}
+                ${["accepted"].includes(ride.ride_status)
+                            ? `<button class="cancel-btn" data-ride-id="${ride.ride_id}">Cancel Ride</button>`
+                            : ""}
+            `;
+                }
 
                 ridesList.appendChild(rideEl);
-            }
+            });
+        } else {
+            ridesList.innerHTML = '<p class="no-rides">No active rides.</p>';
+        }
+
+        // Attach cancel event listeners
+        document.querySelectorAll(".cancel-btn").forEach(btn => {
+            btn.addEventListener("click", async e => {
+                const rideId = e.target.dataset.rideId;
+                const reason = prompt("Why do you want to cancel this ride?");
+                if (!reason) return;
+
+                try {
+                    const res = await fetch(`http://localhost:3000/ride/cancel/${rideId}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        credentials: "include",
+                        body: JSON.stringify({ reason })
+                    });
+
+                    const resData = await res.json();
+                    if (res.ok && resData.success) {
+                        alert("Ride cancelled successfully ✅");
+                        loadRequestedRides(); // refresh
+                    } else {
+                        alert("Error: " + (resData.message || "Failed to cancel ride"));
+                    }
+                } catch (err) {
+                    console.error("Cancel error:", err);
+                    alert("Cancel request failed. Check console.");
+                }
+            });
         });
+
+        // --- Ride History (completed, cancelled) ---
+        const historyRides = rides.filter(r =>
+            ["completed", "cancelled"].includes(r.ride_status)
+        );
+
+        if (historyRides.length) {
+            rideHistoryList.innerHTML = "";
+            historyRides.forEach(ride => {
+                const rideEl = document.createElement("div");
+                rideEl.classList.add("ride-history-item");
+
+                const driverInfo = ride.Driver
+                    ? `<p><strong>Driver:</strong> ${ride.Driver.firstname} ${ride.Driver.lastname}</p>
+                       <p><strong>Phone:</strong> ${ride.Driver.phone}</p>`
+                    : "<p><strong>Driver:</strong> Not Assigned</p>";
+
+                const vehicleInfo = ride.Vehicle
+                    ? `<p><strong>Vehicle:</strong> ${ride.Vehicle.model} (${ride.Vehicle.color || "N/A"})</p>
+                       <p><strong>Reg. No:</strong> ${ride.Vehicle.registration_number}</p>`
+                    : "<p><strong>Vehicle:</strong> Not Assigned</p>";
+
+                rideEl.innerHTML = `
+                    <p><strong>Pickup:</strong> ${ride.pickup_address}</p>
+                    <p><strong>Drop:</strong> ${ride.dropoff_address}</p>
+                    <p><strong>Status:</strong> ${ride.ride_status}</p>
+                    ${driverInfo}
+                    ${vehicleInfo}
+                `;
+                rideHistoryList.appendChild(rideEl);
+            });
+        } else {
+            rideHistoryList.innerHTML = '<p class="no-rides">No ride history.</p>';
+        }
     } catch (err) {
-        console.error('Failed to load requested rides:', err);
+        console.error("Failed to load requested rides:", err);
         ridesList.innerHTML = '<p class="no-rides">Failed to load rides.</p>';
+        rideHistoryList.innerHTML = '<p class="no-rides">Failed to load ride history.</p>';
     }
 }
 
-// Call this on page load
 document.addEventListener('DOMContentLoaded', () => {
     loadRequestedRides();
 });

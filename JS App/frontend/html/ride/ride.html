@@ -11,7 +11,9 @@
 
 <body>
 
-    <nav class="navbar">
+    <div id="header-container"></div>
+
+    <!-- <nav class="navbar">
         <div class="nav-left">
             <h1 class="logo">Uber</h1>
             <ul class="nav-links">
@@ -22,7 +24,7 @@
             <a href="#" class="login">Login</a>
             <a href="#" class="signup">Sign up</a>
         </div>
-    </nav>
+    </nav> -->
 
     <section class="hero">
         <div class="ride-form">
@@ -47,7 +49,6 @@
             </div>
             <div class="button-row">
                 <button id="searchBtn" class="search-btn">Search</button>
-                <button id="fareBtn" class="fare-btn">Prices</button>
                 <button id="requestRide" class="request-ride">Book Ride</button>
             </div>
 
@@ -81,11 +82,22 @@
         </div>
     </section>
 
+    <!-- Ride History Section -->
+    <section class="ride-history">
+        <h2>Your Ride History</h2>
+        <div id="rideHistoryList" class="rides-list">
+            <p class="no-rides">No ride history available.</p>
+        </div>
+    </section>
+
+    <div id="footer-container"></div>
+
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/maps/maps-web.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="../../js/ride/script.js"></script>
     <script type="module" src="../../js/ride/backendCoordinates.js"></script>
     <script type="module" src="../../js/ride/startRideHandler.js"></script>
+    <script type="module" src="../../js/main.js"></script>
 
 </body>
 
