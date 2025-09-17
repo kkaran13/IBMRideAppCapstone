@@ -13,40 +13,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Global alert container
     const alertContainer = document.getElementById("alert-container");
 
-    // navbar placeholder
-    // const navbarContainer = document.getElementById("navbar-placeholder");
-    // fetch("driver-navbar.html")
-    //     .then((response) => {
-    //         if (!response.ok) throw new Error("Network response was not OK");
-    //         return response.text();
-    //     })
-    //     .then((html) => {
-    //         navbarContainer.innerHTML = html;
-
-    //         const link = document.createElement("link");
-    //         link.rel = "stylesheet";
-    //         link.href = "../../css/driver/driver-navbar.css";
-    //         document.head.appendChild(link);
-    //     })
-    //     .catch((error) => console.error("Error loading the navbar:", error));
-
-    // // footer placeholder
-    // const footerContainer = document.getElementById("footer-placeholder");
-    // fetch("driver-footer.html")
-    //     .then((response) => {
-    //         if (!response.ok) throw new Error("Network response was not OK");
-    //         return response.text();
-    //     })
-    //     .then((html) => {
-    //         footerContainer.innerHTML = html;
-
-    //         const link = document.createElement("link");
-    //         link.rel = "stylesheet";
-    //         link.href = "../../css/driver/driver-footer.css";
-    //         document.head.appendChild(link);
-    //     })
-    //     .catch((error) => console.error("Error loading the footer:", error));
-
     // Extract user details
     const userId = loggedInUser?.id || null;
     const firstname = loggedInUser?.firstname || "Driver";
