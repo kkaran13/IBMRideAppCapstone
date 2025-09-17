@@ -9,6 +9,16 @@ class RideRepository {
         return await Ride.create(data);
     }
 
+    async getCompletedRideWithPendingPayment(rider_id) {
+        return await Ride.findOne({
+            where: {
+                rider_id: rider_id,
+                ride_status: "completed",
+                payment_status: "pending"
+            }
+        });
+    }
+
     // Rider/Driver/Admin: get ride details by ID
     async getRideById(rideId) {
         return await Ride.findByPk(rideId);
