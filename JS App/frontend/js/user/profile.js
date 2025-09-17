@@ -180,4 +180,16 @@ async saveProfile(e) {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => new ProfilePage());
+document.addEventListener("DOMContentLoaded", () => {
+  const loggedInUser = AuthUtils.getUserInfo();
+  
+  if (!loggedInUser) {
+    // Redirect to login if no user session found
+    window.location.href = "/html/user/login.html";
+    return;
+  }
+
+  // Only initialize ProfilePage if user is logged in
+  new ProfilePage();
+});
+
