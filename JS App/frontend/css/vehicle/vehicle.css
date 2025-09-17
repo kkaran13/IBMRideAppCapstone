@@ -1,3 +1,222 @@
+/* ----------------- Global ----------------- */
+body {
+  font-family: Arial, sans-serif;
+  background: #f7f9ff;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#header-container {
+  flex-shrink: 0; /* header stays */
+}
+
+#footer-container {
+  flex-shrink: 0; /* footer stays */
+}
+
+main, .content {
+  flex: 1; /* content expands to push footer down */
+}
+
+
+nav {
+  display: flex;
+  gap: 20px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+nav a {
+  text-decoration: none;
+  color: #2c347d;
+  font-weight: bold;
+}
+
+nav a.active {
+  border-bottom: 2px solid #2c347d;
+}
+
+/* ----------------- Filter/Search ----------------- */
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  margin: 20px;
+}
+
+.filter-bar input,
+.filter-bar select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* ----------------- Vehicle Cards ----------------- */
+.vehicles-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.vehicle-card {
+  border-radius: 12px;
+  width: 220px;
+  margin: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.vehicle-card.active-card {
+  background-color: #d9f7d9; /* light green */
+}
+
+.vehicle-card.inactive-card {
+  background-color: #e3e6f3; /* light blue-gray */
+}
+
+/* ----------------- Card Sections ----------------- */
+.card-top {
+  padding: 10px;
+  background-color: #eef1ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vehicle-img {
+  max-width: 100%;
+  height: 80px;
+  object-fit: contain;
+}
+
+.card-bottom {
+  padding: 10px;
+}
+
+/* ----------------- Header + Status ----------------- */
+.vehicle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vehicle-type {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.status-label {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.status-label.active {
+  color: green;
+}
+
+.status-label.activate-btn {
+  color: #d9534f;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* ----------------- Details ----------------- */
+.vehicle-details {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.vehicle-reg {
+  margin: 5px 0;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+/* ----------------- Actions ----------------- */
+.vehicle-actions {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+}
+
+
+.update-link,
+.delete-link {
+  background-color: #8691b6;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none; /* no underline */
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.update-link:hover {
+  background-color: #7180b2;
+}
+
+.delete-link {
+  background-color:#8691b6;
+}
+
+.delete-link:hover {
+  background-color: #7180b2;
+}
+
+
+.view-btn {
+  background:none;
+  /* border: 1px solid #007bff; */
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  color: #455078;
+  font-size: 14px;
+   text-decoration: none;   
+}
+
+/* ----------------- Pagination ----------------- */
+.pagination {
+  text-align: center;
+  margin: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #007bff;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background: #ccc;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+
+
+
 body {
   font-family: Arial, sans-serif;
   background: #f7f9ff;
@@ -70,7 +289,7 @@ nav a.active {
 .details {
   margin: 20px;
   padding: 20px;
-  background: #f0f3ff;
+  background: #e1e7fd;
   border-radius: 12px;
 }
 
@@ -143,5 +362,115 @@ nav a.active {
   border: none;
   color: #1d3b70;
   font-weight: bold;
+  cursor: pointer;
+}
+
+
+/* vehicle info */
+.vehicle-info {
+  text-align: left;
+  margin-top: 5px;
+}
+
+.vehicle-details {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.vehicle-reg {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+
+
+/* form alert */
+#alert-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.alert {
+  pointer-events: auto;
+  min-width: 250px;
+  max-width: 320px;
+  padding: 0.875rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  opacity: 0.95;
+}
+
+.alert-success {
+  background: #dcfce7;
+  color: #166534;
+  border-left: 4px solid #22c55e;
+}
+
+.alert-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border-left: 4px solid #ef4444;
+}
+
+.alert-info {
+  background: #dbeafe;
+  color: #1e40af;
+  border-left: 4px solid #3b82f6;
+}
+
+
+
+
+
+.form-box {
+  width: 60%;                   /* take most of the page width */
+  max-width: 800px;             /* but don’t stretch too much */
+  margin: 50px auto;
+  background: #dbe3fd;          /* soft bluish background */
+  padding: 30px;                /* enough padding inside */
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;                    /* space between inputs */
+  box-sizing: border-box;
+}
+
+.form-box input,
+.form-box select {
+  width: 100%;                  /* always stay inside card */
+  padding: 14px;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  font-size: 15px;
+  background: #f9fbff;
+  box-sizing: border-box;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  color: #1d3b70;
+  font-weight: bold;
+  font-size: 15px;
   cursor: pointer;
 }
