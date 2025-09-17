@@ -61,7 +61,7 @@ function updateNav() {
       <a href="#">Vehicles</a>
       <a href="#">Rides</a>
       <a href="#">Ratings</a>
-      <a href="#">Wallet</a>
+      <a href="/html/wallet/wallet.html">Wallet</a>
       
       <div class="dropdown">
       <img src="../assets/images/profile-icon.png" class="profile-icon">

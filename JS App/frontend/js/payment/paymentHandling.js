@@ -2,10 +2,10 @@ document.getElementById("payBtn").onclick = async function () {
     console.log("Clicked Now");
 
     const payload = {
-        wallet_id: "4d7a1482-257b-49c0-a335-bfd23853797e",
-        ride_id: "11111111-1111-1111-1111-111111111111",
-        rider_id: "22222222-2222-2222-2222-222222222222",
-        driver_id: "793ed0ba-2a87-4df8-9ce0-92079dd984f3",
+        wallet_id: "b6260927-a693-4e96-8c74-9fb7ba67c16d",
+        ride_id: "r3333333-3333-3333-3333-333333333333",
+        rider_id: "1a111111-1111-1111-1111-111111111111",
+        driver_id: "4d444444-4444-4444-4444-444444444444",
         amount: 100.00,
         payment_method: "CARD"
     };

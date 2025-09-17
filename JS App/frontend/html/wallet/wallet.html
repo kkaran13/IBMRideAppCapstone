@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Wallet Balance</title>
+    <link rel="stylesheet" href="../../css/wallet/wallet.css">
+</head>
+<body>
+    <div class="wallet-container">
+        <div id="header-container"></div>
+        <div class="wallet-body">
+            <div class="wallet-title">My Wallet Balance</div>
+            <div class="wallet-balance" id="walletBalance"></div>
+            <div class="status-withdraw">
+                <div class="status">
+                    Active <div class="dot"></div>
+                </div><br>
+                <button class="withdraw-btn" style="color: #f5f6fa; ">Withdraw</button>
+            </div>
+        </div>
+        <div class="wallet-details">
+            <p>Total Earnings : <span id="totalEarnings" style="font-weight: bold;"></span></p><br>
+            <a href="../wallet/transactions.html">View Transaction History <span> >>></span></a><br>
+            <a href="../wallet/withdrawals.html">View Withdrawal History <span>>>></span></a><br>
+        </div> 
+    </div>
+    
+    <div id="footer-container"></div>
+    <script type="module" src="../../js/main.js"></script>
+    <script type="module" src="../../js/wallet/wallet.js"></script>
+</body>
+</html>
