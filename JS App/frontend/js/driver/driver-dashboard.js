@@ -148,7 +148,7 @@ async function refreshRideCard() {
 
             // Update ride info
             rideDetailsContainer.innerHTML = `
-                <p><strong>Rider:</strong> <span id="rider-name">${ride.riderName || "Unknown"}</span></p>
+                <p><strong>Rider:</strong> <span id="rider-name">${(ride.Rider?.firstname + " " + ride.Rider?.lastname) || "Unknown"}</span></p>
                 <p><strong>Pickup:</strong> <span id="pickup-location">${ride.pickup_address || "-"}</span></p>
                 <p><strong>Drop:</strong> <span id="drop-location">${ride.dropoff_address || "-"}</span></p>
                 <p><strong>Fare:</strong> ₹ <span id="ride-fare">${ride.fare || "0"}</span></p>
