@@ -82,7 +82,7 @@ function updateNav() {
   } else if (role === "rider") {
     headerLinks = `
       <a href="/html/ride/ride.html">Book Ride</a>
-      <a href="">Rides</a>
+      <a href="/html/ride/ride-history.html">Rides</a>
       <div class="dropdown">
       <img src="../assets/images/profile-icon.png" class="profile-icon">
       <div class="dropdown-content">
@@ -93,7 +93,7 @@ function updateNav() {
     `;
     footerLinks = `
       <a href="/html/ride/ride.html">Book a Ride</a> |
-      <a href="/html/ride-history.html">Ride History</a> |
+      <a href="/html/ride/ride-history.html">Ride History</a> |
       <a href="/html/profile.html">Profile</a> |
       <a href="#" class="logout">Logout</a>
     `;
