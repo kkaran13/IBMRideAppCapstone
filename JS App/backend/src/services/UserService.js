@@ -64,18 +64,19 @@ class UserService {
           "Driver must provide license number, expiry date, and Aadhaar"
         );
       }
-    }
-    //  Require photo for driver
-    if (!files?.avatar?.[0]) {
-      throw new ApiError(422, "Driver must upload profile photo.");
-    }
-    //  Require license photo for driver
-    if (!files?.license?.[0]) {
-      throw new ApiError(422, "Driver must upload license photo.");
-    }
-    //  Require photo for driver
-    if (!files?.aadhar?.[0]) {
-      throw new ApiError(422, "Driver must upload aadhar photo.");
+      //  Require photo for driver
+      if (!files?.avatar?.[0]) {
+        throw new ApiError(422, "Driver must upload profile photo.");
+      }
+      //  Require license photo for driver
+      if (!files?.license?.[0]) {
+        throw new ApiError(422, "Driver must upload license photo.");
+      }
+      //  Require photo for driver
+      if (!files?.aadhar?.[0]) {
+        throw new ApiError(422, "Driver must upload aadhar photo.");
+
+      }
     }
     // ----------------- PASSWORD -----------------
     const password_hash = await bcrypt.hash(password, 10);
@@ -377,8 +378,8 @@ class UserService {
     // Cookie options
     const cookieOptions = {
       httpOnly: true,
-      secure: Config.NODE_ENV === "production",
-      sameSite: "strict",
+      secure: false,
+      sameSite: "Lax",
       maxAge: 60 * 60 * 1000, // 1h
     };
 
