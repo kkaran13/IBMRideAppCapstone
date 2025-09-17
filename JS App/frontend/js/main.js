@@ -60,7 +60,7 @@ console.log(profile);
   if (role === "driver") {
     headerLinks = `
       <a href="/html/driver/driver-dashboard.html">Home</a>
-      <a href="#">Vehicles</a>
+      <a href="/html/vehicle/active-vehicle.html">Vehicles</a>
       <a href="#">Rides</a>
       <a href="#">Ratings</a>
       <a href="/html/wallet/wallet.html">Wallet</a>
