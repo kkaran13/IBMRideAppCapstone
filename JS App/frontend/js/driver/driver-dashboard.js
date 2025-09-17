@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const loggedInUser = AuthUtils.getUserInfo();
     if (!loggedInUser) {
-        window.location.href = "../user/login.html";
+        window.location.href = "/html/user/login.html";
         return;
     }
 
@@ -14,38 +14,38 @@ document.addEventListener("DOMContentLoaded", async function () {
     const alertContainer = document.getElementById("alert-container");
 
     // navbar placeholder
-    const navbarContainer = document.getElementById("navbar-placeholder");
-    fetch("driver-navbar.html")
-        .then((response) => {
-            if (!response.ok) throw new Error("Network response was not OK");
-            return response.text();
-        })
-        .then((html) => {
-            navbarContainer.innerHTML = html;
+    // const navbarContainer = document.getElementById("navbar-placeholder");
+    // fetch("driver-navbar.html")
+    //     .then((response) => {
+    //         if (!response.ok) throw new Error("Network response was not OK");
+    //         return response.text();
+    //     })
+    //     .then((html) => {
+    //         navbarContainer.innerHTML = html;
 
-            const link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = "../../css/driver/driver-navbar.css";
-            document.head.appendChild(link);
-        })
-        .catch((error) => console.error("Error loading the navbar:", error));
+    //         const link = document.createElement("link");
+    //         link.rel = "stylesheet";
+    //         link.href = "../../css/driver/driver-navbar.css";
+    //         document.head.appendChild(link);
+    //     })
+    //     .catch((error) => console.error("Error loading the navbar:", error));
 
-    // footer placeholder
-    const footerContainer = document.getElementById("footer-placeholder");
-    fetch("driver-footer.html")
-        .then((response) => {
-            if (!response.ok) throw new Error("Network response was not OK");
-            return response.text();
-        })
-        .then((html) => {
-            footerContainer.innerHTML = html;
+    // // footer placeholder
+    // const footerContainer = document.getElementById("footer-placeholder");
+    // fetch("driver-footer.html")
+    //     .then((response) => {
+    //         if (!response.ok) throw new Error("Network response was not OK");
+    //         return response.text();
+    //     })
+    //     .then((html) => {
+    //         footerContainer.innerHTML = html;
 
-            const link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = "../../css/driver/driver-footer.css";
-            document.head.appendChild(link);
-        })
-        .catch((error) => console.error("Error loading the footer:", error));
+    //         const link = document.createElement("link");
+    //         link.rel = "stylesheet";
+    //         link.href = "../../css/driver/driver-footer.css";
+    //         document.head.appendChild(link);
+    //     })
+    //     .catch((error) => console.error("Error loading the footer:", error));
 
     // Extract user details
     const userId = loggedInUser?.id || null;
