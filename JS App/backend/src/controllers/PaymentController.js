@@ -22,5 +22,12 @@ class PaymentController {
         
     });
 
+    getPaymentDetails = asyncHandler(async (req,res) => {
+        const result = await PaymentService.getPayDetails(req);
+        return res
+            .status(201)
+            .json(result);
+    })
+
 }
 export default new PaymentController();

@@ -70,5 +70,17 @@ class PaymentService {
         return apiResponseData;
     }
 
+    async getPayDetails(reqObj){
+        if (!reqObj) {throw new ApiError(400,"Missing required data")};
+
+        const { ride_id } = reqObj.params;
+
+        if(!ride_id) {throw new ApiError(400, "Missing ride_id")};
+
+        const apiResponseData = await HelperFunction.axiosSendRequest("get", `payments/getPaymentDetails/${ride_id}`);
+
+        return apiResponseData;
+    }
+
 }
 export default new PaymentService();
