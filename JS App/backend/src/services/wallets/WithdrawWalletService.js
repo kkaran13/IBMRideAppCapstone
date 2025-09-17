@@ -12,6 +12,28 @@ class WithdrawWalletService {
     return apiResponseData;
   }
 
+  async getAllWithdrawReqByidDetails() {
+     const { driver_id } = req.params;
+    const apiResponseData = await HelperFunction.axiosSendRequest(
+      "get",
+      `wallet/withdraw/${driver_id}/`
+    );
+    return apiResponseData;
+  }
+
+  async postAllWithdrawReqByidDetails() {
+     const { driver_id } = req.params;
+     const {amount,account_holder_name,bank_name,ifsc_code,account_number,contact_info}=req.body;
+     if (!amount || !account_holder_name||!bank_name||!ifsc_code||!account_number||!contact_info) {
+        throw new Error("All The Details Are require,Please Enter All The Details");
+      }
+    const apiResponseData = await HelperFunction.axiosSendRequest(
+      "post",
+      `wallet/withdraw/${driver_id}/`,{amount,account_holder_name,bank_name,ifsc_code,account_number,contact_info}
+    );
+    return apiResponseData;
+  }
+
 
 async changeReqStatus(req) {
     try {
