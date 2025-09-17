@@ -184,6 +184,17 @@ class RideRepository {
                 driver_id: driverId,
                 ride_status: { [Op.in]: ["accepted", "ongoing", "driver_arrived"] },
             },
+            include: [
+                {
+                    model: User,
+                    as: 'Rider',
+                    attributes: ['user_id', 'firstname', 'lastname', 'phone', 'email']
+                },
+                {
+                    model: Vehicle,
+                    attributes: ['vehicle_id', 'make', 'model', 'color', 'registration_number']
+                }
+            ]
         });
     }
 

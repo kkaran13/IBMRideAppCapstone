@@ -20,8 +20,9 @@ export class AuthUtils {
     getUserProfile: `${this.BASE_URL}/user/profile`,
     updateUserLocation: `${this.BASE_URL}/user/update-location`,
 
-
+    // Device token
     registerDeviceToken: `${this.BASE_URL}/device/registerDevice`,
+    deRegisterDeviceToken: `${this.BASE_URL}/device/deRegisterDevice`,
 
 
     // driver-dashboard
