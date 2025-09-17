@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import ratingRepository from "../repositories/RatingRepository.js";
 import rideRepository from "../repositories/RideRepository.js";
+import Rating from "../models/Rating.js";
 
 class RatingService {
     async createRating({ rideid, score, comment }) {
@@ -89,6 +90,32 @@ class RatingService {
 
         return { status: 200, message: "Rating deleted successfully" };
     }
+async getRideAndRating() {
+     const rides = await ratingRepository.getCompletedRides();
+
+    if (!rides || rides.length === 0) {
+      return { status: 404, message: "No completed rides found", data: [] };
+    }
+
+     const rideIds = rides.map((ride) => ride.ride_id);
+
+     const ratings = await Rating.find({ ride_id: { $in: rideIds } });
+
+     const ridesWithRatings = rides.map((ride) => {
+      const rating = ratings.find((r) => r.ride_id === ride.ride_id);
+      return {
+        ...ride.toJSON(),
+        rating: rating ? rating : null, 
+      };
+    });
+ 
+
+    return {
+      status: 200,
+      message: "Completed rides with ratings retrieved successfully",
+      data: ridesWithRatings,
+    };
+  }
 
 
 }

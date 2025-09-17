@@ -7,6 +7,7 @@ import firebaseadmin from '../config/firebaseMessage.js'
 import cloudinary from "../config/cloudinary.js";
 import httpClient from '../config/httpClient.js';
 import DeviceTokenService from "../services/DeviceTokenService.js";
+import client from "../config/teleSign.js";
 
 // recreate __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -159,11 +160,11 @@ class HelperFunction {
             //     throw new Error("No device tokens provided for push notification");
             // }
 
-            if(!userids){
+            if (!userids) {
                 return {}
             }
 
-            if(!Array.isArray(userids)){
+            if (!Array.isArray(userids)) {
                 userids = [userids]
             }
 
@@ -271,8 +272,22 @@ class HelperFunction {
         });
     }
 
+    async sendOtp(phoneNumber, otp) {
+        const message = `Your verification code is ${otp}`;
+        const messageType = "ARN"; // "ARN" = Alerts, Reminders, Notifications
 
-    
+        client.sms.message((error, responseBody) => {
+            if (error) {
+                console.error("Error sending OTP:", error);
+            } else {
+                console.log("Successfully sent OTP via SMS.");
+                console.log(responseBody);
+            }
+        }, phoneNumber, message, messageType);
+    }
+
+
+
 }
 
 // const HF = new HelperFunction()

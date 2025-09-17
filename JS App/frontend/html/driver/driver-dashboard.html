@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Driver Dashboard - RideApp</title>
+    <link rel="stylesheet" href="../../css/driver/driver-dashboard.css" />
+</head>
+
+<body>
+
+    <script type="module" src="../../js/driver/driver-dashboard.js"></script>
+
+    <div id="navbar-placeholder"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-text">
+                <h2>Welcome, Driver 👋</h2>
+                <p>Here’s a quick snapshot of your account. Manage your rides, earnings, and vehicle details all in one
+                    place.</p>
+                <div class="hero-buttons">
+                    <button class="btn primary" id="start-driving-btn">Start Driving</button>
+                    <button class="btn secondary">View Rides</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="../../assets/images/driverdashboardhero.png" alt="Driver illustration" />
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Dashboard Layout -->
+    <section class="dashboard">
+    
+        <!-- Left column -->
+        <div class="left-column">
+            <div class="card">
+                <h3>Active Vehicle</h3>
+                <p>Honda City</p>
+                <p>GJ05 AB 1234</p>
+                <button class="btn primary">Switch Vehicle</button>
+            </div>
+    
+            <div class="card">
+                <h3>Wallet Balance</h3>
+                <p class="wallet-text">
+                    <strong>Total:</strong> ₹ <span id="wallet-total">0</span><br>
+                    <strong>Available:</strong> ₹ <span id="wallet-available">0</span>
+                </p>
+                <button class="btn dark">Withdraw</button>
+            </div>
+        </div>
+    
+        <!-- Right column (Ongoing Ride full height) -->
+        <div class="right-column">
+            <div class="card ongoing-ride" id="ongoing-ride-card">
+                <h3>Current Ride</h3>
+    
+                <!-- Ride details -->
+                <p><strong>Rider:</strong> <span id="rider-name">John Doe</span></p>
+                <p><strong>Pickup:</strong> <span id="pickup-location">MG Road, Ahmedabad</span></p>
+                <p><strong>Drop:</strong> <span id="drop-location">Airport, Ahmedabad</span></p>
+                <p><strong>Fare:</strong> ₹ <span id="ride-fare">350</span></p>
+                <p><strong>Status:</strong> ₹ <span id="ride-status">350</span></p>
+                
+                <!-- Action buttons -->
+                <div class="ride-actions">
+                    <!-- New Arrived button (only visible when status = accepted) -->
+                    <button class="btn primary" id="arrived-btn">Arrived</button>
+                
+                    <!-- Before start -->
+                    <input type="text" id="entered-otp" placeholder="Enter OTP" class="otp-input hidden" />
+                    <button class="btn primary hidden" id="start-ride-btn">Start Ride</button>
+                    <input type="text" id="cancel-reason" placeholder="Reason for cancellation" class="otp-input hidden" />
+                    <button class="btn secondary hidden" id="cancel-ride-btn">Cancel Ride</button>
+                
+                    <!-- During ride -->
+                    <button class="btn primary hidden" id="complete-ride-btn">Complete Ride</button>
+    
+                    <!-- Google Maps navigation -->
+                    <a id="maps-link"
+                        href="https://www.google.com/maps/dir/?api=1&origin=MG+Road+Ahmedabad&destination=Airport+Ahmedabad"
+                        target="_blank" class="btn dark">Navigate with Maps</a>
+                </div>
+            </div>
+        </div>
+    
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+</body>
+
+</html>
