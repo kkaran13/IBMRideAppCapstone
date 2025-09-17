@@ -492,7 +492,7 @@ class UserService {
     let mailObj = {
       to: email,
       subject: `Your Ride App password was changed successfully`,
-      htmlTemplate: "passwordchangesuccess",
+      htmlTemplate: "passwordchangesuccess.html",
       templateData: {
         username: user.firstname + user.lastname,
         appName: "Ride App",

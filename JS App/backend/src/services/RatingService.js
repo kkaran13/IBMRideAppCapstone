@@ -35,8 +35,9 @@ class RatingService {
         return { status: 201, data: rating, message: "Rating created successfully" };
     }
 
-    async getRating(ratingid) {
-        const rating = await ratingRepository.findById(ratingid);
+    async getRating(ride_id) {
+        // const rating = await ratingRepository.findById(ratingid);
+        const rating = await ratingRepository.getRatingByRide(ride_id);
         if (!rating) throw { status: 404, message: "Rating not found" };
 
         return { status: 200, data: rating, message: "Rating fetched successfully" };

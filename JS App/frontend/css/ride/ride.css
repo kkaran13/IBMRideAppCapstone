@@ -12,6 +12,56 @@ body {
 }
 
 /* Navbar */
+header {
+    background: var(--brand);
+    width: 100%;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+header .centered {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+header .logo {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.2px;
+}
+
+header nav {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+header nav a {
+    color: #f7f7f7;
+    text-decoration: none;
+    font-size: 0.98rem;
+    opacity: 0.95;
+}
+
+header .signup-btn {
+    background: var(--black);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -324,6 +374,172 @@ button>i {
 .no-rides {
     color: #777;
     text-align: center;
+}
+
+.cancel-btn {
+    background-color: #e74c3c;
+    /* red */
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: background 0.2s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #c0392b;
+    /* darker red */
+}
+
+.ride-history {
+    margin: 40px auto;
+    max-width: 900px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ride-history h2 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.ride-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ride-history-item {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 5px solid #007bff;
+    /* Accent color for history rides */
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ride-history-item p {
+    margin: 5px 0;
+}
+
+.ride-history .no-rides {
+    color: #777;
+    text-align: center;
+}
+
+footer {
+    background: var(--brand);
+    padding: 2rem;
+    text-align: center;
+    color: #fff;
+}
+
+footer a {
+    color: #fff;
+    margin: 0 0.7rem;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    background: var(--brand);
+    padding: 40px 24px;
+    margin-top: 60px;
+    color: #fff;
+}
+
+footer .centered {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-links {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 0.98rem;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.95
+}
+
+footer p {
+    font-size: 0.9rem;
+    opacity: 0.95
+}
+
+/* Nav */
+header {
+    background: var(--brand);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+}
+
+.close {
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.rate-ride-btn {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.rate-ride-btn:hover {
+  background-color: darkblue;
 }
 
 /* Responsive: stack on very narrow screens */
