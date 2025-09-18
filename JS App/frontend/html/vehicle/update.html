@@ -1,37 +1,31 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Register Vehicle</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Update Vehicle</title>
+  <link rel="stylesheet" href="../../css/vehicle/vehicle.css">
+  
 </head>
 <body>
-  <nav>
-    <a href="active-vehicle.html">Active Vehicle</a>
-    <a href="my-vehicles.html">My Vehicles</a>
-    <a href="register.html" class="active">Register Vehicle</a>
-  </nav>
-
-  <form id="registerForm" class="form-box">
-    <input type="text" name="make" placeholder="Brand" required>
-    <input type="text" name="model" placeholder="Model" required>
-    <input type="number" name="year" placeholder="Year" required>
-    <input type="text" name="color" placeholder="Color" required>
-    <input type="text" name="registration_number" placeholder="Registration Number" required>
-    <select name="vehicle_type" required>
-      <option value="">Select Type</option>
-      <option value="hatchback">Hatchback</option>
-      <option value="sedan">Sedan</option>
-      <option value="suv">SUV</option>
-      <option value="auto">Auto</option>
-      <option value="bike">Bike</option>
-    </select>
+  <div id="=header-container"></div>
+  <main>
+  <div id="alert-container"></div> 
+  <form id="updateForm" class="form-box">
+    <input type="text" name="make" readonly>
+    <input type="text" name="model" readonly>
+    <input type="number" name="year" readonly>
+    <input type="text" name="registration_number" readonly>
+    <input type="text" name="color" placeholder="Update Color" required>
     <div class="actions">
-      <button type="submit">Register</button>
-      <button type="reset">Clear</button>
+      <button type="submit">Update</button>
+      <button type="button" onclick="window.close()">Close</button>
     </div>
   </form>
 
-  <script src="script.js"></script>
+  <script type="module" src="../../js/vehicle/update.js"></script>
+</main>
+
+ <script type="module" src="../../js/main.js"></script>
+<div id="=footer-container"></div>
 </body>
 </html>

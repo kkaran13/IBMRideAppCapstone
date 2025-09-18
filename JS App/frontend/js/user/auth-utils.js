@@ -30,7 +30,15 @@ export class AuthUtils {
     getDriverWalletDetails : `${this.BASE_URL}/wallet/driver-wallet/:driver_id`,
     getOngoingRidesDriver : `${this.BASE_URL}/ride/ongoing/driver`,
     setDriverAvailableForRide : `${this.BASE_URL}/user/set-available`,
+    withdrawAmount : `${this.BASE_URL}/wallet/withdraw/:driver_id`,
+    getPaymentsforWallet : `${this.BASE_URL}/analysis/get-payment/:wallet_id`,
     
+    getActiveVehicle: `${this.BASE_URL}/vehicle/active-vehicle`,
+    getDriverWalletDetails: `${this.BASE_URL}/wallet/driver-wallet/:driver_id`,
+    getOngoingRidesDriver: `${this.BASE_URL}/ride/ongoing/driver`,
+    setDriverAvailableForRide: `${this.BASE_URL}/user/set-available`,
+    driverRideHistory: `${this.BASE_URL}/ride/history/driver`,
+
     // Ride Apis
     startRide : `${this.BASE_URL}/ride/start/:id`,
     driverArrived : `${this.BASE_URL}/ride/driver-arrive/:id`,
@@ -40,14 +48,14 @@ export class AuthUtils {
     ignoreRide : `${this.BASE_URL}/ridematch/ignore/:id`,
 
     //vehicle Apis
-    viewMyVehicles : `${this.BASE_URL}/vehicle/my`,
+    viewMyVehicles: `${this.BASE_URL}/vehicle/my`,
     updateVehicle: `${this.BASE_URL}/vehicle/update/:id`,
     registerVehicle: `${this.BASE_URL}/vehicle/register`,
-    deleteVehicle:`${this.BASE_URL}/vehicle/delete/:id`,
-    viewVehicleDetails:`${this.BASE_URL}/vehicle/:id`,
+    deleteVehicle: `${this.BASE_URL}/vehicle/delete/:id`,
+    viewVehicleDetails: `${this.BASE_URL}/vehicle/:id`,
 
 
-    
+
 
   }
 
@@ -184,54 +192,54 @@ export class AuthUtils {
     container.innerHTML = ""
   }
 
-/**
- * Make API request with error handling
- * @param {string} url
- * @param {object} options
- * @returns {Promise<{success: boolean, data?: any, error?: string, status?: number}>}
- */
-static async apiRequest(url, options = {}) {
-  const isFormData = options.body instanceof FormData;
+  /**
+   * Make API request with error handling
+   * @param {string} url
+   * @param {object} options
+   * @returns {Promise<{success: boolean, data?: any, error?: string, status?: number}>}
+   */
+  static async apiRequest(url, options = {}) {
+    const isFormData = options.body instanceof FormData;
 
-  const defaultOptions = {
-    credentials: "include",
-    headers: {
-      ...(isFormData ? {} : { "Content-Type": "application/json" }),
-      ...(options.headers || {}),
-    },
-    ...options,
-  };
+    const defaultOptions = {
+      credentials: "include",
+      headers: {
+        ...(isFormData ? {} : { "Content-Type": "application/json" }),
+        ...(options.headers || {}),
+      },
+      ...options,
+    };
 
-  try {
-    const response = await fetch(url, defaultOptions);
+    try {
+      const response = await fetch(url, defaultOptions);
 
-    let data = null;
-    const contentType = response.headers.get("content-type");
+      let data = null;
+      const contentType = response.headers.get("content-type");
 
-    if (contentType && contentType.includes("application/json")) {
-      data = await response.json();
-    } else {
-    const text = await response.text();
-      data = text || null;
-    }
+      if (contentType && contentType.includes("application/json")) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        data = text || null;
+      }
 
-    if (!response.ok) {
+      if (!response.ok) {
+        return {
+          success: false,
+          error: data?.message || `HTTP error! status: ${response.status}`,
+          status: response.status,
+        };
+      }
+
+      return { success: true, data, status: response.status };
+    } catch (error) {
       return {
         success: false,
-        error: data?.message || `HTTP error! status: ${response.status}`,
-        status: response.status,
+        error: error.message || "Network error occurred",
+        status: null,
       };
     }
-
-    return { success: true, data, status: response.status };
-  } catch (error) {
-    return {
-      success: false,
-      error: error.message || "Network error occurred",
-      status: null,
-    };
   }
-}
 
 
 

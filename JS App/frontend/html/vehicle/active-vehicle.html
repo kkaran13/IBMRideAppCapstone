@@ -4,10 +4,14 @@
   <meta charset="UTF-8">
   <title>Active Vehicle</title>
   <link rel="stylesheet" href="../../css/vehicle/vehicle.css">
+  <link rel="stylesheet" href="../../components/footer.css">
+    <link rel="stylesheet" href="../../components/header.css">
 </head>
 
 <body>
+    
     <div id="header-container"></div>
+   <main class="content">
   <nav>
     <a href="active-vehicle.html" class="active">Active Vehicle</a>
     <a href="../../html/vehicle/my-vehicle.html">My Vehicles</a>
@@ -17,7 +21,7 @@
   <div style="display: flex; gap: 40px; align-items: flex-start; margin: 20px;">
     <!-- Left: Vehicle card -->
     <section id="activeVehicleCard" class="vehicle-card green">
-      <!-- JS will inject vehicle details here -->
+      
     </section>
 
     <!-- Right: Vehicle details -->
@@ -26,11 +30,9 @@
       <div id="vehicleDetails"></div>
     </section>
   </div>
-
-  <script type="module" src="../../js/vehicle/vehicle.js"></script>
-
+  <script type="module" src="../../js/vehicle/active-vehicle.js"></script>
+  </main>
   <div id="footer-container"></div>
-
-  <script type="module" src="../../js/main.js"></script>
+<script type="module" src="../../js/main.js"></script>
 </body>
 </html>

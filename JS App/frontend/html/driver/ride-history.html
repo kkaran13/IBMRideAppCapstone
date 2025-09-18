@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Driver Ride History - RideApp</title>
+  <link rel="stylesheet" href="../../css/driver/driver-ride-history.css" />
+</head>
+
+<body>
+  <!-- Global Alert Container -->
+  <div id="alert-container"></div>
+
+  <!-- Header -->
+  <div id="header-container"></div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-text">
+        <h2>Your Ride History 🚕</h2>
+        <p>Review all the rides you have completed or cancelled as a driver.</p>
+      </div>
+      <div class="hero-image">
+        <img src="../../assets/images/ridehistorydriver.png" alt="Driver Ride History" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Ride History Section -->
+<section class="dashboard">
+  <div class="right-column" style="grid-column: span 2;">
+    <div class="card">
+      <h3>Ride History</h3>
+      <div id="ride-history-list">
+        <p>Loading your ride history...</p>
+      </div>
+      <div id="pagination" class="pagination"></div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <script type="module" src="../../js/main.js"></script>
+  <script type="module" src="../../js/driver/ride-history.js"></script>
+</body>
+
+</html>

@@ -1,29 +1,38 @@
-import config from './config/Config.js';
+import http from "http";
+import { Server } from "socket.io";
+
+import config from "./config/Config.js";
 import app from "./app.js";
 import mongoConnect from "./config/mongo.js";
-import {checkMySqlConnection, syncSqlDatabase} from './config/mysql.js';
-import redisClient from './config/redisClient.js';
+import { checkMySqlConnection, syncSqlDatabase } from "./config/mysql.js";
+import redisClient from "./config/redisClient.js";
+import { initSocket } from "./sockets/index.js";
 
 const PORT = config.NODE_PORT;
 
 const startServer = async () => {
-    try {
-        
-        await mongoConnect();
+  try {
+    // DB + Redis connections
+    await mongoConnect();
+    await checkMySqlConnection();
+    await syncSqlDatabase();
+    // await redisClient.checkRedisConnection();
 
-        await checkMySqlConnection();
+    // Create HTTP server
+    const server = http.createServer(app);
 
-        await syncSqlDatabase();
+    // Initialize Socket.IO on the same server
+    initSocket(server);
 
-        await redisClient.checkRedisConnection();
+    // Start listening
+    server.listen(PORT, () => {
+      console.log(`Server running at http://localhost:${PORT}`);
+    });
 
-        app.listen(PORT || 3000, ()=>{
-            console.log(`Server running on http://localhost:${3000}`);            
-        });
+  } catch (error) {
+    console.error("Error starting the server:", error.message);
+    process.exit(1);
+  }
+};
 
-    } catch (error) {
-        console.error("Error starting the server :", error.message);
-        process.exit(1);
-    }
-}
-export default startServer; 
+export default startServer;

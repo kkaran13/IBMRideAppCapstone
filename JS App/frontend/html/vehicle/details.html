@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vehicle Details</title>
+  <link rel="stylesheet" href="../../css/vehicle/vehicle.css">
+  <link rel="stylesheet" href="../../components/footer.css">
+  <link rel="stylesheet" href="../../components/header.css">
+</head>
+
+<body>
+  <div id="header-container"></div>
+  <main class="content">
+   
+
+    <div style="display: flex; gap: 40px; align-items: flex-start; margin: 20px;">
+      <!-- Left: Vehicle card -->
+      <section id="vehicleCard" class="vehicle-card">
+        <!-- Filled by JS -->
+      </section>
+
+      <!-- Right: Vehicle details -->
+      <section class="details" style="flex: 1;">
+        <h3>Vehicle Details</h3>
+        <div id="vehicleDetails"></div>
+      </section>
+    </div>
+    <div style="margin-top:20px;">
+          <div style="margin-top: 30px; display: flex; justify-content: center;">
+  <button 
+    onclick="window.location.href='../../html/vehicle/my-vehicle.html'" 
+    style="padding:10px 20px; background:#000000; color:white; border:none; border-radius:6px; cursor:pointer; font-size:16px;">
+    ←
+  </button>
+</div>
+  </main>
+  <div id="footer-container"></div>
+
+  <script type="module" src="../../js/vehicle/details.js"></script>
+  <script type="module" src="../../js/main.js"></script>
+</body>
+</html>
