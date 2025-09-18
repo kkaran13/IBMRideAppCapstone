@@ -4,19 +4,19 @@
   <meta charset="UTF-8">
   <title>Register Vehicle</title>
   <link rel="stylesheet" href="../../css/vehicle/vehicle.css">
-  <link rel="stylesheet" href="../../css/vehicle/popup.css"> <!-- include popup styles -->
 </head>
 <body>
+  <div id="header-container"></div>
   <nav>
     <a href="../../html/vehicle/active-vehicle.html">Active Vehicle</a>
     <a href="../../html/vehicle/my-vehicle.html">My Vehicles</a>
     <a href="../../html/vehicle/register.html" class="active">Register Vehicle</a>
   </nav>
 
-  <!-- ✅ Alert container for success/error popups -->
+ 
   <div id="alert-container"></div>
 
-  <form id="registerForm" class="form-box">
+  <form id="registerVehicle" class="form-box">
     <input type="text" name="make" placeholder="Brand" required>
     <input type="text" name="model" placeholder="Model" required>
     <input type="number" min="1900" max="2099" step="1" name="year" placeholder="Year" required>
@@ -32,10 +32,19 @@
     </select>
     <div class="actions">
       <button type="submit">Register</button>
+      <button type="button" 
+    onclick="window.location.href='../../html/vehicle/my-vehicle.html'" 
+    style="padding:10px 20px; background:#000000; color:white; border:none; border-radius:6px; cursor:pointer; font-size:16px;">
+    ←
+  </button>
       <button type="reset">Clear</button>
     </div>
   </form>
+  
   <script type="module" src="../../js/user/auth-utils.js"></script>
 <script type="module" src="../../js/vehicle/vehicleregister.js"></script>
+
+ <div id="footer-container"></div>
+ <script type="module" src="../../js/main.js"></script>
 </body>
 </html>

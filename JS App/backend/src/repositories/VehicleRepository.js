@@ -54,15 +54,18 @@ class VehicleRepository {
 
     if (status) where.status = status;
     if (type) where.vehicle_type = type;
-    if (make) where.make = { [Op.iLike]: `%${make}%` }; 
-    if (model) where.model = { [Op.iLike]: `%${model}%` };
     if (year) where.year = year;
+
     if (q) {
+      const qFilter = { [Op.iLike]: `%${q}%` };
       where[Op.or] = [
-        { registration_number: { [Op.iLike]: `%${q}%` } },
-        { make: { [Op.iLike]: `%${q}%` } },
-        { model: { [Op.iLike]: `%${q}%` } },
+        { registration_number: qFilter },
+        { make: qFilter },
+        { model: qFilter },
       ];
+    } else {
+      if (make) where.make = { [Op.iLike]: `%${make}%` };
+      if (model) where.model = { [Op.iLike]: `%${model}%` };
     }
 
     const offset = (page - 1) * limit;
@@ -81,6 +84,9 @@ class VehicleRepository {
       totalPages: Math.ceil(count / limit),
     };
   }
+
+
+  
 
 
   async getActiveVehicle(ownerId, options = {}){

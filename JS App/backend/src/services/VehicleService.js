@@ -47,7 +47,7 @@ class VehicleService {
     }
 
     // Default status if not provided
-    const vehicleStatus = status || "active";
+    const vehicleStatus = "inactive";
 
     // Create vehicle
     return await VehicleRepository.createVehicle({
